@@ -135,7 +135,6 @@ export function EstudanteSignup({ handleUseSelectedTab }: Props) {
           title: "Sucesso!",
           description:
             "Seu cadastro foi recebido, iremos enviar um e-mail para confirmação.",
-          icon: "sucess",
         });
 
         return setTimeout(() => handleUseSelectedTab(2), 1000);
@@ -144,7 +143,6 @@ export function EstudanteSignup({ handleUseSelectedTab }: Props) {
         toast({
           title: "Erro!",
           description: "Algo deu errado, por gentileza, tente mais tarde.",
-          icon: "alert",
         });
         setLoad(false)
         return;
