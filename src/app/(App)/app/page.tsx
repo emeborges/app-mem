@@ -10,7 +10,6 @@ import { useState } from "react";
 export default function Admin() {
   const [dados, setDados] = useState<any>();
   const axiosAuth = useAxiosAuth();
-  console.log("session");
 
   const fetchMe = async () => {
     const res = await axiosAuth.get("/me");
@@ -35,7 +34,7 @@ export default function Admin() {
       },
     });
   };
-  console.log(dados);
+
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center">
       <h1 className="text-2xl mb-8">Olá, Bem vindo(a)!</h1>

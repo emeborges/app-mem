@@ -34,7 +34,7 @@ const useAxiosAuth = () => {
 
         if (error?.response?.status === 401 && !prevRequest?.sent) {
           prevRequest.sent = true;
-          console.log('entrou aqui')
+
           await refreshToken();
 
           prevRequest.headers["Authorization"] = `${userSession?.IdToken}`;
