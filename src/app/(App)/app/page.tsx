@@ -40,14 +40,14 @@ export default function Admin() {
     <div className="w-full h-screen flex flex-col items-center justify-center">
       <h1 className="text-2xl mb-8">Olá, Bem vindo(a)!</h1>
       <ButtonLogout />
-      <div>
+      {/* <div>
         <button onClick={fetchMe}>/Me</button>
       </div>
       <div>
         Botao para testar o post
         <button onClick={postData}>Pòst</button>
         <Button>Click me</Button>
-      </div>
+      </div> */}
     </div>
   );
 }

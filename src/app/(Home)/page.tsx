@@ -11,7 +11,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
-import { InfosForm } from "@/components/Forms/InfosForm";
+import { InfosForm } from "@/components/Forms/Home/InfosForm";
 import { FooterHome } from "@/components/Footer/FooterHome";
 
 export default function Home() {

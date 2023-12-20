@@ -8,8 +8,8 @@ import {
   Form,
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { InputForm } from "../Inputs/InputForm";
-import { TextInput } from "../Inputs/TextInput";
+import { InputForm } from "../../Inputs/InputForm";
+import { TextInput } from "../../Inputs/TextInput";
 
 const formSchema = z.object({
   name: z.string().min(2, {
