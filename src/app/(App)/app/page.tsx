@@ -1,6 +1,5 @@
 "use client";
 
-import { nextAuthOptions } from "@/app/(Auth)/[...nextauth]/route";
 import ButtonLogout from "@/components/ButtonLogout";
 import { Button } from "@/components/ui/button";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";

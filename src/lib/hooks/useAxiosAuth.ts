@@ -31,8 +31,7 @@ const useAxiosAuth = () => {
       (response) => response,
       async (error) => {
         const prevRequest = error?.config;
-        console.log('interceptou',prevRequest,  error, )
-        
+
         if (error?.response?.status === 401 && !prevRequest?.sent) {
           prevRequest.sent = true;
           console.log('entrou aqui')
