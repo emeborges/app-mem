@@ -1,8 +1,8 @@
 export const MenuItensHome = [
   { item: "Inicio", route: "/" },
-  { item: "Parceiros", route: "/" },
-  { item: "Quem Somos", route: "/" },
-  { item: "Fale Conosco", route: "/" },
+  { item: "Como Funciona?", route: "#funcionamento" },
+  { item: "Quem Somos", route: "#quemsomos" },
+  { item: "Fale Conosco", route: "#faleconosco" },
 ];
 
 export const ManuItensAppEstudante = [

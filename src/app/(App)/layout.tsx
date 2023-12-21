@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { nextAuthOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import { Toaster } from "@/components/ui/toaster";
+import { AuthMenuBar } from "@/components/MemNav/AuthMenuBar";
 
 
 export default async function RootLayout({
@@ -16,7 +17,10 @@ export default async function RootLayout({
   return (
     <html lang="pt-br" suppressHydrationWarning>
       <body>
-        <NextAuthSessionProvider>{children}</NextAuthSessionProvider>
+        <NextAuthSessionProvider>
+          <AuthMenuBar />
+          {children}
+          </NextAuthSessionProvider>
         <Toaster />
       </body>
     </html>

@@ -47,7 +47,7 @@ export default function Home() {
         </div>
       </StartAnimation>
 
-      <div className="py-8 md:py-8 px-2 text-xs md:text-base">
+      <div className="py-8 md:py-8 px-2 text-xs md:text-base" id="funcionamento">
         <CentralizerContainer>
           <h2 className="text-3xl font-bold m-auto">Como funciona</h2>
         </CentralizerContainer>
@@ -102,7 +102,7 @@ export default function Home() {
       </div>
 
       
-      <div className="py-8 md:py-8 px-2 text-xs md:text-base bg-[#f2f2f2]">
+      <div className="py-8 md:py-8 px-2 text-xs md:text-base bg-[#f2f2f2]" id="quemsomos">
         <CentralizerContainer
           outhers="pt-4 px-2 gap-5 items-start min-h-[20rem] h-full flex-wrap"
           justify="justify-center"
@@ -154,7 +154,7 @@ export default function Home() {
         </CentralizerContainer>
       </div>
 
-      <div className="py-8 px-2">
+      <div className="py-8 px-2" id="faleconosco">
         <CentralizerContainer outhers="w-full md:w-[40rem] flex-col">
           <h2 className="text-2xl font-bold py-4">Fale Conosco</h2>
           <InfosForm />

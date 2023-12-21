@@ -14,9 +14,16 @@ import {
 import { Separator } from "@/components/ui/separator";
 
 import { ManuItensAppEstudante, ManuItensAppMedico } from "@/utils/menuitens";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-export function UserNav() {
+interface Props {
+  name?: string;
+  email?: string;
+  scope?: string;
+}
+
+export function UserNav({ name, email, scope}: Props) {
   const router = useRouter();
 
   function getPrimeiraLetra(string: string | undefined) {
@@ -33,21 +40,29 @@ export function UserNav() {
     return palavras.map((palavra: string) => palavra[0].toLocaleUpperCase());
   }
 
+  async function logout() {
+		await signOut({
+			redirect: false
+		})
+
+		router.replace('/')
+	}
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarFallback>{getPrimeiraLetra("user?.name")}</AvatarFallback>
+            <AvatarFallback className="bg-primary">{getPrimeiraLetra(name)}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 bg-white" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">{"user?.name"}</p>
+            <p className="text-sm font-medium leading-none">{name}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              {"user?.email"}
+              {email}
             </p>
           </div>
         </DropdownMenuLabel>
@@ -59,7 +74,7 @@ export function UserNav() {
           >
             Perfil
           </DropdownMenuItem>
-          {"medic" == "medic"
+          {scope == "medic"
             ? ManuItensAppMedico.map((item) => (
                 <DropdownMenuItem
                   onClick={() => router.replace(`${item.route}`)}
@@ -81,7 +96,7 @@ export function UserNav() {
         </DropdownMenuGroup>
         <Separator />
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Sair</DropdownMenuItem>
+        <DropdownMenuItem onClick={logout}>Sair</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
