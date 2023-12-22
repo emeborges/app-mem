@@ -262,7 +262,7 @@ export function EstudanteSignup({ handleUseSelectedTab }: Props) {
                 </Button>
                 <Button
                   variant={"outline"}
-                  className="mt-2 w-full"
+                  className=" w-full mt-2 mb-4"
                   onClick={() => route.replace('/auth/signin')}
                 >
                   Voltar

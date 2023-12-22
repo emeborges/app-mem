@@ -50,7 +50,7 @@ export default function Home() {
         <Image
           src="/logo-simples-azul.png"
           height={200}
-          width={240}
+          width={200}
           alt="usp"
           className="m-auto pb-5"
         />

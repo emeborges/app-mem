@@ -53,11 +53,12 @@ export const InputDocForm = ({
       render={({ field }) => {
         return (
           <FormItem className={className}>
-            {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+            {label && <FormLabel htmlFor={name} className="text-muted-foreground">{label}</FormLabel>}
             <Input
-              name={"picture"}
+              name={name}
               type="file"
               accept={accept}
+              className="text-muted-foreground"
               onChange={async (event: ChangeEvent<HTMLInputElement>) => {
                 const { target } = event;
                 const files = target.files;

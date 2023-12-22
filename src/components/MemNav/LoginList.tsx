@@ -11,7 +11,7 @@ export const LoginList = () => {
       </Link>
       <Link
         href={"/auth/signup"}
-        className="p-2 bg-primary transition duration-500 ease-in-out hover:font-semibold  rounded m-0 text-white"
+        className="p-2 bg-primary transition duration-500 ease-in-out hover:bg-primary/80  rounded m-0 text-white"
       >
         Cadastre-se
       </Link>

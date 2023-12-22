@@ -16,9 +16,11 @@ export const AuthMenuBar = async () => {
         <Menubar>
             <CentralizerContainer>
               <div>
-                <Image src="/logo-simples-azul.png" alt="logo" height={50} width={120} />
+                <Link href={"/app"} className="cursor-pointer">
+                  <Image src="/logo-simples-azul.png" alt="logo" height={50} width={120} />
+                </Link>
               </div>
-              <div className="flex  items-center space-x-4">
+              <div className="flex  items-center space-x-4 text-muted-foreground">
                 <div className="hidden md:flex space-x-4">
    
                   {session?.scope === 'medic' ?

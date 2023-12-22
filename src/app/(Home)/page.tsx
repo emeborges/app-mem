@@ -56,7 +56,7 @@ export default function Home() {
             <Label
               htmlFor="airplane-mode"
               className={`text-lg ${
-                selected ? "text-gray-600" : "text-secondary"
+                selected ? "muted-foreground" : "text-secondary"
               }`}
             >
               Estudante
@@ -70,7 +70,7 @@ export default function Home() {
             <Label
               htmlFor="airplane-mode"
               className={`text-lg ${
-                selected ? "text-primary" : "text-gray-600"
+                selected ? "text-primary" : "muted-foreground"
               }`}
             >
               Médico
@@ -83,7 +83,7 @@ export default function Home() {
         >
           <Card className="border rounded-xl shadow-md bg-background p-4">
             <div className="flex-col ">
-              <h3 className="text-xl">{selected ? "Médico" : "Estudante"}</h3>
+              <h3 className="text-xl text-muted-foreground">{selected ? "Médico" : "Estudante"}</h3>
               {StepsMedic.map((i, index) => (
                 <div key={index} className="flex items-center pt-6 ml-2">
                   <span
@@ -93,7 +93,7 @@ export default function Home() {
                   >
                     {i.item}.
                   </span>{" "}
-                  <h4 className="px-2">{i.texto}</h4>
+                  <h4 className="px-2 text-muted-foreground">{i.texto}</h4>
                 </div>
               ))}
             </div>
@@ -111,7 +111,7 @@ export default function Home() {
             <div>
               <div className="flex gap-2">
                 <h2 className="text-2xl font-bold ">Quem somos </h2>
-                <Separator className="my-4 bg-black w-[80px]" />
+                <Separator className="my-4 bg-muted-foreground w-[80px]" />
               </div>
             </div>
             <div>
@@ -127,23 +127,23 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div className="max-w-[100%] md:max-w-[49%] w-full  flex flex-col items-end md:items-start justify-around min-h-[15rem] h-full">
+          <div className="max-w-[100%] md:max-w-[49%] w-full  flex flex-col items-end md:items-end justify-around min-h-[15rem] h-full">
             <div className="w-full flex justify-end">
               <div className="flex gap-2 ">
-                <Separator className="my-4 bg-black w-[80px]" />
+                <Separator className="my-4 bg-muted-foreground bg-black w-[80px]" />
                 <h2 className="text-2xl font-bold ">Parceiros </h2>
               </div>
             </div>
-            <div className="flex flex-col justify-around items-center gap-3 w-full  h-full">
+            <div className="flex flex-wrap justify-end  items-center gap-3 w-full max-w-[10rem] h-full">
               <Image
-                src="/sca.jpg"
+                src="/sca.png"
                 height={100}
                 width={140}
                 alt="usp"
                 className="rounded-xl"
               />
               <Image
-                src="/usp.png"
+                src="/usp-removebg-preview.png"
                 height={100}
                 width={140}
                 alt="usp"

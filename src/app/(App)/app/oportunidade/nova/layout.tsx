@@ -1,5 +1,5 @@
 export const metadata = {
-  title: "Entrar | MeuEstagioMed",
+  title: "Nova Oportunidade | MeuEstagioMed",
 };
 export default function ClientLayout({
   children,

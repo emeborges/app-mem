@@ -256,7 +256,7 @@ export function MedicoSignup({ handleUseSelectedTab }: Props) {
                 </Button>
                 <Button
                   variant={"outline"}
-                  className="mt-2 w-full"
+                  className="mt-2 mb-4 w-full"
                   onClick={() => route.replace("/auth/signin")}
                 >
                   Voltar

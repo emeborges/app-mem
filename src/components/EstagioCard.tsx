@@ -30,7 +30,7 @@ export function EstagioCard({
   return (
     <Card
       className={cn(
-        "w-full sm:min-w-[380px] md:min-w-[314px] sm:max-w-[380px] md:max-w-[314px]  flex flex-col justify-between"
+        "w-full sm:min-w-[380px] md:min-w-[314px] sm:max-w-[380px] md:max-w-[314px]  flex flex-col justify-between text-muted-foreground"
       )}
     >
       {/* {situation === "selected" && (
