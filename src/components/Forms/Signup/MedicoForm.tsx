@@ -12,7 +12,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import '../../react-datepicker.css'
 import { formatISO, sub } from "date-fns";
-import { statesBR } from "@/utils/menuitens";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { FileRequestI } from "@/types/geralsI";
@@ -24,6 +23,7 @@ import { InputDateForm } from "@/components/Inputs/InputDateForm";
 import { InputSelectForm } from "@/components/Inputs/InputSelectForm";
 import { InputDocForm } from "@/components/Inputs/InputDocForm";
 import { InputCheckboxForm } from "@/components/Inputs/InputCheckBoxForm";
+import { Estados } from "@/utils/options";
 
 const REG_Mai =
   /(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g;
@@ -62,7 +62,7 @@ const formSchema = z
       .string({ required_error: "É necessário uma senha" })
       .min(8, { message: "Sua senha é muito curta" })
       .regex(new RegExp(REG_Mai), {
-        message: "A senha deve conter pelo menos um caractere maiúsculo",
+        message: "A senha deve conter pelo menos um caractere maiúsculo, um caractere especial e um número",
       }),
     confirmPassword: z
       .string({ required_error: "É necessário uma senha" })
@@ -201,7 +201,7 @@ export function MedicoSignup({ handleUseSelectedTab }: Props) {
                     placeholder="Estado do CRM"
                     name={"federative_unit_professional_certificate"}
                     className="w-full max-w-[50%]"
-                    itens={statesBR}
+                    itens={Estados}
                   />
                 </div>
 

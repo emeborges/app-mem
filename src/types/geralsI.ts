@@ -96,8 +96,8 @@ export interface FileRequestI {
     fk_university_residency?: string;
     university_residency?: UniversityI;
     specialities?: SpecialityI[];
-    locations: LocationsI[];
-    openings?: any
+    locations?: LocationsI[];
+    openings?: OpeningI[];
   }
   
   export interface StudentI {

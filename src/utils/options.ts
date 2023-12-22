@@ -1,3 +1,5 @@
+import { TypesI } from "@/types/geralsI";
+
 export const Semestres = [
     { label: "1", value: "1" },
     { label: "2", value: "2" },
@@ -28,3 +30,14 @@ export const Semestres = [
     { label: "Pr", value: "Pr" },
     { label: "Sp", value: "Sp" },
   ]
+
+  export const enumTypeObj = (strings: string[]): TypesI[] => {
+    const novoObj = strings.map((x, idx) => {return({id: idx.toString(), name: x})})
+    
+    console.log('abc', strings, novoObj)
+    return novoObj
+  }
+
+  export const optionsSelects = (arr: any[], chaveValue: string, chaveLabel: string) => {
+    return arr.map(x => ({'value': x[chaveValue], 'label': x[chaveLabel] }))
+  }

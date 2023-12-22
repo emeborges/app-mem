@@ -69,7 +69,7 @@ const formSchema = z
       .string({ required_error: "É necessário uma senha" })
       .min(8, { message: "Sua senha é muito curta" })
       .regex(new RegExp(REG_Mai), {
-        message: "A senha deve conter pelo menos um caractere maiúsculo",
+        message: "A senha deve conter pelo menos um caractere maiúsculo, um caractere especial e um número",
       }),
     confirmPassword: z
       .string({ required_error: "É necessário uma senha" })
