@@ -34,7 +34,7 @@ export function Oportunity({ session }: Props) {
     setLoad(false);
   }
 
-  console.log('load', load);
+  console.log("load", load);
 
   useEffect(() => {
     setLoad(true);
@@ -63,7 +63,9 @@ export function Oportunity({ session }: Props) {
                   </Link>
                 )}
             </div>
-            {vagaDetails?.status == "active" ? (
+            {vagaDetails?.status == "canceled" ? (
+              <Badge variant={"destructive"}>Vaga Cancelada</Badge>
+            ) : vagaDetails?.status == "active" ? (
               <Badge>Inscrições Abertas</Badge>
             ) : (
               <Badge>Inscrições Fechadas</Badge>

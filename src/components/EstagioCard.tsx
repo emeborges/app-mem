@@ -116,7 +116,9 @@ export function EstagioCard({ opening, userType }: Props) {
                 Status das Inscrições:
               </p>
               <div>
-                {opening.status === "active" ? (
+                {opening.status === "canceled" ? 
+                 <Badge variant={"destructive"}>Cancelada</Badge> :
+                opening.status === "active" ? (
                   <Badge>Abertas</Badge>
                 ) : (
                   <Badge variant={"outline"}>Fechadas</Badge>
