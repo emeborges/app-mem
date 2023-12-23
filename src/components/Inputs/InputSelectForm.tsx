@@ -31,7 +31,7 @@ export const InputSelectForm = ({
     <FormField
       control={formControl}
       name={name}
-      render={({ field }) => {        
+      render={({ field }) => {       
         return(
         <FormItem className={className}>
           {label && <FormLabel htmlFor={name}>{label}</FormLabel>}

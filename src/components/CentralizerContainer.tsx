@@ -18,7 +18,7 @@ export const CentralizerContainer = ({
   return (
     <div
       className={`
-        max-w-screen-xl m-auto w-full h-full flex items-center  text-muted-foreground
+        max-w-screen-xl m-auto w-full h-full flex text-muted-foreground
         ${justify ? justify : "justify-between"}
         ${align ? align : "items-center"}
         ${outhers ?? outhers}

@@ -18,13 +18,10 @@ import { Badge } from "./ui/badge";
 
 interface Props {
   opening: OpeningI;
-  userType?: string ;
+  userType?: string;
 }
 
-export function EstagioCard({
-  opening,
-  userType,
-}: Props) {
+export function EstagioCard({ opening, userType }: Props) {
   const router = useRouter();
 
   return (
@@ -79,7 +76,9 @@ export function EstagioCard({
             <p className="text-sm font-bold leading-none">Localização</p>
             <div>
               <p className="text-lg  text-muted-foreground">
-                {opening.location?.address?.neighbourhood} - {opening.location?.address?.city} - {opening.location?.address?.federative_unit_st}
+                {opening.location?.address?.neighbourhood} -{" "}
+                {opening.location?.address?.city} -{" "}
+                {opening.location?.address?.federative_unit_st}
               </p>
             </div>
           </div>
@@ -96,7 +95,8 @@ export function EstagioCard({
               <p className="text-sm font-bold leading-none">De</p>
               <div>
                 <p className="text-lg  text-muted-foreground">
-                  {opening.start_date && format(new Date(opening.start_date), "dd/MM/yyyy")}
+                  {opening.start_date &&
+                    format(new Date(opening.start_date), "dd/MM/yyyy")}
                 </p>
               </div>
             </div>
@@ -104,7 +104,8 @@ export function EstagioCard({
               <p className="text-sm font-bold leading-none">Ate</p>
               <div>
                 <p className="text-lg  text-muted-foreground">
-                  {opening.end_date && format(new Date(opening.end_date), "dd/MM/yyyy")}
+                  {opening.end_date &&
+                    format(new Date(opening.end_date), "dd/MM/yyyy")}
                 </p>
               </div>
             </div>
@@ -115,19 +116,21 @@ export function EstagioCard({
                 Status das Inscrições:
               </p>
               <div>
-                  {opening.status === "active" ? (
-                    <Badge>Abertas</Badge>
-                  ) : (
-                    <Badge variant={"outline"}>Fechadas</Badge>
-                  )}
+                {opening.status === "active" ? (
+                  <Badge>Abertas</Badge>
+                ) : (
+                  <Badge variant={"outline"}>Fechadas</Badge>
+                )}
               </div>
             </div>
             <div className="w-[49%]">
-              <p className="text-sm font-bold leading-none">
-                Inscrições Até:
-              </p>
+              <p className="text-sm font-bold leading-none">Inscrições Até:</p>
               <div>
-              <Badge variant={'outline'}> {opening.due_date && format(new Date(opening.due_date), "dd/MM/yyyy")}</Badge>
+                <Badge variant={"outline"}>
+                  {" "}
+                  {opening.due_date &&
+                    format(new Date(opening.due_date), "dd/MM/yyyy")}
+                </Badge>
               </div>
             </div>
           </div>
@@ -136,7 +139,7 @@ export function EstagioCard({
       <CardFooter>
         <Button
           className="w-full"
-          // onClick={() => router.push(`/app/oportunidade/${id}`)}
+          onClick={() => router.push(`/app/oportunidade/${opening.id}`)}
         >
           Ver mais informações
         </Button>

@@ -36,7 +36,7 @@ interface Props {
   className?: string;
   maxItens?: number;
   maxItensLabel?: boolean;
-  badgeType?: 'destructive'
+  badgeType?: "destructive";
 }
 export const InputMultiSelectForm = ({
   formControl,
@@ -48,7 +48,7 @@ export const InputMultiSelectForm = ({
   className,
   maxItens,
   maxItensLabel,
-  badgeType
+  badgeType,
 }: Props) => {
   const [open, setOpen] = useState(false);
 
@@ -57,25 +57,32 @@ export const InputMultiSelectForm = ({
       control={formControl}
       name={name}
       render={({ field }) => {
-
+        console.log(name, field.value);
         const validation = (obj: OptionsProps) => {
-            return field.value?.find(
-              (x: OptionsProps) => x.value === obj.value
-            );
+          if (field.value) {
+            if (field.value.length) {
+              return field.value?.find(
+                (x: OptionsProps) =>
+                  x.value === obj.value || x.label === obj.label
+              );
+            }
+          }
         };
 
         return (
-          <FormItem className={cn(className, 'h-full')}>
+          <FormItem className={cn(className, "h-full")}>
             {label && (
               <FormLabel htmlFor={name} className="p-0 m-0">
-                {label} {maxItensLabel && `(${field.value ? field.value.length : 0}/${maxItens})`}
+                {label}{" "}
+                {maxItensLabel &&
+                  `(${field.value ? field.value.length : 0}/${maxItens})`}
               </FormLabel>
             )}
 
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger
                 asChild
-                className="w-full m-0 flex-wrap h-full gap-2"
+                className="w-full m-0 flex-wrap h-full min-h-[100%] gap-2"
               >
                 <Button
                   variant="outline"
@@ -86,9 +93,12 @@ export const InputMultiSelectForm = ({
                   <div className="max-w-[80%] flex flex-wrap gap-2">
                     {field.value?.length > 0 ? (
                       field.value?.map((value: any) => {
-    
                         return (
-                          <Badge variant={badgeType} key={value.value} className="mr-1">
+                          <Badge
+                            variant={badgeType}
+                            key={value.value}
+                            className="mr-1"
+                          >
                             {value.label}
                           </Badge>
                         );
@@ -113,31 +123,68 @@ export const InputMultiSelectForm = ({
                     {itens?.map((framework) => (
                       <CommandItem
                         key={framework.label}
-                        onSelect={(currentValueLow:any) => {
-                          console.log('ta aqui o valor', label,currentValueLow)
+                        onSelect={(currentValueLow: any) => {
+                          console.log(
+                            "ta aqui o valor",
+                            label,
+                            currentValueLow
+                          );
                           const currentValue =
                             currentValueLow.toLocaleUpperCase();
+
                           const validacao = field?.value
-                            ? field.value?.find(
-                                (arr: any) =>
-                                  arr.label.toLocaleUpperCase() == currentValue
-                              )
+                            ? field.value?.find((arr: any) => {
+                                const validacao = typeof arr.label;
+
+                                if (validacao == "string") {
+                                  return (
+                                    arr.label.toLocaleUpperCase() ==
+                                    currentValue
+                                  );
+                                } else {
+                                  return arr.label == currentValue;
+                                }
+                              })
                             : null;
 
-                          
-
                           if (validacao) {
-                            const newValues = field.value?.filter(
-                              (el: any) =>
-                                el.label.toLocaleUpperCase() !== currentValue
-                            );
+                            const newValues = field.value?.filter((el: any) => {
+                              const validacao = typeof el.label;
+
+                              if (validacao == "string") {
+                                return (
+                                  el.label.toLocaleUpperCase() != currentValue
+                                );
+                              } else {
+                                return el.label != currentValue;
+                              }
+                            });
 
                             field.onChange(newValues);
                           } else {
-                            
-                            if(maxItens){
-                              if(field?.value?.length >= maxItens){
-                                return
+                            if (maxItens) {
+                              if (field?.value?.length >= maxItens) {
+                                if (field.value.lenght) {
+                                  const novoObj = field.value.shift();
+
+                                  const objSelecionado = itens.find(
+                                    (arr) =>
+                                      arr.label.toLocaleUpperCase() ==
+                                      currentValue
+                                  );
+
+                                  novoObj.push(objSelecionado);
+                                  return;
+                                } else {
+                                  const objSelecionado = itens.find(
+                                    (arr) =>
+                                      arr.label.toLocaleUpperCase() ==
+                                      currentValue
+                                  );
+
+                                  field.onChange([objSelecionado]);
+                                  return;
+                                }
                               }
                             }
 
@@ -146,7 +193,9 @@ export const InputMultiSelectForm = ({
                                 arr.label.toLocaleUpperCase() == currentValue
                             );
                             const novoObj = field.value ? field.value : [];
+
                             novoObj.push(objSelecionado);
+
                             field.onChange(novoObj);
                           }
 
@@ -169,7 +218,8 @@ export const InputMultiSelectForm = ({
             {description && <FormDescription>{description}</FormDescription>}
             <FormMessage />
           </FormItem>
-        );}}
+        );
+      }}
     />
   );
 };

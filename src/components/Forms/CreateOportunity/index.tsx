@@ -173,33 +173,58 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
   });
 
   const onSubmit = (values: any) => {
-    console.log(values);
     setLoading(true);
+
     const obj = {
       opening: {
         ...values,
         name: `Estágio em ${values.speciality}`,
       },
     };
-    return axiosAuth
-      .post("/opening", obj)
-      .then((e) => {
-        toast({
-          title: "Sucesso!",
-          description:
-            "Excelente, a oportunidade foi editada! Você será redirecionado em 5 segundos",
-        });
 
-        return setTimeout(() => router.push("/app/"), 5000);
-      })
-      .catch((e) => {
-        toast({
-          title: "Erro!",
-          description: "Contate o suporte e tente novamente mais tarde!",
+    if (initialValues) {
+      // delete obj.opening.location;
+
+      return axiosAuth
+        .patch(`/opening/${initialValues.id}`, obj)
+        .then((e) => {
+          toast({
+            title: "Sucesso!",
+            description:
+              "Excelente, a oportunidade foi editada! Você será redirecionado em 5 segundos",
+          });
+
+          return setTimeout(() => router.push("/app/"), 5000);
+        })
+        .catch((e) => {
+          toast({
+            title: "Erro!",
+            description: "Contate o suporte e tente novamente mais tarde!",
+          });
+          setLoading(false);
+          // return setTimeout(() => router.push("/app/"), 5000);
         });
-        setLoading(false);
-        // return setTimeout(() => router.push("/app/"), 5000);
-      });
+    } else {
+      return axiosAuth
+        .post("/opening", obj)
+        .then((e) => {
+          toast({
+            title: "Sucesso!",
+            description:
+              "Excelente, a oportunidade foi criada! Você será redirecionado em 5 segundos",
+          });
+
+          return setTimeout(() => router.push("/app/"), 5000);
+        })
+        .catch((e) => {
+          toast({
+            title: "Erro!",
+            description: "Contate o suporte e tente novamente mais tarde!",
+          });
+          setLoading(false);
+          // return setTimeout(() => router.push("/app/"), 5000);
+        });
+    }
   };
 
   async function getDados() {
@@ -209,15 +234,12 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
         setModalities(enumTypeObj(e.data.modalities));
       }),
       axiosAuth.get("/activities").then((e) => {
-        console.log("ACTIVITES ");
         setActivities(enumTypeObj(e.data));
       }),
       axiosAuth.get("/specialities").then((e) => {
-        console.log("SPECIALITES ");
         setSpecialities(enumTypeObj(e.data));
       }),
       axiosAuth.get("/me").then((e) => {
-        console.log("me ");
         setMe(e.data);
       }),
     ]);
@@ -245,17 +267,17 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
         start_date: initialValues.start_date,
         school_term_min: [
           {
-            value: initialValues.school_term_min,
-            label: initialValues.school_term_min,
+            label: initialValues.school_term_min?.toString(),
+            value: initialValues.school_term_min?.toString(),
           },
         ],
         school_term_max: [
           {
-            value: initialValues.school_term_max,
-            label: initialValues.school_term_max,
+            label: initialValues.school_term_max?.toString(),
+            value: initialValues.school_term_max?.toString(),
           },
         ],
-        total_hours: initialValues.total_hours,
+        total_hours: `${initialValues.total_hours}`,
         description: initialValues.description,
       });
       setNovoEndereco(false);
@@ -270,8 +292,8 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-4 w-full"
         >
-          <div className="px-4 flex flex-col gap-2">
-            <div className="flex gap-2">
+          <div className="px-4 flex flex-col gap-2 flex-wrap">
+            <div className="flex flex-wrap gap-2">
               <p>Em qual local será realizado?</p>
               <div className="flex items-center space-x-2">
                 <Switch
@@ -296,14 +318,27 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
             </div>
             {novoEndereco ? (
               <div>
-                <div className="m-w-[10rem]">
+                <div className="m-w-[200px] w-full">
                   <InputForm
                     label="Qual será o apelido do local? "
+                    className="w-full"
                     formControl={form.control}
                     name={`location.name`}
                   />
                 </div>
-                <div className="flex gap-2">
+                <div className="py-1 flex flex-col gap-2 max-w-[440px]">
+                  <InputMultiSelectForm
+                    formControl={form.control}
+                    label={"Especialidade(s) do Local"}
+                    placeholder="Selecione"
+                    name={`location.specialities`}
+                    className="w-full"
+                    itens={
+                      specialities && optionsSelects(specialities, "id", "name")
+                    }
+                  />
+                </div>
+                <div className="py-1 flex gap-2 flex-wrap">
                   <InputSelectForm
                     formControl={form.control}
                     placeholder="Selecione"
@@ -315,25 +350,15 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
                   <InputSelectForm
                     formControl={form.control}
                     placeholder="Selecione"
-                    label="Modalidade "
+                    label="Modalidade do Local"
                     name={`location.modality`}
                     className="max-w-[400px] min-w-[10rem]"
                     itens={
                       modalities && optionsSelects(modalities, "id", "name")
                     }
                   />
-                  <InputMultiSelectForm
-                    formControl={form.control}
-                    label={"Especialidade(s)"}
-                    placeholder="Selecione"
-                    name={`location.specialities`}
-                    className="w-full"
-                    itens={
-                      specialities && optionsSelects(specialities, "id", "name")
-                    }
-                  />
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-wrap">
                   <InputForm
                     formControl={form.control}
                     label="Rua"
@@ -355,7 +380,8 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
                     name={`location.address.neighbourhood`}
                   />
                 </div>
-                <div className="flex gap-2">
+
+                <div className="flex gap-2 flex-wrap">
                   <InputMaskForm
                     formControl={form.control}
                     name={"location.address.postal_code"}
@@ -436,16 +462,14 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
               name={"end_date"}
             />
           </div>
-          <div className="px-4 flex flex gap-3">
+          <div className="px-4 flex flex-wrap  gap-3">
             <InputMultiSelectForm
               formControl={form.control}
               label={"Semestre Mínimo"}
               placeholder="Selecione"
               name={`school_term_min`}
-              className="max-w-500px"
               maxItens={1}
-              maxItensLabel={true}
-              badgeType="destructive"
+              className="max-w-[200px]"
               itens={optionsSelects(Semestres, "value", "label")}
             />
 
@@ -454,10 +478,8 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
               label={"Semestre Máximo"}
               placeholder="Selecione"
               name={`school_term_max`}
-              className="max-w-500px"
+              className="max-w-[200px]"
               maxItens={1}
-              maxItensLabel={true}
-              badgeType="destructive"
               itens={optionsSelects(Semestres, "value", "label")}
             />
 
@@ -482,7 +504,7 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
           </div>
           <Button type="submit" disabled={loading}>
             {" "}
-            Criar Estágio{" "}
+            {initialValues ? 'Editar Estágio' : 'Criar Estágio'}
             {loading && <Loader2 className="mr-2 ml-4 h-4 w-4 animate-spin" />}
           </Button>
         </form>
