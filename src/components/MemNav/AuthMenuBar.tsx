@@ -17,7 +17,7 @@ export const AuthMenuBar = async () => {
             <CentralizerContainer>
               <div>
                 <Link href={"/app"} className="cursor-pointer">
-                  <Image src="/logo-simples-azul.png" alt="logo" height={50} width={120} />
+                  <Image src="/MEM_BLUE.svg" alt="logo" height={50} width={120} />
                 </Link>
               </div>
               <div className="flex  items-center space-x-4 text-muted-foreground">

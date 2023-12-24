@@ -32,7 +32,7 @@ export default function HomeRootLayout({
                 className=" transition duration-500 ease-in-out border-b-4 border-transparent hover:border-primary"
               >
                 <Image
-                  src="/logo-simples-azul.png"
+                  src="/MEM_BLUE.svg"
                   alt="logo"
                   height={50}
                   width={120}

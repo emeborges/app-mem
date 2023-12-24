@@ -183,7 +183,7 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
     };
 
     if (initialValues) {
-      // delete obj.opening.location;
+      delete obj.opening.location;
 
       return axiosAuth
         .patch(`/opening/${initialValues.id}`, obj)

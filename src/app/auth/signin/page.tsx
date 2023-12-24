@@ -48,7 +48,7 @@ export default function Home() {
     <div className="h-screen flex align-center " suppressHydrationWarning>
       <div className="m-auto">
         <Image
-          src="/logo-simples-azul.png"
+          src="/MEM_BLUE.svg"
           height={200}
           width={200}
           alt="usp"
