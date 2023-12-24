@@ -46,7 +46,7 @@ export const DetalhesMedico = ({ details }: props) => {
           (details?.status == "finished" ? (
             <div> </div>
           ) : (
-            <ConfigsOportunity id={details?.id} status={details?.status}/>
+            <ConfigsOportunity id={details?.id} status={details?.status} startDate={details?.start_date} />
           ))}
       </div>
 

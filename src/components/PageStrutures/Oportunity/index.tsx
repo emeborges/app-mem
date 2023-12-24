@@ -21,7 +21,6 @@ export function Oportunity({ session }: Props) {
   const [load, setLoad] = useState(true);
   const axiosAuth = useAxiosAuth();
   const router = useRouter();
-  console.log(vagaDetails);
 
   async function getDados() {
     await axiosAuth
@@ -34,11 +33,11 @@ export function Oportunity({ session }: Props) {
     setLoad(false);
   }
 
-  console.log("load", load);
 
   useEffect(() => {
     setLoad(true);
     setTimeout(getDados, 2000);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -68,7 +67,7 @@ export function Oportunity({ session }: Props) {
             ) : vagaDetails?.status == "active" ? (
               <Badge>Inscrições Abertas</Badge>
             ) : (
-              <Badge>Inscrições Fechadas</Badge>
+              <Badge variant={"outline"}>Inscrições Fechadas</Badge>
             )}
 
             {vagaDetails?.status == "finished" && (

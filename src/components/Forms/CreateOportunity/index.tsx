@@ -139,7 +139,9 @@ const formSchema = z
         required_error: "Quantidade de horas é necessário",
       })
       .transform((x) => Number(x)),
-    description: z.string().optional().nullable(),
+    description: z.string({
+      required_error: "Uma Descrição é necessária"
+    }),
   })
   .refine(
     (data) => Number(data.school_term_min) <= Number(data.school_term_max),
@@ -194,7 +196,7 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
               "Excelente, a oportunidade foi editada! Você será redirecionado em 5 segundos",
           });
 
-          return setTimeout(() => router.push("/app/"), 5000);
+          return setTimeout(() => router.push(`/app/oportunidade/${initialValues.id}`), 5000);
         })
         .catch((e) => {
           toast({
