@@ -14,6 +14,9 @@ const useAxiosAuth = () => {
       (config) => {
         
         if (!config.headers["Authorization"]) {
+          if(userSession?.IdToken === undefined)  setTimeout(() => {return}, 2000)
+
+          
           config.headers[
             "Authorization"
           ] = `${userSession?.IdToken}`;

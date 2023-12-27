@@ -17,11 +17,13 @@ export const useRefreshToken = () => {
         },
       }
     );
+    
 
     if (session) {
       session.AcessToken = res.data.AccessToken;
       session.IdToken = res.data.IdToken;
     } else signIn();
   };
+
   return refreshToken;
 };

@@ -89,6 +89,7 @@ export interface FileRequestI {
     email?: string;
     usage_terms?: string;
     is_active?: boolean;
+    scope?: 'medic'
     fk_address?: string;
     address?: AddressI;
     fk_university_graduation?: string;
@@ -116,6 +117,7 @@ export interface FileRequestI {
     fk_address?: string;
     address?: AddressI;
     fk_university?: string;
+    scope?: 'student'
     university?: UniversityI;
     specialities?: SpecialityI[];
     curriculums?: CurriculumObj[];

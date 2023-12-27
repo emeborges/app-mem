@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
+import { getPrimeiraLetra } from "@/utils/functions";
 
 import { ManuItensAppEstudante, ManuItensAppMedico } from "@/utils/menuitens";
 import { signOut } from "next-auth/react";
@@ -26,19 +27,7 @@ interface Props {
 export function UserNav({ name, email, scope}: Props) {
   const router = useRouter();
 
-  function getPrimeiraLetra(string: string | undefined) {
-    if (string == undefined) {
-      return;
-    }
-    // Converte a string para letras minúsculas
-    string = string.toLowerCase();
-
-    // Divide a string em palavras
-    const palavras = string.split(" ");
-
-    // Retorna um array com as primeiras letras das palavras
-    return palavras.map((palavra: string) => palavra[0].toLocaleUpperCase());
-  }
+  
 
   async function logout() {
 		await signOut({
