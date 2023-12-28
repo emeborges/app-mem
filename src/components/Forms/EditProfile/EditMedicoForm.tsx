@@ -13,7 +13,7 @@ import "../../react-datepicker.css";
 import { formatISO, sub } from "date-fns";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
-import {  MedicI } from "@/types/geralsI";
+import { MedicI } from "@/types/geralsI";
 import { InputForm } from "@/components/Inputs/InputForm";
 import { InputMaskForm } from "@/components/Inputs/InputMaskForm";
 import { InputDateForm } from "@/components/Inputs/InputDateForm";
@@ -111,7 +111,13 @@ export function EditMedicoForm({ initialValues, height }: Props) {
     axiosAuth
       .patch("/medic", { medic: newValues })
       .then((e) => {
-        route.push('/app')
+        toast({
+          title: "Sucesso!",
+          description:
+            "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
+        });
+
+        return setTimeout(() => route.push("/app"), 3000);
       })
       .catch((e) => {
         toast({
@@ -119,8 +125,6 @@ export function EditMedicoForm({ initialValues, height }: Props) {
           description: "Algo deu errado, por gentileza, tente mais tarde.",
         });
       });
-
-    
   };
 
   useEffect(() => {
@@ -137,6 +141,7 @@ export function EditMedicoForm({ initialValues, height }: Props) {
         federative_unit_professional_certificate:
           initialValues?.federative_unit_professional_certificate,
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

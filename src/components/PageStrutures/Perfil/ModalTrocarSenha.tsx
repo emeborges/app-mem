@@ -17,6 +17,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { InputForm } from "@/components/Inputs/InputForm";
+import { Loader2 } from "lucide-react";
 
 const REG_Mai =
   /(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g;
@@ -54,12 +55,33 @@ export function TrocarSenha() {
   const axiosAuth = useAxiosAuth();
 
   const onSubmit = async (values: any) => {
+    setLoad(true)
     const newValues = {
-        new_password: values.newPassword,
-        password: values.password
-    }
+      new_password: values.newPassword,
+      password: values.password,
+    };
 
-    axiosAuth.post('/auth/password/change', newValues).then(e => console.log(e)).catch(e => console.log(e))
+    axiosAuth
+      .post("/auth/password/change", newValues)
+      .then((e) => {
+        toast({
+          title: "Sucesso!",
+          description:
+            "Senha altarada com sucesso! Você será redirecionado em 3 segundos.",
+        });
+
+        return setTimeout(() => route.replace('/app'), 3000)
+      })
+      .catch((e) => {
+        if(e.response.data.Message === 'An error occurred (NotAuthorizedException) when calling the ChangePassword operation: Incorrect username or password.'){
+          toast({
+            title: "Erro!",
+            description:
+              "A senha atual esta incorreta, revise-a e tente novamente",
+          });
+          setLoad(false)
+        }
+      });
   };
 
   return (
@@ -106,7 +128,7 @@ export function TrocarSenha() {
                 type="password"
               />
               <DialogFooter>
-                <Button type="submit">Save changes</Button>
+                <Button type="submit" disabled={load}>{load ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Salvar senha'}</Button>
               </DialogFooter>
             </form>
           </Form>
