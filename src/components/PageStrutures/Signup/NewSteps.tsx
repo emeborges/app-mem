@@ -23,7 +23,6 @@ export default function NewSteps() {
 
   useEffect(() => {
     handleUseSelectedTab(tela);
-
   }, [tela]);
 
   function handleUseSelectedTab(number: number) {
@@ -42,11 +41,10 @@ export default function NewSteps() {
       label: "Preencha seus dados",
       component:
         userType === 1 ? (
-          <EstudanteSignup
-            handleUseSelectedTab={handleChanceStep}
-          />
+          <EstudanteSignup handleUseSelectedTab={handleChanceStep} />
         ) : (
           <MedicoSignup
+            height={"300px"}
             handleUseSelectedTab={handleChanceStep}
           />
         ),

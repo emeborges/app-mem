@@ -8,8 +8,9 @@ import { MedicI, StudentI } from "@/types/geralsI";
 import { formatarCPF, getPrimeiraLetra } from "@/utils/functions";
 import { format } from "date-fns";
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { TrocarSenha } from "./ModalTrocarSenha";
 
 interface Props {
   scope?: string;
@@ -17,6 +18,7 @@ interface Props {
 
 export const Perfil = ({ scope }: Props) => {
   const axiosAuth = useAxiosAuth();
+  const route = useRouter()
   const [load, setLoad] = useState(true);
   const [me, setMe] = useState<MedicI & StudentI>();
 
@@ -115,8 +117,8 @@ export const Perfil = ({ scope }: Props) => {
             </div>
           )}
           <div className="flex flex-col w-full gap-2 items-center justify-center">
-            <Button className="w-[15rem]">Editar Perfil</Button>
-            <Button className="w-[15rem]" variant={"outline"}>Trocar Senha</Button>
+            <Button className="w-[15rem]" onClick={() => route.push('/app/perfil/editar')}>Editar Perfil</Button>
+            <TrocarSenha />
           </div>
         </div>
       )}

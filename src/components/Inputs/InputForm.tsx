@@ -10,6 +10,7 @@ interface Props {
   placeholder?: string;
   description?: string;
   className?: string;
+  disable?: boolean
 }
 export const InputForm = ({
   formControl,
@@ -19,6 +20,7 @@ export const InputForm = ({
   placeholder,
   description,
   className,
+  disable
 }: Props) => {
 
   return (
@@ -27,12 +29,13 @@ export const InputForm = ({
       name={name}
       render={({ field }) => (
         <FormItem className={className}>
-          {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+          {label && <FormLabel className="text-muted-foreground" htmlFor={name}>{label}</FormLabel>}
           <FormControl>
             <Input
               type={type ? type : "text"}
               placeholder={placeholder && placeholder}
               {...field}
+              disabled={disable}
             />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
