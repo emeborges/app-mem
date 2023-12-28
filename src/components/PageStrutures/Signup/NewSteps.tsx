@@ -44,7 +44,6 @@ export default function NewSteps() {
           <EstudanteSignup handleUseSelectedTab={handleChanceStep} />
         ) : (
           <MedicoSignup
-            height={"300px"}
             handleUseSelectedTab={handleChanceStep}
           />
         ),
