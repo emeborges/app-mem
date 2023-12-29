@@ -28,3 +28,9 @@ export function getPrimeiraLetra(string: string | undefined) {
   // Retorna um array com as primeiras letras das palavras
   return palavras.map((palavra: string) => palavra[0].toLocaleUpperCase());
 }
+
+export function maior(stringTest?: any, stringReferencia?: any) {
+
+  return Number(stringTest) < Number(stringReferencia)
+
+}

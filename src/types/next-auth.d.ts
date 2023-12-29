@@ -11,5 +11,6 @@ declare module "next-auth" {
     picture?: string;
     id: string;
     email: string;
+    school_term: string;
   }
 }

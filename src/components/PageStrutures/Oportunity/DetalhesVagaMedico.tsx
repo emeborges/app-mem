@@ -25,11 +25,11 @@ import {
 import { ModalDetalhesEstudante } from "./ModalDetalhesEstudante";
 import { ConfigsOportunity } from "./ConfigOportunity";
 
-interface props {
+interface Props {
   details?: OpeningI;
 }
 
-export const DetalhesMedico = ({ details }: props) => {
+export const DetalhesMedico = ({ details }: Props) => {
   const route = useRouter();
   const [send, setSend] = useState(false);
 

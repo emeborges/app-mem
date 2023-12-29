@@ -10,6 +10,9 @@ import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { DetalhesMedico } from "./DetalhesVagaMedico";
+import { Button } from "@/components/ui/button";
+import { ModalConfirmSelect } from "./ModalConfirmSelect";
+import { maior } from "@/utils/functions";
 
 interface Props {
   session?: Session | undefined | null;
@@ -33,11 +36,10 @@ export function Oportunity({ session }: Props) {
     setLoad(false);
   }
 
-
   useEffect(() => {
     setLoad(true);
     setTimeout(getDados, 2000);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -146,7 +148,9 @@ export function Oportunity({ session }: Props) {
           {session?.scope === "medic" ? (
             <DetalhesMedico details={vagaDetails} />
           ) : (
-            <div></div>
+            <div>
+              {vagaDetails?.status === "active" && <ModalConfirmSelect />}
+            </div>
           )}
         </div>
       )}

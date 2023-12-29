@@ -9,7 +9,7 @@ import { Form } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { formatISO, sub } from "date-fns";
 import '../../react-datepicker.css'
@@ -19,7 +19,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { InputMaskForm } from "@/components/Inputs/InputMaskForm";
 import { InputDateForm } from "@/components/Inputs/InputDateForm";
 import { InputSelectForm } from "../../Inputs/InputSelectForm";
-import { Semestres } from "@/utils/options";
+import { Semestres, optionsSelects } from "@/utils/options";
 import { InputDocForm } from "@/components/Inputs/InputDocForm";
 import { InputCheckboxForm } from "@/components/Inputs/InputCheckBoxForm";
 import { FileRequestI } from "@/types/geralsI";
@@ -50,6 +50,11 @@ const formSchema = z
         }),
       },
       { required_error: "É necessário uma foto de perfil" }
+    ),
+    university: z.string(
+      {
+        required_error: "Faculdade é necessário",
+      }
     ),
     enrollment_certificate: z.object(
       {
@@ -96,6 +101,7 @@ interface ValuesProps {
   school_term: string;
   password: string;
   usage_terms: boolean;
+  university: string
 }
 
 interface Props {
@@ -109,8 +115,15 @@ export function EstudanteSignup({ handleUseSelectedTab }: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
+  const [universitys, setUniversitys] = useState()
+
+  useEffect(() => {
+    axios.get('/university').then(e => setUniversitys(e.data))
+
+  }, [])
 
   const onSubmit = async (values: ValuesProps) => {
+    
     const data = {
       email: values.email,
       password: values.password,
@@ -123,9 +136,11 @@ export function EstudanteSignup({ handleUseSelectedTab }: Props) {
         //enrollment_certificate: values.enrollment_certificate,
         school_term: values.school_term,
         usage_terms: values.usage_terms,
+        university: {id: values.university}
       },
     };
 
+ 
     setLoad(true)
 
     await axios
@@ -193,6 +208,15 @@ export function EstudanteSignup({ handleUseSelectedTab }: Props) {
                     name={"tax_document"}
                     mask={"___.___.___-__"}
                     placeholder="Digite seu CPF"
+                  />
+                </div>
+                <div className=" py-2 flex gap-2 w-full">
+                  <InputSelectForm
+                    placeholder="Qual é sua faculdade? "
+                    formControl={form.control}
+                    name={"university"}
+                    className="w-full"
+                    itens={universitys && optionsSelects(universitys, 'id', 'name')}
                   />
                 </div>
 
