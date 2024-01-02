@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { OpeningI, StudentI } from "@/types/geralsI";
 import { format } from "date-fns";
-import { Loader2 } from "lucide-react";
+import { AlertCircle, Loader2 } from "lucide-react";
 import { Session } from "next-auth/core/types";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
@@ -14,6 +14,8 @@ import { Button } from "@/components/ui/button";
 import { ModalConfirmSelect } from "./ModalConfirmSelect";
 import { maior } from "@/utils/functions";
 import { Label } from "@radix-ui/react-dropdown-menu";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Separator } from "@/components/ui/separator";
 
 interface Props {
   session?: Session | undefined | null;
@@ -48,7 +50,11 @@ export function Oportunity({ session }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(vagaDetails?.school_term_min, session?.school_term ,Number(vagaDetails?.school_term_min) > Number(session?.school_term))
+  console.log(
+    vagaDetails?.school_term_min,
+    session?.school_term,
+    Number(vagaDetails?.school_term_min) > Number(session?.school_term)
+  );
   return (
     <div className="h-full w-full ">
       {load ? (
@@ -152,27 +158,41 @@ export function Oportunity({ session }: Props) {
               </div>
             </div>
           </div>
+
           {session?.scope === "medic" ? (
             <DetalhesMedico details={vagaDetails} />
           ) : (
             <div>
-              {
-                Number(vagaDetails?.school_term_min) >= Number(session?.school_term) ||
-                Number(session?.school_term) > Number(vagaDetails?.school_term_max)
-                ? 
-                  <h2>Infelizmente, você não se enquadra nos requisitos mínimos deste estágio.</h2>
-                :
-                me?.curriculums && me?.curriculums?.length > 0 ? (
-                  vagaDetails?.status === "active" && <ModalConfirmSelect />
-                ) : (
-                  <div >
-                    <Label> Para se inscriver, é necessário ter um currículo cadastrado, cadastre-o já:</Label>
-                    <Link href={'/app/curriculo'}>
-                    <Button variant={'outline'}>Cadastrar Currículo</Button>
-                    </Link>
-                  </div>
-                )
-              }               
+              <div className="flex items-center">
+                <p>Área do Aluno</p>
+                <Separator className="my-4 ml-2 max-w-[80%]" />
+              </div>
+              {Number(vagaDetails?.school_term_min) >=
+                Number(session?.school_term) ||
+              Number(session?.school_term) >
+                Number(vagaDetails?.school_term_max) ? (
+                <Alert variant="default">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>Requisitos não compatíveis</AlertTitle>
+                  <AlertDescription>
+                    Infelizmente, você não se enquadra nos requisitos mínimos
+                    para essa vaga, tente outra vaga.
+                  </AlertDescription>
+                </Alert>
+              ) : me?.curriculums && me?.curriculums?.length > 0 ? (
+                vagaDetails?.status === "active" && <ModalConfirmSelect />
+              ) : (
+                <div>
+                  <Label>
+                    {" "}
+                    Para se inscriver, é necessário ter um currículo cadastrado,
+                    cadastre-o já:
+                  </Label>
+                  <Link href={"/app/curriculo"}>
+                    <Button variant={"outline"}>Cadastrar Currículo</Button>
+                  </Link>
+                </div>
+              )}
             </div>
           )}
         </div>

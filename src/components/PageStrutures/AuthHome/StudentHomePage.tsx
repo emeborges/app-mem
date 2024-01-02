@@ -26,8 +26,11 @@ export const StudentHomePage = ({ session }: Props) => {
 
   const fetchMe = async () => {
     const res = await axiosAuth.get("/opening", {params: {}});
-
+    const results = res.data
+    const filters = results.filter((x: any) => differenceInDays(new Date(), x.due_date) < 0)
+    console.log('filtrados', filters)
     setOportunities(res.data);
+
     setTimeout( () => setLoad(false), 2000);
   };
 

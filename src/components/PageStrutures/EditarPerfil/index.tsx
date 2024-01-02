@@ -1,6 +1,7 @@
 "use client";
 
 import { EditMedicoForm } from "@/components/Forms/EditProfile/EditMedicoForm";
+import { EditStudentForm } from "@/components/Forms/EditProfile/EditStudentForm";
 import { MedicoSignup } from "@/components/Forms/Signup/MedicoForm";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { MedicI, StudentI } from "@/types/geralsI";
@@ -28,7 +29,7 @@ export const EditarPerfil = ({ scope }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(me);
+  console.log(me?.scope === 'medic');
 
   return (
     <div className="h-full w-full ">
@@ -38,7 +39,12 @@ export const EditarPerfil = ({ scope }: Props) => {
         </div>
       ) : (
         <div className="rounded-lg full border bg-card text-card-foreground shadow-sm flex flex-col flex-wrap justify-around md:justify-start gap-2 w-full p-2 my-2">
-          <EditMedicoForm initialValues={me}/>
+          {
+            me?.scope === 'medic' ? 
+            <EditMedicoForm initialValues={me}/>
+            :
+            <EditStudentForm initialValues={me}/>
+          }
         </div>
       )}
     </div>

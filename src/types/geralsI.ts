@@ -107,7 +107,7 @@ export interface FileRequestI {
     birthdate?: string;
     tax_document?: string;
     personal_document?: string;
-    school_term?: string;
+    school_term?: string | any;
     enrollment_certificate_url?: FileRequestI | string;
     picture_url?: FileRequestI | string;
     phone_number?: string;

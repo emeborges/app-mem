@@ -10,8 +10,11 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
+import { axiosAuth } from "@/lib/axios";
 import { OpeningI } from "@/types/geralsI";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface Props {
@@ -20,9 +23,26 @@ interface Props {
 
 export const ModalConfirmSelect = ({ details }: Props) => {
   const [load, setLoad] = useState<boolean>(false);
+  const route = useRouter()
 
   function handleSubmition() {
-    
+    axiosAuth
+      .post(`/opening/${details?.id}/application`)
+      .then((e) => {
+        toast({
+          title: "Parabéns!",
+          description:
+            "Você se candidatou a esta oportunidade, fique atento aos seus contatos cadastrados no seu perfil. Você será redirecionado em 3 segundos.",
+        });
+
+        return setTimeout(() => route.push("/app"), 5000);
+      })
+      .catch((e) => {
+        toast({
+          title: "Erro!",
+          description: "Algo deu errado, por gentileza, tente mais tarde.",
+        });
+      });
   }
 
   return (
