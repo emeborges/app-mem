@@ -4,7 +4,6 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   description: "Cadastro | Meuestagiomed",
-  icons: '../favicon.ico'
 }; 
 
 export default function Signin() {

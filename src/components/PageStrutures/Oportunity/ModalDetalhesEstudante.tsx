@@ -10,16 +10,17 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { DialogHeader } from "@/components/ui/dialog";
-import { ApplicationsI } from "@/types/geralsI";
-import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import {
   Dialog,
-  DialogTrigger,
   DialogContent,
+  DialogHeader,
   DialogTitle,
-} from "@radix-ui/react-dialog";
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { ApplicationsI } from "@/types/geralsI";
+import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { Badge, FileDown, Loader2 } from "lucide-react";
+import Link from "next/link";
 import { Dispatch, SetStateAction, useState } from "react";
 
 interface Props {
@@ -38,6 +39,7 @@ export const ModalDetalhesEstudante = ({
   setSendState,
 }: Props) => {
   const estudante = aplication.student;
+  console.log(aplication);
 
   const handleConfirmation = async () => {
     setSendState(true);
@@ -92,7 +94,7 @@ export const ModalDetalhesEstudante = ({
                     <div>
                       <p>Faculdade:</p>
                     </div>
-                    <h3 className="text-md">{estudante.university?.name}</h3>
+                    <h3 className="text-md">{estudante?.university?.name}</h3>
                   </div>
                 </div>
 
@@ -104,38 +106,17 @@ export const ModalDetalhesEstudante = ({
                     <h3 className="text-md">{estudante.school_term}º</h3>
                   </div>
                 </div>
-                <div className="py-2 max-w-[30%]">
+              </div>
+              {estudante?.curriculums && estudante?.curriculums?.length > 0 && (
+                <div className="flex w-full gap-10 items-center py-2">
                   <div>
-                    <div>
-                      <p>Campus:</p>
-                    </div>
-                    <h3 className="text-md">
-                      {estudante.university?.address?.city}
-                    </h3>
+                    <p>Currículo:</p>
                   </div>
+                  <Link href={`${estudante?.curriculums[0].url}`}>
+                    <FileDown />
+                  </Link>
                 </div>
-              </div>
-              <div className="flex w-full gap-10 justify-between py-2">
-                <div>
-                  <div>
-                    <p>Áreas de Interesse:</p>
-                  </div>
-                  <div className="flex gap-2">
-                    {estudante.specialities &&
-                      estudante.specialities.map((x) => (
-                        <Badge key={x.id}>{x.name}</Badge>
-                      ))}
-                  </div>
-                </div>
-              </div>
-              <div className="flex w-full gap-10 items-center py-2">
-                <div>
-                  <p>Currículo:</p>
-                </div>
-                <Button variant={"outline"} onClick={() => console.log("aqui")}>
-                  <FileDown />
-                </Button>
-              </div>
+              )}
             </div>
           </div>
         </DialogContent>
