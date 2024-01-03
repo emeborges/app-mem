@@ -18,16 +18,16 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface Props {
-  details?: OpeningI;
+  id?: string;
 }
 
-export const ModalConfirmSelect = ({ details }: Props) => {
+export const ModalConfirmSelect = ({ id }: Props) => {
   const [load, setLoad] = useState<boolean>(false);
   const route = useRouter()
 
   function handleSubmition() {
     axiosAuth
-      .post(`/opening/${details?.id}/application`)
+      .post(`/opening/${id}/application`)
       .then((e) => {
         toast({
           title: "Parabéns!",
@@ -35,7 +35,7 @@ export const ModalConfirmSelect = ({ details }: Props) => {
             "Você se candidatou a esta oportunidade, fique atento aos seus contatos cadastrados no seu perfil. Você será redirecionado em 3 segundos.",
         });
 
-        return setTimeout(() => route.push("/app"), 5000);
+        return setTimeout(() =>  window.location.reload(), 5000);
       })
       .catch((e) => {
         toast({

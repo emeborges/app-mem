@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { OpeningI, StudentI } from "@/types/geralsI";
 import { format } from "date-fns";
-import { AlertCircle, Loader2 } from "lucide-react";
+import { AlertCircle, Loader2, RocketIcon } from "lucide-react";
 import { Session } from "next-auth/core/types";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
@@ -16,6 +16,8 @@ import { maior } from "@/utils/functions";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { ModalConfirmCancel } from "./ModalConfirmCancel";
 
 interface Props {
   session?: Session | undefined | null;
@@ -50,11 +52,7 @@ export function Oportunity({ session }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(
-    vagaDetails?.school_term_min,
-    session?.school_term,
-    Number(vagaDetails?.school_term_min) > Number(session?.school_term)
-  );
+  
   return (
     <div className="h-full w-full ">
       {load ? (
@@ -153,7 +151,7 @@ export function Oportunity({ session }: Props) {
                   {vagaDetails?.school_term_min}º Semestre Mínimo
                 </Badge>
                 <Badge variant="outline" className="p-2">
-                  {vagaDetails?.school_term_min}º Semestre Máximo
+                  {vagaDetails?.school_term_max}º Semestre Máximo
                 </Badge>
               </div>
             </div>
@@ -180,7 +178,28 @@ export function Oportunity({ session }: Props) {
                   </AlertDescription>
                 </Alert>
               ) : me?.curriculums && me?.curriculums?.length > 0 ? (
-                vagaDetails?.status === "active" && <ModalConfirmSelect />
+                vagaDetails?.status === "active" &&
+                vagaDetails.applications.length > 0 ? vagaDetails.applications.find(x => x.status !== 'canceled') ? (
+                  <Alert>
+                    <RocketIcon className="h-4 w-4" />
+                    <AlertTitle>Candidatura Realizada!</AlertTitle>
+                    <AlertDescription>
+                      <div>
+                        <p>
+                          Parabéns, você foi cadastrado com sucesso! Fique
+                          atento aos seus contatos cadastrados, qualquer
+                          novidade, te comunicaremos por lá!
+                        </p>
+                      </div>
+                      <div>
+                        Você também pode desistir da vaga,{" "}
+                        <ModalConfirmCancel id={vagaDetails?.id}  />
+                      </div>
+                    </AlertDescription>
+                  </Alert>
+                ) : (<ModalConfirmSelect id={vagaDetails?.id} /> ): (
+                  <ModalConfirmSelect id={vagaDetails?.id} />
+                )
               ) : (
                 <div>
                   <Label>

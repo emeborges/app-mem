@@ -121,7 +121,7 @@ export interface FileRequestI {
     university?: UniversityI;
     specialities?: SpecialityI[];
     curriculums?: CurriculumObj[];
-    openings?: any
+    openings?: OpeningI[]
   }
   
   export interface OpeningI {
