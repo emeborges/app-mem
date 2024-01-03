@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { formatISO, sub } from "date-fns";
-import '../../react-datepicker.css'
+import "../../react-datepicker.css";
 import axios from "@/lib/axios";
 import { InputForm } from "@/components/Inputs/InputForm";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -24,8 +24,8 @@ import { InputDocForm } from "@/components/Inputs/InputDocForm";
 import { InputCheckboxForm } from "@/components/Inputs/InputCheckBoxForm";
 import { FileRequestI } from "@/types/geralsI";
 
-const REG_Mai = /(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g;
-
+const REG_Mai =
+  /(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g;
 
 const formSchema = z
   .object({
@@ -51,11 +51,9 @@ const formSchema = z
       },
       { required_error: "É necessário uma foto de perfil" }
     ),
-    university: z.string(
-      {
-        required_error: "Faculdade é necessário",
-      }
-    ),
+    university: z.string({
+      required_error: "Faculdade é necessário",
+    }),
     enrollment_certificate: z.object(
       {
         type: z.string({
@@ -74,15 +72,16 @@ const formSchema = z
       .string({ required_error: "É necessário uma senha" })
       .min(8, { message: "Sua senha é muito curta" })
       .regex(new RegExp(REG_Mai), {
-        message: "A senha deve conter pelo menos um caractere maiúsculo, um caractere especial e um número",
+        message:
+          "A senha deve conter pelo menos um caractere maiúsculo, um caractere especial e um número",
       }),
     confirmPassword: z
       .string({ required_error: "É necessário uma senha" })
       .min(8, { message: "Sua senha é muito curta" }),
     usage_terms: z.literal(true, {
-      errorMap: () => ({ 
+      errorMap: () => ({
         message: "É necessário confirmar os termos de uso",
-      })
+      }),
     }),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -101,7 +100,7 @@ interface ValuesProps {
   school_term: string;
   password: string;
   usage_terms: boolean;
-  university: string
+  university: string;
 }
 
 interface Props {
@@ -111,19 +110,17 @@ interface Props {
 export function EstudanteSignup({ handleUseSelectedTab }: Props) {
   const { toast } = useToast();
   const route = useRouter();
-  const [load, setLoad] = useState(false)
+  const [load, setLoad] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
-  const [universitys, setUniversitys] = useState()
+  const [universitys, setUniversitys] = useState();
 
   useEffect(() => {
-    axios.get('/university').then(e => setUniversitys(e.data))
-
-  }, [])
+    axios.get("/university").then((e) => setUniversitys(e.data));
+  }, []);
 
   const onSubmit = async (values: ValuesProps) => {
-    
     const data = {
       email: values.email,
       password: values.password,
@@ -136,12 +133,11 @@ export function EstudanteSignup({ handleUseSelectedTab }: Props) {
         //enrollment_certificate: values.enrollment_certificate,
         school_term: values.school_term,
         usage_terms: values.usage_terms,
-        university: {id: values.university}
+        university: { id: values.university },
       },
     };
 
- 
-    setLoad(true)
+    setLoad(true);
 
     await axios
       .post(`/auth/signup/student`, data)
@@ -159,7 +155,7 @@ export function EstudanteSignup({ handleUseSelectedTab }: Props) {
           title: "Erro!",
           description: "Algo deu errado, por gentileza, tente mais tarde.",
         });
-        setLoad(false)
+        setLoad(false);
         return;
       });
   };
@@ -216,7 +212,9 @@ export function EstudanteSignup({ handleUseSelectedTab }: Props) {
                     formControl={form.control}
                     name={"university"}
                     className="w-full"
-                    itens={universitys && optionsSelects(universitys, 'id', 'name')}
+                    itens={
+                      universitys && optionsSelects(universitys, "id", "name")
+                    }
                   />
                 </div>
 
@@ -272,9 +270,28 @@ export function EstudanteSignup({ handleUseSelectedTab }: Props) {
                     label={
                       <div>
                         Estou ciente e concordo com os{" "}
-                        <Link href={"/"} className="underline">
+                        <span
+                        className={'cursor-pointer mr-1 text-bold underline'}
+                          onClick={() =>
+                            window.open(
+                              "https://s3.sa-east-1.amazonaws.com/dev.mem.publicread/static/TERMOS+E+CONDIC%CC%A7O%CC%83ES+DE+USO+MEM+FINAL.pdf"
+                            )
+                          }
+                        >
                           Termos de Uso
-                        </Link>
+                        </span>
+                        e{" "}
+                        <br />
+                        <span
+                          className={'cursor-pointer text-bold underline'}
+                          onClick={() =>
+                            window.open(
+                              "https://s3.sa-east-1.amazonaws.com/dev.mem.publicread/static/Politica+de+privacidade+MEM+atualizado.pdf"
+                            )
+                          }
+                        >
+                          Políticas de privacidade
+                        </span>
                         .
                       </div>
                     }
@@ -282,12 +299,16 @@ export function EstudanteSignup({ handleUseSelectedTab }: Props) {
                 </div>
 
                 <Button className="w-full" disabled={load} type="submit">
-                  {load ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Cadastrar'}
+                  {load ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    "Cadastrar"
+                  )}
                 </Button>
                 <Button
                   variant={"outline"}
                   className=" w-full mt-2 mb-4"
-                  onClick={() => route.replace('/auth/signin')}
+                  onClick={() => route.replace("/auth/signin")}
                 >
                   Voltar
                 </Button>

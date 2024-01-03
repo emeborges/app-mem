@@ -238,9 +238,28 @@ export function MedicoSignup({ handleUseSelectedTab }: Props) {
                     label={
                       <div>
                         Estou ciente e concordo com os{" "}
-                        <Link href={"/"} className="underline">
+                        <span
+                        className={'cursor-pointer mr-1 text-bold underline'}
+                          onClick={() =>
+                            window.open(
+                              "https://s3.sa-east-1.amazonaws.com/dev.mem.publicread/static/TERMOS+E+CONDIC%CC%A7O%CC%83ES+DE+USO+MEM+FINAL.pdf"
+                            )
+                          }
+                        >
                           Termos de Uso
-                        </Link>
+                        </span>
+                        e{" "}
+                        <br />
+                        <span
+                          className={'cursor-pointer text-bold underline'}
+                          onClick={() =>
+                            window.open(
+                              "https://s3.sa-east-1.amazonaws.com/dev.mem.publicread/static/Politica+de+privacidade+MEM+atualizado.pdf"
+                            )
+                          }
+                        >
+                          Políticas de privacidade
+                        </span>
                         .
                       </div>
                     }
