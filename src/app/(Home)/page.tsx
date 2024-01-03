@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { CentralizerContainer } from "@/components/CentralizerContainer";
-import { StepsHome, StepsMedic } from "@/utils/textos";
+import { StepsMedic, StepsStudent } from "@/utils/textos";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { StartAnimation } from "@/components/ScrollAnimation";
@@ -47,7 +47,10 @@ export default function Home() {
         </div>
       </StartAnimation>
 
-      <div className="py-8 md:py-8 px-2 text-xs md:text-base" id="funcionamento">
+      <div
+        className="py-8 md:py-8 px-2 text-xs md:text-base"
+        id="funcionamento"
+      >
         <CentralizerContainer>
           <h2 className="text-3xl font-bold m-auto">Como funciona</h2>
         </CentralizerContainer>
@@ -83,26 +86,43 @@ export default function Home() {
         >
           <Card className="border rounded-xl shadow-md bg-background p-4">
             <div className="flex-col ">
-              <h3 className="text-xl text-muted-foreground">{selected ? "Médico" : "Estudante"}</h3>
-              {StepsMedic.map((i, index) => (
-                <div key={index} className="flex items-center pt-6 ml-2">
-                  <span
-                    className={`${
-                      selected ? "bg-primary" : "bg-secondary"
-                    } px-3 py-2 rounded-full text-white`}
-                  >
-                    {i.item}.
-                  </span>{" "}
-                  <h4 className="px-2 text-muted-foreground">{i.texto}</h4>
-                </div>
-              ))}
+              <h3 className="text-xl text-muted-foreground">
+                {selected ? "Médico" : "Estudante"}
+              </h3>
+              {selected
+                ? StepsMedic.map((i, index) => (
+                    <div key={index} className="flex items-center pt-6 ml-2">
+                      <span
+                        className={`${
+                          selected ? "bg-primary" : "bg-secondary"
+                        } px-3 py-2 rounded-full text-white`}
+                      >
+                        {i.item}.
+                      </span>{" "}
+                      <h4 className="px-2 text-muted-foreground">{i.texto}</h4>
+                    </div>
+                  ))
+                : StepsStudent.map((i, index) => (
+                    <div key={index} className="flex items-center pt-6 ml-2">
+                      <span
+                        className={`${
+                          selected ? "bg-primary" : "bg-secondary"
+                        } px-3 py-2 rounded-full text-white`}
+                      >
+                        {i.item}.
+                      </span>{" "}
+                      <h4 className="px-2 text-muted-foreground">{i.texto}</h4>
+                    </div>
+                  ))}
             </div>
           </Card>
         </CentralizerContainer>
       </div>
 
-      
-      <div className="py-8 md:py-8 px-2 text-xs md:text-base bg-[#f2f2f2]" id="quemsomos">
+      <div
+        className="py-8 md:py-8 px-2 text-xs md:text-base bg-[#f2f2f2]"
+        id="quemsomos"
+      >
         <CentralizerContainer
           outhers="pt-4 px-2 gap-5 items-start min-h-[20rem] h-full flex-wrap"
           justify="justify-center"
@@ -116,14 +136,16 @@ export default function Home() {
             </div>
             <div>
               <p className="py-3 text-md md:text-md w:1/2 md:w-3/4">
-                Acreditamos no poder da experiência prática para moldar futuros
-                médicos excepcionais.
+                Somos 4 estudantes de economia e medicina e acreditamos que a
+                experiência prática é fundamental para criar futuros médicos
+                excepcionais.
               </p>
 
               <p className="py-3 text-md md:text-md w:1/2 md:w-3/4">
-                Nosso compromisso é proporcionar oportunidades de estágio que
-                transcendem a sala de aula, oferecendo aos alunos a chance de
-                aplicar seus conhecimentos em um ambiente real de trabalho.
+                Nosso compromisso é proporcionar oportunidades de estágios
+                informais que transcendem a sala de aula, oferecendo aos alunos
+                a chance de aplicar seus conhecimentos em um ambiente real de
+                trabalho.
               </p>
             </div>
           </div>
@@ -134,19 +156,13 @@ export default function Home() {
                 <h2 className="text-2xl font-bold ">Parceiros </h2>
               </div>
             </div>
-            <div className="flex flex-wrap justify-end  items-center gap-3 w-full max-w-[10rem] h-full">
+            <div className="flex flex-wrap justify-end  items-center gap-3 w-full max-w-[20rem] h-full">
+              
               <Image
-                src="/sca.png"
-                height={100}
-                width={140}
-                alt="usp"
-                className="rounded-xl"
-              />
-              <Image
-                src="/usp-removebg-preview.png"
-                height={100}
-                width={140}
-                alt="usp"
+                src="/inovasanta.png"
+                height={600}
+                width={600}
+                alt="Inova Santa"
                 className=""
               />
             </div>
