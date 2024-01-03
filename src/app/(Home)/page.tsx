@@ -160,10 +160,24 @@ export default function Home() {
               
               <Image
                 src="/inovasanta.png"
-                height={600}
-                width={600}
+                height={200}
+                width={200}
                 alt="Inova Santa"
                 className=""
+              />
+              <Image
+                src="/gastros-logo-1.svg"
+                height={200}
+                width={200}
+                alt="Inova Santa"
+                className=""
+              />
+              <Image
+                src="/medeasy.png"
+                height={200}
+                width={200}
+                alt="Inova Santa"
+                className="bg-[#111433]"
               />
             </div>
           </div>
