@@ -1,6 +1,6 @@
 export const MenuItensHome = [
   { item: "Inicio", route: "/" },
-  { item: "Como Funciona?", route: "#funcionamento" },
+  { item: "Como Funciona", route: "#funcionamento" },
   { item: "Quem Somos", route: "#quemsomos" },
   { item: "Fale Conosco", route: "#faleconosco" },
 ];
