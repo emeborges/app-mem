@@ -79,6 +79,7 @@ export function EstagioCard({ opening, userType }: Props) {
                 {opening.location?.address?.neighbourhood} -{" "}
                 {opening.location?.address?.city} -{" "}
                 {opening.location?.address?.federative_unit_st}
+      
               </p>
             </div>
           </div>

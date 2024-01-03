@@ -27,18 +27,16 @@ const formSchema = z.object({
   file: z.object(
     {
       type: z.string({
-        required_error: "É necessário um comprovante de matrícula",
+        required_error: "É necessário um currículo",
       }),
       content: z.string({
-        required_error: "É necessário um comprovante de matrícula",
+        required_error: "É necessário um currículo",
       }),
     },
-    { required_error: "É necessário um comprovante de matrícula" }
+    { required_error: "É necessário um currículo" }
   ),
   description: z
-    .string({ required_error: "Email é necessário" })
-    .optional()
-    .nullable(),
+    .string({ required_error: "É necessário uma descrição" }),
 });
 
 interface Props {

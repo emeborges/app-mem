@@ -29,13 +29,14 @@ export const StudentHomePage = ({ session }: Props) => {
     const results = res.data
     const filters = results.filter((x: any) => differenceInDays(new Date(), x.due_date) < 0)
     console.log('filtrados', filters)
-    setOportunities(res.data);
+    setOportunities(filters);
 
     setTimeout( () => setLoad(false), 2000);
   };
 
   useEffect(() => {
     setTimeout(fetchMe, 2000);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
 
   function handleInitial(e: any) {
