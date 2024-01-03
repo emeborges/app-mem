@@ -55,52 +55,62 @@ export function CurriculoForm({ initialValues }: Props) {
   const axiosAuth = useAxiosAuth();
 
   const onSubmit = async (values: any) => {
-    //setLoad(true);
+    setLoad(true);
 
     const newValues: any = {
       name_tag: formatISO(new Date()),
-      ...values
+      ...values,
     };
-
-
-
-    
 
     console.log(newValues);
 
-    axiosAuth
-      .post("/curriculum", { curriculum: newValues })
-      .then((e) => {
-        toast({
-          title: "Sucesso!",
-          description:
-            "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
-        });
+    initialValues
+      ? axiosAuth
+          .patch(`/curriculum/${initialValues.id}`, { curriculum: newValues })
+          .then((e) => {
+            toast({
+              title: "Sucesso!",
+              description:
+                "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
+            });
 
-        return setTimeout(() => route.push("/app"), 3000);
-      })
-      .catch((e) => {
-        toast({
-          title: "Erro!",
-          description: "Algo deu errado, por gentileza, tente mais tarde.",
-        });
-      }); 
+            return setTimeout(() => route.push("/app"), 3000);
+          })
+          .catch((e) => {
+            toast({
+              title: "Erro!",
+              description: "Algo deu errado, por gentileza, tente mais tarde.",
+            });
+
+            return;
+          })
+      : axiosAuth
+          .post("/curriculum", { curriculum: newValues })
+          .then((e) => {
+            toast({
+              title: "Sucesso!",
+              description:
+                "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
+            });
+
+            return setTimeout(() => route.push("/app"), 3000);
+          })
+          .catch((e) => {
+            toast({
+              title: "Erro!",
+              description: "Algo deu errado, por gentileza, tente mais tarde.",
+            });
+
+            return;
+          });
   };
 
   useEffect(() => {
-    /*initialValues &&
+    initialValues &&
       form.reset({
-        name_tag: initialValues.name_tag,
-        email: initialValues.email,
-        phone_number: initialValues.phone_number,
-        birthdate: initialValues.birthdate
-          ? new Date(initialValues.birthdate)
-          : new Date(),
-        tax_document: initialValues.tax_document,
-        professional_certificate: initialValues.professional_certificate,
-        federative_unit_professional_certificate:
-          initialValues?.federative_unit_professional_certificate,
-      });*/
+        description: initialValues.description,
+      });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -113,7 +123,9 @@ export function CurriculoForm({ initialValues }: Props) {
             encType="multipart/form-data"
           >
             <div className="py-2">
-              <h2 className="text-3xl">Currículo:</h2>
+              <h2 className="text-3xl">
+                {initialValues ? "Editar Currículo" : "Cadastrar Currículo"}:
+              </h2>
             </div>
 
             <TextInput
@@ -139,13 +151,15 @@ export function CurriculoForm({ initialValues }: Props) {
                 "Salvar"
               )}
             </Button>
-            <Button
-              variant={"outline"}
-              className="mt-2 mb-4 w-full"
-              onClick={() => route.replace("/auth/signin")}
-            >
-              Voltar
-            </Button>
+            {initialValues ? null : (
+              <Button
+                variant={"outline"}
+                className="mt-2 mb-4 w-full"
+                onClick={() => route.replace("/auth/signin")}
+              >
+                Voltar
+              </Button>
+            )}
           </form>
         </Form>
       </div>
