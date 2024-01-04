@@ -136,14 +136,14 @@ export default function Home() {
             </div>
             <div>
               <p className="py-3 text-md md:text-md w:1/2 md:w-3/4">
-                Somos 4 estudantes de economia e medicina e acreditamos que a
+                A MEM acredita que a
                 experiência prática é fundamental para criar futuros médicos
                 excepcionais.
               </p>
 
               <p className="py-3 text-md md:text-md w:1/2 md:w-3/4">
                 Nosso compromisso é proporcionar oportunidades de estágios
-                informais que transcendem a sala de aula, oferecendo aos alunos
+                informais que transcendam a sala de aula, oferecendo aos alunos
                 a chance de aplicar seus conhecimentos em um ambiente real de
                 trabalho.
               </p>

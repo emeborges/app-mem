@@ -166,7 +166,7 @@ export function Oportunity({ session }: Props) {
               </div>
               {Number(vagaDetails?.school_term_min) >=
                 Number(session?.school_term) ||
-              Number(session?.school_term) >
+              Number(session?.school_term) >=
                 Number(vagaDetails?.school_term_max) ? (
                 <Alert variant="default">
                   <AlertCircle className="h-4 w-4" />

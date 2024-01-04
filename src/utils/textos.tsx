@@ -24,7 +24,7 @@ export const StepsMedic: Items[] = [
     texto: "A vaga será disponibilizada para os estudantes",
   },
   { item: 6, texto: "Os estudantes se candidatarão para o estágio" },
-  { item: 7, texto: "Você poderá selecionar seu estágiario" },
+  { item: 7, texto: "Você poderá selecionar seu estudante" },
   { item: 8, texto: "Agora é só esperar o estágio começar" },
 ]
 
