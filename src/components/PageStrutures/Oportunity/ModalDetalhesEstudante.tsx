@@ -9,6 +9,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,7 +18,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { toast } from "@/components/ui/use-toast";
+import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { ApplicationsI } from "@/types/geralsI";
+import { getPrimeiraLetra } from "@/utils/functions";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { Badge, FileDown, Loader2 } from "lucide-react";
 import Link from "next/link";
@@ -39,12 +43,22 @@ export const ModalDetalhesEstudante = ({
   setSendState,
 }: Props) => {
   const estudante = aplication.student;
-  console.log(aplication);
+  const axiosAuth = useAxiosAuth();
 
   const handleConfirmation = async () => {
     setSendState(true);
-    const dados = { vagaId: idVaga, estudante: estudante.id };
-    // await api.post(`/vagas/${idVaga}/confirmar`, dados);
+   
+    await axiosAuth
+      .put(`/opening/${idVaga}/application/${estudante.id}`)
+      .then((e) => {
+        toast({
+          title: "Sucesso!",
+          description:
+            "Estudante selecionado, você será redirecionado em 3 segundos.",
+        });
+
+      })
+      .catch((e) => window.location.reload());
 
     setTimeout(() => setSendState(false), 5000);
   };
@@ -62,7 +76,13 @@ export const ModalDetalhesEstudante = ({
           <div className="">
             <div className="flex gap-2 py-2 flex-col items-center">
               <Avatar className="h-[6rem] w-[6rem]">
-                <AvatarImage src="https://github.com/shadcn.png" />
+              {estudante?.picture_url ? (
+                  <AvatarImage src={estudante.picture_url.toString()} />
+                ) : (
+                  <AvatarFallback className="bg-primary text-5xl">
+                    {getPrimeiraLetra(estudante?.name)}
+                  </AvatarFallback>
+                )}
               </Avatar>
               <div className="text-xl">{estudante.name}</div>
               {aplication.status == "selected" && <Badge>Selecionado</Badge>}
