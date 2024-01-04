@@ -132,7 +132,7 @@ export const ModalDetalhesEstudante = ({
                 <div>
                   <p>Currículo:</p>
                 </div>
-                <Button variant={"outline"} onClick={() => console.log("aqui")}>
+                <Button variant={"outline"} href={`${estudante?.curriculums[0].url}`}>
                   <FileDown />
                 </Button>
               </div>
@@ -158,7 +158,7 @@ export const ModalDetalhesEstudante = ({
               </AlertDialogTitle>
               <AlertDialogDescription>
                 Após a confirmação, não será permitido a alteração do
-                estagiário, tens certeza que eseja continuar?
+                estagiário, tem certeza que deseja continuar?
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

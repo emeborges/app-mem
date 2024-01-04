@@ -159,7 +159,7 @@ export const ModalDetalhesEstudante = ({
               </AlertDialogTitle>
               <AlertDialogDescription>
                 Após a confirmação, não será permitido a alteração do
-                estagiário, tens certeza que eseja continuar?
+                estagiário, tem certeza que deseja continuar?
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
