@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { OpeningI, StudentI } from "@/types/geralsI";
 import { format } from "date-fns";
-import { AlertCircle, Loader2, RocketIcon } from "lucide-react";
+import { AlertCircle, Frown, Loader2, Medal, RocketIcon } from "lucide-react";
 import { Session } from "next-auth/core/types";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
@@ -52,7 +52,6 @@ export function Oportunity({ session }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  
   return (
     <div className="h-full w-full ">
       {load ? (
@@ -178,26 +177,72 @@ export function Oportunity({ session }: Props) {
                   </AlertDescription>
                 </Alert>
               ) : me?.curriculums && me?.curriculums?.length > 0 ? (
-                vagaDetails?.status === "active" &&
-                vagaDetails.applications.length > 0 ? vagaDetails.applications.find(x => x.status !== 'canceled') ? (
-                  <Alert>
-                    <RocketIcon className="h-4 w-4" />
-                    <AlertTitle>Candidatura Realizada!</AlertTitle>
-                    <AlertDescription>
-                      <div>
-                        <p>
-                          Parabéns, você foi cadastrado com sucesso! Fique
-                          atento aos seus contatos cadastrados, qualquer
-                          novidade, te comunicaremos por lá!
-                        </p>
-                      </div>
-                      <div>
-                        Você também pode desistir da vaga,{" "}
-                        <ModalConfirmCancel id={vagaDetails?.id}  />
-                      </div>
-                    </AlertDescription>
-                  </Alert>
-                ) : (<ModalConfirmSelect id={vagaDetails?.id} /> ): (
+                vagaDetails &&
+                vagaDetails?.status !== "closed" &&
+                vagaDetails.applications.length > 0 ? (
+                  vagaDetails.applications.find(
+                    (x) => x.status !== "canceled"
+                  ) ? (
+                    vagaDetails.applications.find(
+                      (x) => x.status === "selected"
+                    ) ? (
+                      <Alert>
+                        <Medal className="h-4 w-4" />
+                        <AlertTitle>Você foi selecionado!</AlertTitle>
+                        <AlertDescription>
+                          <div>
+                            <p>
+                              Parabéns, você foi SELECIONADO!! Fique atento aos
+                              seus contatos cadastrados, o médico entrará em
+                              contato diretamente por lá!
+                            </p>
+                            <p>
+                              Agora é só esperar e se dedicar ao máximo ao
+                              estágio!
+                            </p>
+                          </div>
+                        </AlertDescription>
+                      </Alert>
+                    ) : vagaDetails.applications.find(
+                        (x) => x.status === "closed"
+                      ) ? (
+                      <Alert>
+                        <Frown className="h-4 w-4" />
+                        <AlertTitle>Vaga Finalizada!</AlertTitle>
+                        <AlertDescription>
+                          <div>
+                            <p>Infelizmente, não foi desta vez!</p>
+                            <p>
+                              Mas não desanime, existem várias outras
+                              oportunidades. Sua hora irá chegar!
+                            </p>
+                          </div>
+                          
+                        </AlertDescription>
+                      </Alert>
+                    ) : (
+                      <Alert>
+                        <RocketIcon className="h-4 w-4" />
+                        <AlertTitle>Candidatura Realizada!</AlertTitle>
+                        <AlertDescription>
+                          <div>
+                            <p>
+                              Parabéns, você foi cadastrado com sucesso! Fique
+                              atento aos seus contatos cadastrados, qualquer
+                              novidade, te comunicaremos por lá!
+                            </p>
+                          </div>
+                          <div>
+                            Você também pode desistir da vaga,{" "}
+                            <ModalConfirmCancel id={vagaDetails?.id} />
+                          </div>
+                        </AlertDescription>
+                      </Alert>
+                    )
+                  ) : (
+                    <ModalConfirmSelect id={vagaDetails?.id} />
+                  )
+                ) : (
                   <ModalConfirmSelect id={vagaDetails?.id} />
                 )
               ) : (
