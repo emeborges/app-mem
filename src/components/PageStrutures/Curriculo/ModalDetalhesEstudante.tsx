@@ -20,6 +20,7 @@ import {
   DialogTitle,
 } from "@radix-ui/react-dialog";
 import { Badge, FileDown, Loader2 } from "lucide-react";
+import Link from "next/link";
 import { Dispatch, SetStateAction, useState } from "react";
 
 interface Props {
@@ -129,12 +130,16 @@ export const ModalDetalhesEstudante = ({
                 </div>
               </div>
               <div className="flex w-full gap-10 items-center py-2">
-                <div>
-                  <p>Currículo:</p>
-                </div>
-                <Button variant={"outline"} href={`${estudante?.curriculums[0].url}`}>
-                  <FileDown />
-                </Button>
+                {estudante?.curriculums && (
+                  <div>
+                    <div>
+                      <p>Currículo:</p>
+                    </div>
+                    <Link href={`${estudante?.curriculums[0].url}`}>
+                      <FileDown />
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>
