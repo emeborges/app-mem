@@ -120,7 +120,7 @@ export function EstudanteSignup({ handleUseSelectedTab }: Props) {
     axios.get("/university").then((e) => setUniversitys(e.data));
   }, []);
 
-  const onSubmit = async (values: ValuesProps) => {
+  const onSubmit = async (values: ValuesProps | any) => {
     const data = {
       email: values.email,
       password: values.password,
@@ -129,8 +129,8 @@ export function EstudanteSignup({ handleUseSelectedTab }: Props) {
         phone_number: values.phone_number,
         birthdate: formatISO(values.birthdate),
         tax_document: values.tax_document,
-        //picture: values.picture,
-        //enrollment_certificate: values.enrollment_certificate,
+        picture: values.picture,
+        enrollment_certificate: values.enrollment_certificate,
         school_term: values.school_term,
         usage_terms: values.usage_terms,
         university: { id: values.university },

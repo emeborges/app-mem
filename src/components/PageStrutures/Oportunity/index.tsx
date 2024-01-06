@@ -52,6 +52,15 @@ export function Oportunity({ session }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const SemestreValidation =
+    Number(me?.school_term) >= Number(vagaDetails?.school_term_min) &&
+    Number(me?.school_term) <= Number(vagaDetails?.school_term_max);
+
+  console.log(
+    Number(me?.school_term) >= Number(vagaDetails?.school_term_min) &&
+      Number(me?.school_term) <= Number(vagaDetails?.school_term_max)
+  );
+
   return (
     <div className="h-full w-full ">
       {load ? (
@@ -164,10 +173,7 @@ export function Oportunity({ session }: Props) {
                 <p>Área do Aluno</p>
                 <Separator className="my-4 ml-2 max-w-[80%]" />
               </div>
-              {Number(vagaDetails?.school_term_min) >=
-                Number(session?.school_term) ||
-              Number(session?.school_term) >=
-                Number(vagaDetails?.school_term_max) ? (
+              {!SemestreValidation ? (
                 <Alert variant="default">
                   <AlertCircle className="h-4 w-4" />
                   <AlertTitle>Requisitos não compatíveis</AlertTitle>
@@ -217,7 +223,6 @@ export function Oportunity({ session }: Props) {
                               oportunidades. Sua hora irá chegar!
                             </p>
                           </div>
-                          
                         </AlertDescription>
                       </Alert>
                     ) : (
