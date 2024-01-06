@@ -18,7 +18,7 @@ interface Props {
 export const SingleDate = ({label, value, setValue}: Props) => {
     return(
         <div className="flex flex-col">
-            <Label>
+            <Label className="text-muted-foreground text-sm">
                 {label}
             </Label>
             <Popover>

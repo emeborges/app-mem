@@ -101,8 +101,6 @@ export function EditStudentForm({ initialValues, height }: Props) {
     if (values.picture) {
       newValues["picture"] = values.picture;
     }
-    debugger
-    console.log(newValues);
 
     axiosAuth
       .patch("/student", { student: newValues })

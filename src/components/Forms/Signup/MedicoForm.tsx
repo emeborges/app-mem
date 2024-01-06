@@ -112,7 +112,7 @@ export function MedicoSignup({ handleUseSelectedTab }: Props) {
         birthdate: formatISO(values.birthdate),
         phone_number: values.phone_number,
         tax_document: values.tax_document,
-        //picture: values.picture,
+        picture: values.picture,
         professional_certificate: values.professional_certificate,
         federative_unit_professional_certificate:
           values.federative_unit_professional_certificate,

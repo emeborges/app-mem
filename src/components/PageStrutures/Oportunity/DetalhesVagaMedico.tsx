@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/dialog";
 import { ModalDetalhesEstudante } from "./ModalDetalhesEstudante";
 import { ConfigsOportunity } from "./ConfigOportunity";
+import Link from "next/link";
 
 interface Props {
   details?: OpeningI;
@@ -37,7 +38,6 @@ export const DetalhesMedico = ({ details }: Props) => {
     (aplic) => aplic.status == "selected"
   );
 
-
   return (
     <div className=" w-full rounded-lg border bg-card text-card-foreground shadow-sm flex flex-col flex-wrap justify-around md:justify-start gap-2 p-2 my-2">
       <div className="flex justify-between items-center">
@@ -46,7 +46,11 @@ export const DetalhesMedico = ({ details }: Props) => {
           (details?.status == "finished" ? (
             <div> </div>
           ) : (
-            <ConfigsOportunity id={details?.id} status={details?.status} startDate={details?.start_date} />
+            <ConfigsOportunity
+              id={details?.id}
+              status={details?.status}
+              startDate={details?.start_date}
+            />
           ))}
       </div>
 
@@ -129,9 +133,11 @@ export const DetalhesMedico = ({ details }: Props) => {
                       {aplicacao.student.school_term}º Periodo
                     </TableCell>
                     <TableCell>
-                      <Button variant={"outline"}>
-                        <FileDown />
-                      </Button>
+                      {aplicacao.student.curriculums ? (
+                        <Link href={`${aplicacao.student.curriculums[0].url}`}>
+                          <FileDown />
+                        </Link>
+                      ) : '-'}
                     </TableCell>
                     <TableCell>
                       <ModalDetalhesEstudante
