@@ -3,6 +3,7 @@
 import { EstagioCard } from "@/components/EstagioCard";
 import { SingleDate } from "@/components/Inputs/InputSingleDate";
 import { MultiSelect } from "@/components/Inputs/MultiSelect";
+import { SelectSimple } from "@/components/Inputs/Select";
 import {
   Accordion,
   AccordionContent,
@@ -25,9 +26,23 @@ interface Props {
   session: Session | undefined | null;
 }
 
-interface EspecialidadeI {
+interface ItensI {
   label: string;
-  id: string;
+  id: string | any;
+}
+
+type StatusEnumType = {
+  Abertas: string;
+  Fechadas: string;
+  Selecionadas: string;
+  Canceladas: string;
+};
+
+const  StatusOpieNUM: StatusEnumType = {
+  Abertas: 'active',
+  Fechadas: 'closed',
+  Selecionadas: 'selected',
+  Canceladas: 'canceled'
 }
 
 export const StudentHomePage = ({ session }: Props) => {
@@ -35,8 +50,8 @@ export const StudentHomePage = ({ session }: Props) => {
   const [final, setFinal] = useState();
   const [due, setDue] = useState();
   const [especialidades, setEspecialidades] = useState<SpecialityI[]>();
-  const [espSelect, setEspSelect] = useState<EspecialidadeI[]>([]);
-  const [miniLoad, setMiniLoad] = useState(false);
+  const [espSelect, setEspSelect] = useState<ItensI[]>([]);
+  const [status, setStatus] = useState<string>();
 
   const [oportunities, setOportunities] = useState<OpeningI[]>([]);
   const [filtredOpt, setFiltredOpt] = useState<OpeningI[]>([]);
@@ -122,6 +137,12 @@ export const StudentHomePage = ({ session }: Props) => {
     return;
   }
 
+  function handleSit(e: string) {
+    setStatus(e)
+
+    return
+  }
+
   function handlerFilter() {
     let optsIniciais = oportunities
 
@@ -136,6 +157,10 @@ export const StudentHomePage = ({ session }: Props) => {
     espSelect.length > 0 && (
       optsIniciais = optsIniciais.filter(x => x.speciality?.name && espSelect.some( y => y.id === editarString(`${x.speciality?.name}`))
     ));
+
+    status && (
+      optsIniciais = optsIniciais.filter(x => x.status === StatusOpieNUM[status]
+    ))
 
     setFiltredOpt(optsIniciais)
   }
@@ -155,7 +180,7 @@ export const StudentHomePage = ({ session }: Props) => {
                   Filtros
                 </AccordionTrigger>
                 <AccordionContent className="flex gap-2 wrap h-full flex-col ">
-                  <div className="flex gap-2 wrap h-full">
+                  <div className="flex gap-2 flex-wrap h-full">
                     <div className="py-1 sm:py-0">
                       <SingleDate
                         value={inicial}
@@ -184,6 +209,15 @@ export const StudentHomePage = ({ session }: Props) => {
                         placeholder={"Selecione"}
                         itens={especialidades}
                         onChange={handleEsp}
+                      />
+                    </div>
+                    <div className="py-1 sm:py-0 h-full ">
+                      <SelectSimple
+                        value={status}
+                        label="Inscrições"
+                        placeholder={"Selecione"}
+                        itens={['Abertas' , 'Fechadas' , 'Selecionadas' , 'Canceladas']}
+                        onChange={handleSit}
                       />
                     </div>
                   </div>

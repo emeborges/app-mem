@@ -60,6 +60,7 @@ export interface FileRequestI {
     id: string;
     status: 'active' | 'closed' | 'selected' | 'canceled';
     student: StudentI
+    opening: OpeningI
   }
   
   export interface LocationsI {
@@ -122,6 +123,7 @@ export interface FileRequestI {
     specialities?: SpecialityI[];
     curriculums?: CurriculumObj[];
     openings?: OpeningI[]
+    applications?: ApplicationsI[];
   }
   
   export interface OpeningI {

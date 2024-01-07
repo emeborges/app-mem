@@ -1,7 +1,6 @@
 import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route";
 import { CentralizerContainer } from "@/components/CentralizerContainer";
-import { Curriculo } from "@/components/PageStrutures/Curriculo";
-import { Perfil } from "@/components/PageStrutures/Perfil";
+import { MinhasInscricoes } from "@/components/PageStrutures/MinhasInscricoes";
 
 import { getServerSession } from "next-auth";
 
@@ -10,7 +9,9 @@ export default async function PerfilUser() {
 
   return (
     <CentralizerContainer outhers="pt-[5rem] flex-col h-screen">
-      inscrições
+      <div className="rounded-lg border bg-card text-card-foreground shadow-sm flex flex-col flex-wrap justify-around md:justify-start gap-2 w-full p-2 my-2">
+        <MinhasInscricoes />
+      </div>
     </CentralizerContainer>
   );
 }
