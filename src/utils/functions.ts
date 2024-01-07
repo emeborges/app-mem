@@ -34,3 +34,19 @@ export function maior(stringTest?: any, stringReferencia?: any) {
   return Number(stringTest) < Number(stringReferencia)
 
 }
+
+export function editarString(str: string) {
+  // Remover espaços
+  const semEspacos = str.replace(/\s/g, '');
+
+  // Substituir o ç por c
+  const semCedilha = semEspacos.replace(/ç/g, 'c');
+
+  // Remover acentos e caracteres especiais
+  const semAcentos = semCedilha.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+  // Converter para caixa alta (maiúsculas)
+  const emMaiusculas = semAcentos.toUpperCase();
+
+  return emMaiusculas;
+}
