@@ -31,14 +31,12 @@ interface ItensI {
   id: string | any;
 }
 
-type StatusEnumType = {
-  Abertas: string;
-  Fechadas: string;
-  Selecionadas: string;
-  Canceladas: string;
-};
+interface Map {
+  [key: string]: string | undefined
+}
 
-const  StatusOpieNUM: StatusEnumType = {
+
+const  StatusOpieNUM: Map = {
   Abertas: 'active',
   Fechadas: 'closed',
   Selecionadas: 'selected',
