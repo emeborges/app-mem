@@ -52,7 +52,26 @@ export const DetalhesMedico = ({ details }: Props) => {
         toast({
           title: "Sucesso!",
           description:
-            "Estudante selecionado, você será redirecionado em 3 segundos.",
+            "Estudante desconsiderado, sua página será atualizada em 3 segundos.",
+        });
+
+        setTimeout(() => window.location.reload(), 5000);
+      })
+      .catch((e) => window.location.reload());
+
+    setTimeout(() => setLoad(false), 5000);
+  };
+
+  const handleFinalizar = async () => {
+    setLoad(true);
+
+    await axiosAuth
+      .put(`/opening/${details?.id}/finish`)
+      .then((e) => {
+        toast({
+          title: "Sucesso!",
+          description:
+            "Seleção finalizada, sua página será atualizada em 3 segundos.",
         });
 
         setTimeout(() => window.location.reload(), 5000);
@@ -171,7 +190,7 @@ export const DetalhesMedico = ({ details }: Props) => {
             ))}
           </div>
           <div className="flex w-full pt-2 gap-2">
-            <Button>Finalizar Seleção</Button>
+            <Button onClick={handleFinalizar}>Finalizar Seleção</Button>
           </div>
         </div>
       )}
