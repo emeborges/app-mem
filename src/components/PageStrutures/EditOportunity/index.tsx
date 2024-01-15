@@ -31,7 +31,7 @@ export default function EditOportunity() {
           <Loader2 className="h-[4rem] w-[4rem] text-muted-foreground animate-spin" />
         </div>
       ) : (
-        <OportunidadeForm session={null} initialValues={vagaDetails} />
+        <OportunidadeForm  initialValues={vagaDetails} />
       )}
     </div>
   );
