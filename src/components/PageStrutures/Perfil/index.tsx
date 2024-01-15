@@ -34,7 +34,6 @@ export const Perfil = ({ scope }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(me);
 
   return (
     <div className="h-full w-full ">

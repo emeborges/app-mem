@@ -20,11 +20,11 @@ export const TextInput = ({formControl, name, label, placeholder, description, c
         name={name}
         render={({ field }) => (
           <FormItem className="w-full">
-            {label && <FormLabel>{label}</FormLabel>}
+            {label && <FormLabel className="text-muted-foreground">{label}</FormLabel>}
             <FormControl>
               <Textarea
                 placeholder={placeholder}
-                className={`resize-none ${className}`}
+                className={`resize-none focus:outline-none ${className}`}
                 {...field}
               />
             </FormControl>

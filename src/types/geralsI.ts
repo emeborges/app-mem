@@ -60,6 +60,7 @@ export interface FileRequestI {
     id: string;
     status: 'active' | 'closed' | 'selected' | 'canceled';
     student: StudentI
+    pre_selected: boolean;
     opening: OpeningI
   }
   
@@ -147,6 +148,7 @@ export interface FileRequestI {
     fk_medic?: string;
     fk_location?: string;
     location?: LocationsI;
+    max_selection?: string | number;
   }
   
   export interface CurriculumObj {

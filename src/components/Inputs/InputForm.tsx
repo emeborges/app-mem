@@ -36,6 +36,7 @@ export const InputForm = ({
               placeholder={placeholder && placeholder}
               {...field}
               disabled={disable}
+
             />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}

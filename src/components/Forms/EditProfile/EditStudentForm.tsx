@@ -22,7 +22,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getPrimeiraLetra } from "@/utils/functions";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { InputMultiSelectForm } from "@/components/Inputs/InputMultiSelectForm";
-import { Semestres, optionsSelects } from "@/utils/options";
+import { Anos, optionsSelects } from "@/utils/options";
 import axios from "@/lib/axios";
 
 const REG_Mai =
@@ -221,12 +221,12 @@ export function EditStudentForm({ initialValues, height }: Props) {
             <div className=" py-2 flex gap-2 w-full">
               <InputMultiSelectForm
                 formControl={form.control}
-                label={"Semestre"}
+                label={"Ano"}
                 placeholder="Selecione"
                 name={`school_term`}
                 maxItens={1}
                 className="w-full"
-                itens={optionsSelects(Semestres, "value", "label")}
+                itens={optionsSelects(Anos, "value", "label")}
               />
             </div>
 

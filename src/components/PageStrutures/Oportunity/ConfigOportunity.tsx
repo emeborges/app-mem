@@ -101,7 +101,6 @@ export function ConfigsOportunity({ status, id, startDate }: Props) {
     });
   }
 
-  console.log(validation && !load)
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

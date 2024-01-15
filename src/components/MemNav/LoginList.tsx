@@ -7,7 +7,7 @@ export const LoginList = () => {
         className=" transition duration-500 ease-in-out border-b-4 border-transparent hover:border-primary"
         href={"/auth/signin"}
       >
-        login
+        Login
       </Link>
       <Link
         href={"/auth/signup"}

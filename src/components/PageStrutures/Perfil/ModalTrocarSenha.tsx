@@ -90,7 +90,7 @@ export function TrocarSenha() {
         <Button
           variant="outline"
           className="w-[15rem]"
-          onClick={() => console.log("clocoasdf")}
+        
         >
           Trocar Senha
         </Button>

@@ -91,7 +91,7 @@ export const StudentHomePage = ({ session }: Props) => {
     if (inicial) {
       const dataInicial = toDate(inicial);
       const dataFinal = toDate(e);
-      console.log(differenceInDays(dataFinal, dataInicial));
+
       if (differenceInDays(dataFinal, dataInicial) >= 0) {
         setFinal(e);
       } else {

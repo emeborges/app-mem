@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { FileDown } from "lucide-react";
+import { FileDown, Settings } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
@@ -25,6 +25,13 @@ import {
 import { ModalDetalhesEstudante } from "./ModalDetalhesEstudante";
 import { ConfigsOportunity } from "./ConfigOportunity";
 import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
+import { toast } from "@/components/ui/use-toast";
 
 interface Props {
   details?: OpeningI;
@@ -33,10 +40,31 @@ interface Props {
 export const DetalhesMedico = ({ details }: Props) => {
   const route = useRouter();
   const [send, setSend] = useState(false);
+  const axiosAuth = useAxiosAuth();
+  const [load, setLoad] = useState(false);
 
-  const selecionado = details?.applications?.find(
-    (aplic) => aplic.status == "selected"
-  );
+  const handleDesconsiderar = async (idEstudante: string) => {
+    setLoad(true);
+
+    await axiosAuth
+      .put(`/opening/${details?.id}/application/${idEstudante}/reset`)
+      .then((e) => {
+        toast({
+          title: "Sucesso!",
+          description:
+            "Estudante selecionado, você será redirecionado em 3 segundos.",
+        });
+
+        setTimeout(() => window.location.reload(), 5000);
+      })
+      .catch((e) => window.location.reload());
+
+    setTimeout(() => setLoad(false), 5000);
+  };
+
+  const selecionados = details?.applications?.filter((aplic) => {
+    return aplic.status == "selected" || aplic.pre_selected;
+  });
 
   return (
     <div className=" w-full rounded-lg border bg-card text-card-foreground shadow-sm flex flex-col flex-wrap justify-around md:justify-start gap-2 p-2 my-2">
@@ -54,41 +82,96 @@ export const DetalhesMedico = ({ details }: Props) => {
           ))}
       </div>
 
-      {details?.status == "finished" && selecionado && (
+      {details && selecionados && selecionados.length > 0 && (
         <div className="py-4">
           <div>
-            <h2 className="text-md">Selecionado:</h2>
+            <h2 className="text-md">
+              Pré-selecionados: ({selecionados.length}/ {details.max_selection}
+              ):
+            </h2>
           </div>
-          <div className="rounded-lg border max-w-[450px] p-2 flex flex-col items-center">
-            <div>
-              <h2 className="text-md">Você selecionou:</h2>
-            </div>
-            <div className="py-2">
-              <Avatar className="h-[4rem] w-[4rem]">
-                <AvatarImage src="https://github.com/shadcn.png" />
-              </Avatar>
-            </div>
-            <div className="test text-sm max-w-[80%] text-center">
-              <p className="py-2">
-                {selecionado.student.name}, para esta experiência.
-              </p>
-              <p className="py-2">
-                Para maiores informações, verifique as informações pessoais do
-                estudante abaixo:
-              </p>
-              <ModalDetalhesEstudante
-                idVaga={details.id}
-                aplication={selecionado}
-                oportunidadeAberta={details.status != "finished"}
-                sendState={send}
-                setSendState={setSend}
-              />
-              <p className="py-2">
-                Nos detalhes acima, você terá acesso aos dados para entrar em
-                contato diretamente com o estagiário, e, caso precise, estamos a
-                disposição no canal de atendimento.
-              </p>
-            </div>
+          <div className="flex w-full  gap-2">
+            {selecionados.map((selecionado) => (
+              <div
+                key={selecionado.id}
+                className="rounded-lg border max-w-[250px] p-2 flex flex-col items-center justify-center "
+              >
+                <div className="py-2 flex justify-center">
+                  <Avatar className="h-[4rem] w-[4rem]">
+                    <AvatarImage src="https://github.com/shadcn.png" />
+                  </Avatar>
+                </div>
+                <div className="test text-sm max-w-[80%] text-center">
+                  <p className="py-2">
+                    Você selecionou, {selecionado.student.name}, para esta
+                    experiência.
+                  </p>
+                  <p className="py-2">
+                    Para maiores informações, verifique as informações pessoais
+                    do estudante abaixo:
+                  </p>
+                  <div className="flex gap-2">
+                    <ModalDetalhesEstudante
+                      idVaga={details.id}
+                      aplication={selecionado}
+                      oportunidadeAberta={false}
+                      sendState={send}
+                      setSendState={setSend}
+                      totalInscritos={selecionados?.length}
+                      maxInscritos={Number(details.max_selection)}
+                    />
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline">
+                          <Settings />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-56 flex flex-col gap-2">
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant={"destructive"} disabled={load}>
+                              Desconsiderar Seleção
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="sm:max-w-[425px]">
+                            <DialogHeader>
+                              <DialogTitle>Desconsiderar Seleção</DialogTitle>
+                              <DialogDescription>
+                                Você tem certeza que deseja desconsiderar a
+                                inscrições de {selecionado.student.name}
+                                para esta oportunidade?
+                              </DialogDescription>
+                            </DialogHeader>
+
+                            <DialogFooter>
+                              <Button
+                                onClick={() =>
+                                  selecionado.student.id &&
+                                  handleDesconsiderar(selecionado.student.id)
+                                }
+                                disabled={load}
+                              >
+                                Confirmar
+                              </Button>
+                            </DialogFooter>
+                          </DialogContent>
+                        </Dialog>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                  {selecionado.status === "selected" && (
+                    <p className="py-2">
+                      Nos detalhes acima, você terá acesso aos dados para entrar
+                      em contato diretamente com o estagiário, e, caso precise,
+                      estamos a disposição no canal de atendimento.
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="flex w-full pt-2 gap-2">
+            <Button>Finalizar Seleção</Button>
           </div>
         </div>
       )}
@@ -129,15 +212,15 @@ export const DetalhesMedico = ({ details }: Props) => {
                         )}
                     </TableCell>
                     <TableCell>{aplicacao.student.university?.name}</TableCell>
-                    <TableCell>
-                      {aplicacao.student.school_term}º Periodo
-                    </TableCell>
+                    <TableCell>{aplicacao.student.school_term}º Ano</TableCell>
                     <TableCell>
                       {aplicacao.student.curriculums ? (
                         <Link href={`${aplicacao.student.curriculums[0].url}`}>
                           <FileDown />
                         </Link>
-                      ) : '-'}
+                      ) : (
+                        "-"
+                      )}
                     </TableCell>
                     <TableCell>
                       <ModalDetalhesEstudante
@@ -146,6 +229,8 @@ export const DetalhesMedico = ({ details }: Props) => {
                         oportunidadeAberta={details.status == "active"}
                         sendState={send}
                         setSendState={setSend}
+                        totalInscritos={selecionados ? selecionados.length : 0}
+                        maxInscritos={1}
                       />
                     </TableCell>
                   </TableRow>

@@ -47,7 +47,7 @@ export const InputSimpleDate = ({
         
         return(
         <FormItem className={className}>
-          {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+          {label && <FormLabel className="text-muted-foreground" htmlFor={name}>{label}</FormLabel>}
           <FormControl>
             <div className="flex flex-col">
               <Popover>

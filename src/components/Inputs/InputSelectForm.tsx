@@ -35,7 +35,7 @@ export const InputSelectForm = ({
             
         return(
         <FormItem className={className}>
-          {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+          {label && <FormLabel className="text-muted-foreground" htmlFor={name}>{label}</FormLabel>}
           <Select disabled={disabled} onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
               <SelectTrigger>

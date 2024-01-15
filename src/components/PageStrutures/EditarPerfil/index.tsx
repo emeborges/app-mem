@@ -29,7 +29,6 @@ export const EditarPerfil = ({ scope }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(me?.scope === 'medic');
 
   return (
     <div className="h-full w-full ">

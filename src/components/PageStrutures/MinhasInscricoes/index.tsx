@@ -37,7 +37,7 @@ export const MinhasInscricoes = () => {
     setTimeout(fetchMe, 2000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(me);
+
   return (
     <div className="w-full h-full">
       {load ? (

@@ -62,7 +62,7 @@ export const InputDateForm = ({
       name={name}
       render={({ field }) => (
         <FormItem className={`flex flex-col ${className}`}>
-          {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
+          {label && <FormLabel className="text-muted-foreground" htmlFor={name}>{label}</FormLabel>}
           <DatePicker
             selected={field.value}
             className={

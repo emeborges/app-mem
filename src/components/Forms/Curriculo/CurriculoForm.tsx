@@ -33,8 +33,8 @@ const formSchema = z.object({
         required_error: "É necessário um currículo",
       }),
     },
-    { required_error: "É necessário um currículo" }
-  ),
+    
+  ).nullable().optional(),
   description: z
     .string({ required_error: "É necessário uma descrição" }),
 });
@@ -60,7 +60,7 @@ export function CurriculoForm({ initialValues }: Props) {
       ...values,
     };
 
-    console.log(newValues);
+   
 
     initialValues
       ? axiosAuth

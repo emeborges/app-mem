@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 import {
   Estados,
-  Semestres,
+  Anos,
   enumTypeObj,
   optionsSelects,
 } from "@/utils/options";
@@ -38,7 +38,6 @@ import { Label } from "@/components/ui/label";
 
 interface Props {
   initialValues?: OpeningI;
-  session: Session | undefined | null;
 }
 
 const formSchema = z
@@ -142,12 +141,15 @@ const formSchema = z
     description: z.string({
       required_error: "Uma Descrição é necessária"
     }),
+    max_selection: z.string({
+      required_error: "É necessário um número máximo de selecionados"
+    }).transform((x) => Number(x)),
   })
   .refine(
     (data) => Number(data.school_term_min) <= Number(data.school_term_max),
     {
       path: ["school_term_max"],
-      message: "Semestre final não pode ser menor que semestre inicial.",
+      message: "Ano final não pode ser menor que ano inicial.",
     }
   )
   .refine((data) => data.end_date > data.start_date, {
@@ -157,7 +159,7 @@ const formSchema = z
   .refine((data) => data.due_date <= data.start_date, {
     path: ["due_date"],
     message: "A data final de inscrição não pode ser maior que a data inicial.",
-  });
+  })
 
 export const OportunidadeForm = ({ initialValues }: Props) => {
   const [modalities, setModalities] = useState<ModalitysI[]>();
@@ -280,6 +282,7 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
           },
         ],
         total_hours: `${initialValues.total_hours}`,
+        max_selection: `${initialValues.max_selection}`,
         description: initialValues.description,
       });
       setNovoEndereco(false);
@@ -467,29 +470,39 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
           <div className="px-4 flex flex-wrap  gap-3">
             <InputMultiSelectForm
               formControl={form.control}
-              label={"Semestre Mínimo"}
+              label={"Ano Mínimo"}
               placeholder="Selecione"
               name={`school_term_min`}
               maxItens={1}
               className="max-w-[200px]"
-              itens={optionsSelects(Semestres, "value", "label")}
+              itens={optionsSelects(Anos, "value", "label")}
             />
 
             <InputMultiSelectForm
               formControl={form.control}
-              label={"Semestre Máximo"}
+              label={"Ano Máximo"}
               placeholder="Selecione"
               name={`school_term_max`}
               className="max-w-[200px]"
               maxItens={1}
-              itens={optionsSelects(Semestres, "value", "label")}
+              itens={optionsSelects(Anos, "value", "label")}
             />
 
-            <InputForm
+            
+          </div>
+          <div className="px-4 flex flex-wrap  gap-3">
+          <InputForm
               label="Quantidade de Horas "
               formControl={form.control}
               placeholder="Horas"
               name={`total_hours`}
+              type="number"
+            />
+            <InputForm
+              label="Quantidade de Vagas"
+              formControl={form.control}
+              placeholder="Quantidade"
+              name={`max_selection`}
               type="number"
             />
           </div>

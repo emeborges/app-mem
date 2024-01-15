@@ -35,7 +35,6 @@ export function Oportunity({ session }: Props) {
     await axiosAuth
       .get(`/opening/${vaga}`)
       .then((e) => {
-        console.log("data ");
         setvagaDetails(e.data);
       })
       .catch((e) => router.refresh());
@@ -43,7 +42,7 @@ export function Oportunity({ session }: Props) {
     session?.scope === "student" &&
       (await axiosAuth.get("/me").then((e) => setMe(e.data)));
 
-    setLoad(false);
+    setTimeout(() => setLoad(false), 3000);
   }
 
   useEffect(() => {
@@ -52,7 +51,7 @@ export function Oportunity({ session }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const SemestreValidation =
+  const AnoValidation =
     Number(me?.school_term) >= Number(vagaDetails?.school_term_min) &&
     Number(me?.school_term) <= Number(vagaDetails?.school_term_max);
 
@@ -124,6 +123,14 @@ export function Oportunity({ session }: Props) {
               </h3>
             </div>
           </div>
+          <div className="flex flex-wrap w-full items-center gap-4">
+            <div>
+              <h3 className="text-lg">
+                Quantidade Máxima de Selecionados: {vagaDetails?.max_selection}{" "}
+                {Number(vagaDetails?.max_selection) > 1 ? "alunos" : "aluno"}
+              </h3>
+            </div>
+          </div>
           <div className="pt-2 flex flex-wrap w-full items-center gap-4">
             <div>
               <h2 className="text-xl ">Descrição:</h2>
@@ -151,10 +158,10 @@ export function Oportunity({ session }: Props) {
               </div>
               <div>
                 <Badge variant="outline" className="p-2">
-                  {vagaDetails?.school_term_min}º Semestre Mínimo
+                  {vagaDetails?.school_term_min}º Ano Mínimo
                 </Badge>
                 <Badge variant="outline" className="p-2">
-                  {vagaDetails?.school_term_max}º Semestre Máximo
+                  {vagaDetails?.school_term_max}º Ano Máximo
                 </Badge>
               </div>
             </div>
@@ -168,7 +175,7 @@ export function Oportunity({ session }: Props) {
                 <p>Área do Aluno</p>
                 <Separator className="my-4 ml-2 max-w-[80%]" />
               </div>
-              {!SemestreValidation ? (
+              {!AnoValidation ? (
                 <Alert variant="default">
                   <AlertCircle className="h-4 w-4" />
                   <AlertTitle>Requisitos não compatíveis</AlertTitle>

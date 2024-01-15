@@ -57,7 +57,7 @@ export const InputMultiSelectForm = ({
       control={formControl}
       name={name}
       render={({ field }) => {
-        console.log(name, field.value);
+        
         const validation = (obj: OptionsProps) => {
           if (field.value) {
             if (field.value.length) {
@@ -72,7 +72,7 @@ export const InputMultiSelectForm = ({
         return (
           <FormItem className={cn(className, "h-full")}>
             {label && (
-              <FormLabel htmlFor={name} className="p-0 m-0">
+              <FormLabel  htmlFor={name} className=" text-muted-foreground p-0 m-0">
                 {label}{" "}
                 {maxItensLabel &&
                   `(${field.value ? field.value.length : 0}/${maxItens})`}
@@ -124,11 +124,7 @@ export const InputMultiSelectForm = ({
                       <CommandItem
                         key={framework.label}
                         onSelect={(currentValueLow: any) => {
-                          console.log(
-                            "ta aqui o valor",
-                            label,
-                            currentValueLow
-                          );
+                        
                           const currentValue =
                             currentValueLow.toLocaleUpperCase();
 

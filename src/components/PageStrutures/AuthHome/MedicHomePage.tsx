@@ -18,7 +18,7 @@ export const MedicHomePage = ({ session }: Props) => {
   const [filters, setFilters] = useState({
     initial: null,
     finish: null,
-    semestre: null,
+    ano: null,
   });
   const [me, setMe] = useState<MedicI>();
   const [load, setLoad] = useState(true);
@@ -44,7 +44,7 @@ export const MedicHomePage = ({ session }: Props) => {
     if (filters.initial) {
       const dataInicial = toDate(filters.initial);
       const dataFinal = toDate(e);
-      console.log(differenceInDays(dataFinal, dataInicial));
+    
       if (differenceInDays(dataFinal, dataInicial) >= 0) {
         setFilters({ ...filters, finish: e });
       } else {
@@ -67,7 +67,7 @@ export const MedicHomePage = ({ session }: Props) => {
           <Loader2 className="h-[4rem] w-[4rem] text-muted-foreground animate-spin" />
         </div>
       ) : (
-        <div className="w-full h-full">
+        <div className="w-full h-full pt-2">
           <div className="flex flex-wrap gap-2">
             {me?.openings && me?.openings?.length > 0 ? (
               me?.openings?.map((x) => (

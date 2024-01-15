@@ -33,6 +33,8 @@ interface Props {
   oportunidadeAberta?: boolean;
   sendState: boolean;
   setSendState: Dispatch<SetStateAction<boolean>>;
+  totalInscritos: number;
+  maxInscritos: number;
 }
 
 export const ModalDetalhesEstudante = ({
@@ -41,15 +43,18 @@ export const ModalDetalhesEstudante = ({
   oportunidadeAberta,
   sendState,
   setSendState,
+  totalInscritos,
+  maxInscritos,
 }: Props) => {
   const estudante = aplication.student;
   const axiosAuth = useAxiosAuth();
+  const maxInscritosValidation = totalInscritos <= maxInscritos - 1
 
   const handleConfirmation = async () => {
     setSendState(true);
-   
+
     await axiosAuth
-      .put(`/opening/${idVaga}/application/${estudante.id}`)
+      .put(`/opening/${idVaga}/application/${estudante.id}/select`)
       .then((e) => {
         toast({
           title: "Sucesso!",
@@ -57,6 +62,7 @@ export const ModalDetalhesEstudante = ({
             "Estudante selecionado, você será redirecionado em 3 segundos.",
         });
 
+        setTimeout(() => window.location.reload(), 5000);
       })
       .catch((e) => window.location.reload());
 
@@ -76,7 +82,7 @@ export const ModalDetalhesEstudante = ({
           <div className="">
             <div className="flex gap-2 py-2 flex-col items-center">
               <Avatar className="h-[6rem] w-[6rem]">
-              {estudante?.picture_url ? (
+                {estudante?.picture_url ? (
                   <AvatarImage src={estudante.picture_url.toString()} />
                 ) : (
                   <AvatarFallback className="bg-primary text-5xl">
@@ -128,56 +134,66 @@ export const ModalDetalhesEstudante = ({
                 </div>
               </div>
               {estudante?.curriculums && estudante?.curriculums?.length > 0 && (
-                <div className="flex w-full gap-10 items-center py-2">
-                  <div>
-                    <p>Currículo:</p>
+                <div>
+                  <div className="flex w-full gap-10 items-center py-2">
+                    <div>
+                      <p>Currículo:</p>
+                    </div>
+                    <Link href={`${estudante?.curriculums[0].url}`}>
+                      <FileDown />
+                    </Link>
                   </div>
-                  <Link href={`${estudante?.curriculums[0].url}`}>
-                    <FileDown />
-                  </Link>
+                  <div className="flex flex-col flex w-full py-2">
+                    <div>
+                      <p>Descrição do Aluno:</p>
+                    </div>
+                    {estudante?.curriculums[0].description}
+                  </div>
                 </div>
               )}
             </div>
           </div>
         </DialogContent>
       </Dialog>
-      {oportunidadeAberta && (
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button variant="outline" disabled={sendState}>
-              {sendState ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                "Selecionar"
-              )}
-            </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>
-                Confirma a seleção de {estudante.name}?
-              </AlertDialogTitle>
-              <AlertDialogDescription>
-                Após a confirmação, não será permitido a alteração do
-                estagiário, tem certeza que deseja continuar?
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction
-                onClick={handleConfirmation}
-                disabled={sendState}
-              >
+      {oportunidadeAberta &&
+        !aplication.pre_selected &&
+        maxInscritosValidation && (
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline" disabled={sendState}>
                 {sendState ? (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 ) : (
-                  "Continuar"
+                  "Selecionar"
                 )}
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      )}
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  Confirma a seleção de {estudante.name}?
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  Após a confirmação, não será permitido a alteração do
+                  estagiário, tem certeza que deseja continuar?
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleConfirmation}
+                  disabled={sendState}
+                >
+                  {sendState ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    "Continuar"
+                  )}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        )}
     </div>
   );
 };

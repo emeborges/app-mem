@@ -19,7 +19,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { InputMaskForm } from "@/components/Inputs/InputMaskForm";
 import { InputDateForm } from "@/components/Inputs/InputDateForm";
 import { InputSelectForm } from "../../Inputs/InputSelectForm";
-import { Semestres, optionsSelects } from "@/utils/options";
+import { Anos, optionsSelects } from "@/utils/options";
 import { InputDocForm } from "@/components/Inputs/InputDocForm";
 import { InputCheckboxForm } from "@/components/Inputs/InputCheckBoxForm";
 import { FileRequestI } from "@/types/geralsI";
@@ -162,7 +162,7 @@ export function EstudanteSignup({ handleUseSelectedTab }: Props) {
 
   return (
     <div>
-      <CardContent className="grid gap-2 py-2">
+      <CardContent className="grid gap-2 py-2 m-1">
         <div>
           <Form {...form}>
             <form
@@ -220,11 +220,11 @@ export function EstudanteSignup({ handleUseSelectedTab }: Props) {
 
                 <div className=" py-2 flex gap-2 w-full">
                   <InputSelectForm
-                    placeholder="Em qual período da faculdade está? "
+                    placeholder="Em qual ano da faculdade você está? "
                     formControl={form.control}
                     name={"school_term"}
                     className="w-full"
-                    itens={Semestres}
+                    itens={Anos}
                   />
                 </div>
 

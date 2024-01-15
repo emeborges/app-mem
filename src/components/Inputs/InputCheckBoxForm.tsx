@@ -24,7 +24,7 @@ export const InputCheckboxForm = ({
       render={({ field }:any) => (
         <FormItem className={className}>
           <FormControl>
-            <Checkbox className="mt-[8px]" checked={field.value} onCheckedChange={field.onChange} />
+            <Checkbox className="mt-[8px] focus:outline-none" checked={field.value} onCheckedChange={field.onChange} />
           </FormControl>
           <div className="leading-none align-middle">
             <FormLabel className="text-muted-foreground">{label}</FormLabel>
