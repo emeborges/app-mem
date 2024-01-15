@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { FileDown, Settings } from "lucide-react";
+import { FileDown, Loader2, Settings } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
@@ -32,6 +32,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { toast } from "@/components/ui/use-toast";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 interface Props {
   details?: OpeningI;
@@ -190,7 +191,41 @@ export const DetalhesMedico = ({ details }: Props) => {
             ))}
           </div>
           <div className="flex w-full pt-2 gap-2">
-            <Button onClick={handleFinalizar}>Finalizar Seleção</Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline" disabled={load}>
+                {load ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  "Finalizar Seleção"
+                )}
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  Confirma a finalização da seleção?
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  Após a confirmação, não será permitido a alteração dos
+                  selecionados, tem certeza que deseja continuar assim mesmo??
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                <AlertDialogAction
+                  onClick={handleFinalizar}
+                  disabled={load}
+                >
+                  {load ? (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  ) : (
+                    "Continuar"
+                  )}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
           </div>
         </div>
       )}
