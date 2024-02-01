@@ -1,6 +1,8 @@
 import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route";
 import { CentralizerContainer } from "@/components/CentralizerContainer";
-import { EditEspecialidadesAdmin } from "@/components/PageStrutures/Admin/Especialidades/EditEspecialidades";
+import {  UniversityForm } from "@/components/Forms/University/UniversityForm";
+import { EditAtividadesAdmin } from "@/components/PageStrutures/Admin/Atividades/EditAtividades";
+import { UniversidadesAdmin } from "@/components/PageStrutures/Admin/Universidades";
 import { getServerSession } from "next-auth";
 
 export default async function Admin() {
@@ -8,7 +10,7 @@ export default async function Admin() {
   return (
     <CentralizerContainer outhers="pt-[5rem] flex-col h-screen ">
       <div className="rounded-lg full border bg-card text-card-foreground shadow-sm flex flex-col flex-wrap justify-around md:justify-start gap-2 w-full p-2 my-2">
-        <EditEspecialidadesAdmin  />
+        <EditAtividadesAdmin />
       </div>
     </CentralizerContainer>
   );

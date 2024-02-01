@@ -154,10 +154,27 @@ export function UniversityForm({ initialValues }: Props) {
   }
 
   async function deleteUniversity() {
-    setLoad(true)
+    setLoad(true);
 
-    console.log('excluir')
-    setTimeout(() => setLoad(false), 2000)
+    axiosAuth
+      .delete(`/university/${initialValues?.id}`)
+      .then((e) => {
+        toast({
+          title: "Sucesso!",
+          description:
+            "Universidade deletada com sucesso, você será redirecionado em 3 segundos.",
+        });
+
+        return setTimeout(() => route.push("/admin/universidades"), 3000);
+      })
+      .catch((e) => {
+        toast({
+          title: "Erro!",
+          description: "Algo deu errado, por gentileza, tente mais tarde.",
+        });
+        setLoad(false);
+        return;
+      });
   }
 
   useEffect(() => {
@@ -267,7 +284,11 @@ export function UniversityForm({ initialValues }: Props) {
               maxItens={1}
             />
           </div>
-          <Button className="w-full" disabled={load || !initialValues?.is_active} type="submit">
+          <Button
+            className="w-full"
+            disabled={load || !initialValues?.is_active}
+            type="submit"
+          >
             {load ? (
               <Loader2 className="mr-2 ml-4 h-4 w-4 animate-spin" />
             ) : (
@@ -279,20 +300,28 @@ export function UniversityForm({ initialValues }: Props) {
       {initialValues && initialValues.is_active && (
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button variant={"outline"} className="w-full mt-2">
-              Excluir
+            <Button variant={"outline"} className="w-full mt-2" disabled={load || !initialValues?.is_active}>
+            {load ? (
+              <Loader2 className="mr-2 ml-4 h-4 w-4 animate-spin" />
+            ) : (
+              "Excluir"
+            )}
             </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Você tem certeza que desejar apagar este registro??</AlertDialogTitle>
+              <AlertDialogTitle>
+                Você tem certeza que desejar apagar este registro??
+              </AlertDialogTitle>
               <AlertDialogDescription>
                 Apagando este registro, não será possível busca-lo novamente.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancelar</AlertDialogCancel>
-              <AlertDialogAction onClick={deleteUniversity}>Excluir</AlertDialogAction>
+              <AlertDialogAction onClick={deleteUniversity}>
+                Excluir
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

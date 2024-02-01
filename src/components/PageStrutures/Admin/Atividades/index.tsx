@@ -13,8 +13,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { MedicI, StudentI, UniversityI } from "@/types/geralsI";
-import { FileCog, Loader2, PlusCircle } from "lucide-react";
+import { ActivityI, MedicI, StudentI, UniversityI } from "@/types/geralsI";
+import { FileCog, Loader2, PlusCircle, UserCog } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -22,21 +22,21 @@ interface Props {
   scope?: string;
 }
 
-export const EspecialidadesAdmin = ({ scope }: Props) => {
+export const AtividadesAdmin = ({ scope }: Props) => {
   const axiosAuth = useAxiosAuth();
   const [load, setLoad] = useState(true);
-  const route = useRouter()
-  const [especialidades, setEspecialidades] = useState<UniversityI[]>();
+  const route = useRouter();
+  const [atividades, setAtividades] = useState<ActivityI[]>();
 
-  const getEspecialidades = async () => {
-    await axiosAuth.get("/speciality").then((e) => setEspecialidades(e.data));
+  const getAtividades = async () => {
+    await axiosAuth.get("/activity").then((e) => setAtividades(e.data));
 
     setLoad(false);
     return;
   };
 
   useEffect(() => {
-    setTimeout(getEspecialidades, 4000);
+    setTimeout(getAtividades, 4000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -51,13 +51,16 @@ export const EspecialidadesAdmin = ({ scope }: Props) => {
           <div className="w-full py-4 flex justify-between p-2 ">
             <div>
               <h2 className="text-3xl font-bold text-muted-foreground">
-              Especialidades
+                Atividades
               </h2>
             </div>
             <div>
-              <Button onClick={() => route.push('/admin/especialidades/adicionar')}><PlusCircle /></Button>
+              <Button onClick={() => route.push("/admin/atividades/adicionar")}>
+                <PlusCircle />
+              </Button>
             </div>
           </div>
+
           <Table>
             <TableHeader>
               <TableRow>
@@ -67,22 +70,21 @@ export const EspecialidadesAdmin = ({ scope }: Props) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {especialidades?.map((esp) => (
-                <TableRow key={esp.id}>
+              {atividades?.map((ativ, indx) => (
+                <TableRow key={indx}>
                   <TableCell>
                     <Button
                       variant="outline"
-                      disabled={!esp.is_active}
-                      onClick={() => route.push(`/admin/especialidades/${esp.id}/editar`)}
+                      disabled={!ativ.is_active}
+                      onClick={() => route.push(`/admin/atividades/${ativ.id}/editar`)}
                     >
                       <FileCog className="text-muted-foreground text-sm" />
                     </Button>
                   </TableCell>
-                  <TableCell className=" ">{esp.name}</TableCell>
-
+                  <TableCell className=" ">{ativ.name}</TableCell>
                   <TableCell>
                     {" "}
-                    {esp.is_active ? (
+                    {ativ.is_active ? (
                       <Badge> Ativo </Badge>
                     ) : (
                       <Badge variant={"destructive"}>Desativado</Badge>

@@ -16,18 +16,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { SpecialityI } from "@/types/geralsI";
 import { useEffect, useState } from "react";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Loader2 } from "lucide-react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 
 const formSchema = z.object({
   name: z.string({
@@ -39,29 +29,29 @@ interface Props {
   initialValues?: SpecialityI;
 }
 
-export function EspecialidadesForm({ initialValues }: Props) {
+export function AtividadesForm({ initialValues }: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
   const axiosAuth = useAxiosAuth();
   const { toast } = useToast();
-  const route = useRouter();
   const [load, setLoad] = useState(false);
+  const route = useRouter();
 
   const onSubmit = (values: any) => {
     setLoad(true);
 
     if (initialValues) {
       axiosAuth
-        .patch(`/speciality/${initialValues.id}`, { speciality: values })
+        .patch("/activity", { activity: values })
         .then((e) => {
           toast({
             title: "Sucesso!",
             description:
-              "Especialidade editada com sucesso, você será redirecionado em 3 segundos.",
+              "Atividade editada com sucesso, você será redirecionado em 3 segundos.",
           });
 
-          return setTimeout(() => route.push("/admin/especialidades"), 3000);
+          return setTimeout(() => route.push("/admin/atividades"), 3000);
         })
         .catch((e) => {
           toast({
@@ -73,15 +63,15 @@ export function EspecialidadesForm({ initialValues }: Props) {
         });
     } else {
       axiosAuth
-        .post("/speciality", { speciality: values })
+        .post("/activity", { activity: values })
         .then((e) => {
           toast({
             title: "Sucesso!",
             description:
-              "Especialidade adicionada com sucesso, você será redirecionado em 3 segundos.",
+              "Atividade adicionada com sucesso, você será redirecionado em 3 segundos.",
           });
 
-          return setTimeout(() => route.push("/admin/especialidades"), 3000);
+          return setTimeout(() => route.push("/admin/atividades"), 3000);
         })
         .catch((e) => {
           toast({
@@ -102,18 +92,18 @@ export function EspecialidadesForm({ initialValues }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function deleteEspecialidade() {
+  function deleteAtividade() {
     setLoad(true);
     axiosAuth
-      .delete(`/speciality/${initialValues?.id}`)
+      .delete(`/activity/${initialValuesw.id}`)
       .then((e) => {
         toast({
           title: "Sucesso!",
           description:
-            "Especialidade deletada com sucesso, você será redirecionado em 3 segundos.",
+            "Atividade deletada com sucesso, você será redirecionado em 3 segundos.",
         });
 
-        return setTimeout(() => route.push("/admin/especialidades"), 3000);
+        return setTimeout(() => route.push("/admin/atividades"), 3000);
       })
       .catch((e) => {
         toast({
@@ -124,8 +114,6 @@ export function EspecialidadesForm({ initialValues }: Props) {
         return;
       });
   }
-
-  console.log(initialValues);
 
   return (
     <div className="w-full m-auto max-w-[450px]">
@@ -140,12 +128,7 @@ export function EspecialidadesForm({ initialValues }: Props) {
             label={"Nome"}
             name="name"
           />
-
-          <Button
-            className="w-full"
-            disabled={load || (initialValues && !initialValues.is_active)}
-            type="submit"
-          >
+          <Button disabled={load} type="submit" className="w-full">
             {load ? (
               <Loader2 className="mr-2 ml-4 h-4 w-4 animate-spin" />
             ) : (
@@ -154,7 +137,6 @@ export function EspecialidadesForm({ initialValues }: Props) {
           </Button>
         </form>
       </Form>
-
       {initialValues && (
         <AlertDialog>
           <AlertDialogTrigger asChild>
@@ -182,7 +164,7 @@ export function EspecialidadesForm({ initialValues }: Props) {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancelar</AlertDialogCancel>
-              <AlertDialogAction onClick={deleteEspecialidade}>
+              <AlertDialogAction onClick={deleteAtividade}>
                 Excluir
               </AlertDialogAction>
             </AlertDialogFooter>

@@ -14,7 +14,11 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { getPrimeiraLetra } from "@/utils/functions";
 
-import { AuthItens, ManuItensAppEstudante, ManuItensAppMedico } from "@/utils/menuitens";
+import {
+  AuthItens,
+  ManuItensAppEstudante,
+  ManuItensAppMedico,
+} from "@/utils/menuitens";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -24,29 +28,33 @@ interface Props {
   scope?: string;
 }
 
-export function AdminNav({ name, email, scope}: Props) {
+export function AdminNav({ name, email, scope }: Props) {
   const router = useRouter();
 
-  
-
   async function logout() {
-		await signOut({
-			redirect: false
-		})
+    await signOut({
+      redirect: false,
+    });
 
-		router.replace('/')
-	}
+    router.replace("/");
+  }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarFallback className="bg-primary">{getPrimeiraLetra(name)}</AvatarFallback>
+            <AvatarFallback className="bg-primary">
+              {getPrimeiraLetra(name)}
+            </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 bg-white text-muted-foreground" align="end" forceMount>
+      <DropdownMenuContent
+        className="w-56 bg-white text-muted-foreground"
+        align="end"
+        forceMount
+      >
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">{name}</p>
@@ -64,25 +72,29 @@ export function AdminNav({ name, email, scope}: Props) {
             Perfil
           </DropdownMenuItem>
 
-            {AuthItens.map((item,i) => (
-                <DropdownMenuItem
-                  onClick={() => router.replace(`${item.route}`)}
-                  className="cursor-pointer hover:bg-gray-200"
-                  key={i}
-                >
-                  {item.item}
-                </DropdownMenuItem>
-            ))}
+          {AuthItens.map((item, i) => (
             <DropdownMenuItem
-                  onClick={() => router.replace(`/admin/especialidades`)}
-                  className="cursor-pointer hover:bg-gray-200"
-          
-                >
-                  Especialidades
-                </DropdownMenuItem>
-           
+              onClick={() => router.replace(`${item.route}`)}
+              className="cursor-pointer hover:bg-gray-200"
+              key={i}
+            >
+              {item.item}
+            </DropdownMenuItem>
+          ))}
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={() => router.replace(`/admin/especialidades`)}
+            className="cursor-pointer hover:bg-gray-200"
+          >
+            Especialidades
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => router.replace(`/admin/atividades`)}
+            className="cursor-pointer hover:bg-gray-200"
+          >
+            Atividades
+          </DropdownMenuItem>
         </DropdownMenuGroup>
-        <Separator />
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={logout}>Sair</DropdownMenuItem>
       </DropdownMenuContent>
