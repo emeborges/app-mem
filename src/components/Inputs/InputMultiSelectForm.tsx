@@ -20,6 +20,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Badge } from "../ui/badge";
+import { ScrollArea } from "@radix-ui/react-scroll-area";
 
 interface OptionsProps {
   value: string | any;
@@ -37,6 +38,7 @@ interface Props {
   maxItens?: number;
   maxItensLabel?: boolean;
   badgeType?: "destructive";
+  disable?: boolean;
 }
 export const InputMultiSelectForm = ({
   formControl,
@@ -49,6 +51,7 @@ export const InputMultiSelectForm = ({
   maxItens,
   maxItensLabel,
   badgeType,
+  disable,
 }: Props) => {
   const [open, setOpen] = useState(false);
 
@@ -57,7 +60,6 @@ export const InputMultiSelectForm = ({
       control={formControl}
       name={name}
       render={({ field }) => {
-        
         const validation = (obj: OptionsProps) => {
           if (field.value) {
             if (field.value.length) {
@@ -72,7 +74,10 @@ export const InputMultiSelectForm = ({
         return (
           <FormItem className={cn(className, "h-full")}>
             {label && (
-              <FormLabel  htmlFor={name} className=" text-muted-foreground p-0 m-0">
+              <FormLabel
+                htmlFor={name}
+                className=" text-muted-foreground p-0 m-0"
+              >
                 {label}{" "}
                 {maxItensLabel &&
                   `(${field.value ? field.value.length : 0}/${maxItens})`}
@@ -120,93 +125,99 @@ export const InputMultiSelectForm = ({
                   <CommandInput placeholder={`Procure por ${placeholder}`} />
                   <CommandEmpty>Não há opções.</CommandEmpty>
                   <CommandGroup>
-                    {itens?.map((framework) => (
-                      <CommandItem
-                        key={framework.label}
-                        onSelect={(currentValueLow: any) => {
-                        
-                          const currentValue =
-                            currentValueLow.toLocaleUpperCase();
+                    <ScrollArea className="max-h-[10rem] overflow-auto">
+                      {itens?.map((framework) => (
+                        <CommandItem
+                          key={framework.label}
+                          onSelect={(currentValueLow: any) => {
+                            const currentValue =
+                              currentValueLow.toLocaleUpperCase();
 
-                          const validacao = field?.value
-                            ? field.value?.find((arr: any) => {
-                                const validacao = typeof arr.label;
+                            const validacao = field?.value
+                              ? field.value?.find((arr: any) => {
+                                  const validacao = typeof arr.label;
 
-                                if (validacao == "string") {
-                                  return (
-                                    arr.label.toLocaleUpperCase() ==
-                                    currentValue
-                                  );
-                                } else {
-                                  return arr.label == currentValue;
-                                }
-                              })
-                            : null;
-
-                          if (validacao) {
-                            const newValues = field.value?.filter((el: any) => {
-                              const validacao = typeof el.label;
-
-                              if (validacao == "string") {
-                                return (
-                                  el.label.toLocaleUpperCase() != currentValue
-                                );
-                              } else {
-                                return el.label != currentValue;
-                              }
-                            });
-
-                            field.onChange(newValues);
-                          } else {
-                            if (maxItens) {
-                              if (field?.value?.length >= maxItens) {
-                                if (field.value.lenght) {
-                                  const novoObj = field.value.shift();
-
-                                  const objSelecionado = itens.find(
-                                    (arr) =>
+                                  if (validacao == "string") {
+                                    return (
                                       arr.label.toLocaleUpperCase() ==
                                       currentValue
-                                  );
+                                    );
+                                  } else {
+                                    return arr.label == currentValue;
+                                  }
+                                })
+                              : null;
 
-                                  novoObj.push(objSelecionado);
-                                  return;
-                                } else {
-                                  const objSelecionado = itens.find(
-                                    (arr) =>
-                                      arr.label.toLocaleUpperCase() ==
+                            if (validacao) {
+                              const newValues = field.value?.filter(
+                                (el: any) => {
+                                  const validacao = typeof el.label;
+
+                                  if (validacao == "string") {
+                                    return (
+                                      el.label.toLocaleUpperCase() !=
                                       currentValue
-                                  );
+                                    );
+                                  } else {
+                                    return el.label != currentValue;
+                                  }
+                                }
+                              );
 
-                                  field.onChange([objSelecionado]);
-                                  return;
+                              field.onChange(newValues);
+                            } else {
+                              if (maxItens) {
+                                if (field?.value?.length >= maxItens) {
+                                  if (field.value.lenght) {
+                                    const novoObj = field.value.shift();
+
+                                    const objSelecionado = itens.find(
+                                      (arr) =>
+                                        arr.label.toLocaleUpperCase() ==
+                                        currentValue
+                                    );
+
+                                    novoObj.push(objSelecionado);
+                                    return;
+                                  } else {
+                                    const objSelecionado = itens.find(
+                                      (arr) =>
+                                        arr.label.toLocaleUpperCase() ==
+                                        currentValue
+                                    );
+
+                                    field.onChange([objSelecionado]);
+                                    return;
+                                  }
                                 }
                               }
+
+                              const objSelecionado = itens.find(
+                                (arr) =>
+                                  arr.label.toLocaleUpperCase() == currentValue
+                              );
+                              const novoObj = field.value ? field.value : [];
+
+                              novoObj.push(objSelecionado);
+
+                              field.onChange(novoObj);
                             }
 
-                            const objSelecionado = itens.find(
-                              (arr) =>
-                                arr.label.toLocaleUpperCase() == currentValue
-                            );
-                            const novoObj = field.value ? field.value : [];
-
-                            novoObj.push(objSelecionado);
-
-                            field.onChange(novoObj);
-                          }
-
-                          setOpen(false);
-                        }}
-                      >
-                        <Check
-                          className={cn(
-                            "mr-2 h-4 w-4",
-                            validation(framework) ? "opacity-100" : "opacity-0"
-                          )}
-                        />
-                        {framework.label}
-                      </CommandItem>
-                    ))}
+                            setOpen(false);
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              validation(framework)
+                                ? "opacity-100"
+                                : "opacity-0"
+                            )}
+                          />
+                          {framework.label}
+                        </CommandItem>
+                      ))}
+                    </ScrollArea>
                   </CommandGroup>
                 </Command>
               </PopoverContent>

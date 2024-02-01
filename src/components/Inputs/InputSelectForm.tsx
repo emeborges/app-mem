@@ -39,7 +39,7 @@ export const InputSelectForm = ({
           <Select disabled={disabled} onValueChange={field.onChange} defaultValue={field.value}>
             <FormControl>
               <SelectTrigger>
-                <SelectValue placeholder={placeholder ? placeholder : ""} />
+                <SelectValue className="text-muted-foreground" placeholder={placeholder ? placeholder : ""} />
               </SelectTrigger>
             </FormControl>
             <SelectContent className="bg-white max-h-[150px] overflow-auto">

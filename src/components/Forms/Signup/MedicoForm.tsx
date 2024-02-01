@@ -79,7 +79,7 @@ const formSchema = z
   });
 
 interface Props {
-  handleUseSelectedTab: (number: number) => void;
+  handleUseSelectedTab: (number?: number) => void;
 }
 
 interface ValuesProps {
@@ -126,7 +126,7 @@ export function MedicoSignup({ handleUseSelectedTab }: Props) {
         toast({
           title: "Sucesso!",
           description:
-            "Seu cadastro foi recebido, iremos enviar um e-mail para confirmação",
+            "Cadastro foi recebido, iremos enviar um e-mail para confirmação",
         });
 
         return setTimeout(() => handleUseSelectedTab(2), 1000);

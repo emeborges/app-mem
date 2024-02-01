@@ -21,11 +21,14 @@ import { InputDocForm } from "@/components/Inputs/InputDocForm";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getPrimeiraLetra } from "@/utils/functions";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
+import { InputSelectForm } from "@/components/Inputs/InputSelectForm";
+import { Estados } from "@/utils/options";
+import { InputMultiSelectForm } from "@/components/Inputs/InputMultiSelectForm";
 
 const REG_Mai =
   /(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g;
 
-const formSchema = z.object({
+const formSchema: any = z.object({
   name: z.string({ required_error: "Nome é necessário" }).optional().nullable(),
   email: z
     .string({ required_error: "Email é necessário" })
@@ -62,31 +65,25 @@ const formSchema = z.object({
     required_error: "É necessário um CRM",
   }),
   federative_unit_professional_certificate: z
-    .string({
-      required_error: "É necessário um Estado",
-    })
-    .or(
-      z
-        .object(
-          {
-            label: z.string(),
-            value: z.string(),
-          },
-          {
-            required_error: "Semetre Máximo é necessário",
-          }
-        )
-        .array()
-        .transform((id) => Number(id[0].label))
-    ),
+    .object(
+      {
+        label: z.string(),
+        value: z.string(),
+      },
+      { required_error: "Selecione uma Especialidade" }
+    )
+    .array()
+    .transform((id) => id[0].value)
+    .optional()
+    .nullable(),
 });
 
 interface Props {
   initialValues?: MedicI;
-  height?: string;
+  admin?: boolean;
 }
 
-export function EditMedicoForm({ initialValues, height }: Props) {
+export function EditMedicoForm({ initialValues, admin }: Props) {
   const { toast } = useToast();
   const route = useRouter();
   const [load, setLoad] = useState(false);
@@ -96,35 +93,56 @@ export function EditMedicoForm({ initialValues, height }: Props) {
   const axiosAuth = useAxiosAuth();
 
   const onSubmit = async (values: any) => {
-    setLoad(true);
-    const newValues: any = {
-      phone_number: values.phone_number,
-      birthdate: formatISO(values.birthdate),
-    };
+    // setLoad(true);
+
+    delete values.picture;
+
+    const newValues: any = admin
+      ? values
+      : {
+          phone_number: values.phone_number,
+          birthdate: formatISO(values.birthdate),
+        };
 
     if (values.picture) {
       newValues["picture"] = values.picture;
     }
 
-    console.log(newValues);
+    admin
+      ? axiosAuth
+          .patch(`/medic/${initialValues?.id}`, { medic: newValues })
+          .then((e) => {
+            toast({
+              title: "Sucesso!",
+              description:
+                "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
+            });
 
-    axiosAuth
-      .patch("/medic", { medic: newValues })
-      .then((e) => {
-        toast({
-          title: "Sucesso!",
-          description:
-            "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
-        });
+            return setTimeout(() => route.push("/admin/medicos"), 3000);
+          })
+          .catch((e) => {
+            toast({
+              title: "Erro!",
+              description: "Algo deu errado, por gentileza, tente mais tarde.",
+            });
+          })
+      : axiosAuth
+          .patch("/medic", { medic: newValues })
+          .then((e) => {
+            toast({
+              title: "Sucesso!",
+              description:
+                "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
+            });
 
-        return setTimeout(() => route.push("/app"), 3000);
-      })
-      .catch((e) => {
-        toast({
-          title: "Erro!",
-          description: "Algo deu errado, por gentileza, tente mais tarde.",
-        });
-      });
+            return setTimeout(() => route.push("/app"), 3000);
+          })
+          .catch((e) => {
+            toast({
+              title: "Erro!",
+              description: "Algo deu errado, por gentileza, tente mais tarde.",
+            });
+          });
   };
 
   useEffect(() => {
@@ -138,9 +156,17 @@ export function EditMedicoForm({ initialValues, height }: Props) {
           : new Date(),
         tax_document: initialValues.tax_document,
         professional_certificate: initialValues.professional_certificate,
-        federative_unit_professional_certificate:
-          initialValues?.federative_unit_professional_certificate,
+        federative_unit_professional_certificate: admin
+          ? [
+              Estados.find(
+                (x) =>
+                  x.value ===
+                  initialValues.federative_unit_professional_certificate
+              ),
+            ]
+          : initialValues.federative_unit_professional_certificate,
       });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -170,14 +196,14 @@ export function EditMedicoForm({ initialValues, height }: Props) {
               name={"name"}
               placeholder="Digite seu Nome"
               className="py-2"
-              disable
+              disable={!admin}
             />
             <InputForm
               formControl={form.control}
               name={"email"}
               placeholder="Digite seu melhor e-mail"
               className="py-2"
-              disable
+              disable={!admin}
             />
             <InputMaskForm
               formControl={form.control}
@@ -194,32 +220,45 @@ export function EditMedicoForm({ initialValues, height }: Props) {
                 name={"birthdate"}
                 placeholder="Data de Aniversario"
               />
-
-              <InputForm
+              <InputMaskForm
                 formControl={form.control}
                 className="w-full max-w-[50%]"
                 name={"tax_document"}
+                mask={"___.___.___-__"}
                 placeholder="Digite seu CPF"
-                disable
+                disable={!admin}
               />
             </div>
 
             <div className=" py-2 flex gap-2 w-full">
               <InputForm
                 formControl={form.control}
+                label="Crm"
                 name={"professional_certificate"}
                 type="number"
                 placeholder="Digite seu CRM"
                 className="w-full max-w-[50%]"
-                disable
+                disable={!admin}
               />
-              <InputForm
-                formControl={form.control}
-                placeholder="Estado do CRM"
-                name={"federative_unit_professional_certificate"}
-                className="w-full max-w-[50%]"
-                disable
-              />
+              {admin ? (
+                <InputMultiSelectForm
+                  formControl={form.control}
+                  label="Estado Crm"
+                  placeholder="Selecione"
+                  name={`federative_unit_professional_certificate`}
+                  maxItens={1}
+                  className="max-w-[200px] w-full"
+                  itens={Estados}
+                />
+              ) : (
+                <InputForm
+                  formControl={form.control}
+                  placeholder="Estado do CRM"
+                  name={"federative_unit_professional_certificate"}
+                  className="w-full max-w-[50%] h-full"
+                  disable
+                />
+              )}
             </div>
 
             <div className="py-2">
@@ -238,15 +277,19 @@ export function EditMedicoForm({ initialValues, height }: Props) {
                 "Editar"
               )}
             </Button>
+          </form>
+        </Form>
+        <div className="flex justify-center p-2">
+          <div className={"max-w-[350px] w-full px-2"}>
             <Button
               variant={"outline"}
-              className="mt-2 mb-4 w-full"
-              onClick={() => route.replace("/auth/signin")}
+              className=" m-auto w-full"
+              onClick={() => route.back()}
             >
               Voltar
             </Button>
-          </form>
-        </Form>
+          </div>
+        </div>
       </div>
     </CardContent>
   );

@@ -14,14 +14,12 @@ export const metadata = {
 export default async function PrivateLayout({ children }: PrivateLayoutProps){
 	const session = await getServerSession(nextAuthOptions)
 
-	console.log(session)
-
 	if (!session) {
 		redirect('/')
 	}
 
-	if(session.scope === 'admin') {
-		redirect('/admin')
+	if(session.scope !== 'admin') {
+		redirect('/app')
 	}
 
 	return <>{children}</>
