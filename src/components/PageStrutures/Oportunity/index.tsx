@@ -66,12 +66,12 @@ export function Oportunity({ session }: Props) {
           <div className="py-2 max-w-[100%]">
             <div className="flex justify-between items-center w-full">
               <h2 className="font-bold text-3xl">{vagaDetails?.name}</h2>
-              {session?.scope === "medic" || session?.scope === "admin" &&
+              {session?.scope != "student" &&
                 vagaDetails?.status !== "finished" &&
                 vagaDetails?.status !== "canceled" && (
                   <Link
                     className="rounded-lg border p-2"
-                    href={`/app/oportunidade/${vagaDetails?.id}/edit`}
+                    href={session?.scope === 'medic' ? `/app/oportunidade/${vagaDetails?.id}/edit` : `/admin/oportunidades/${vagaDetails?.id}/edit`}
                   >
                     Editar
                   </Link>

@@ -120,7 +120,7 @@ const formSchema = z
         }
       )
       .array()
-      .transform((id) => Number(id[0].label)),
+      .transform((id) => Number(id[0].value)),
     school_term_max: z
       .object(
         {
@@ -132,7 +132,7 @@ const formSchema = z
         }
       )
       .array()
-      .transform((id) => Number(id[0].label)),
+      .transform((id) => Number(id[0].value)),
     total_hours: z
       .string({
         required_error: "Quantidade de horas é necessário",
@@ -146,13 +146,14 @@ const formSchema = z
     }).transform((x) => Number(x)),
   })
   .refine(
-    (data) => Number(data.school_term_min) <= Number(data.school_term_max),
+    (data) => (data.school_term_min <= data.school_term_max),
     {
       path: ["school_term_max"],
       message: "Ano final não pode ser menor que ano inicial.",
     }
   )
-  .refine((data) => data.end_date > data.start_date, {
+  .refine((data) => data.end_date > data.start_date
+, {
     path: ["end_date"],
     message: "A data final não pode ser maior que a data inicial.",
   })
@@ -198,7 +199,7 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
               "Excelente, a oportunidade foi editada! Você será redirecionado em 5 segundos",
           });
 
-          return setTimeout(() => router.push(`/app/oportunidade/${initialValues.id}`), 5000);
+          return setTimeout(() => router.back(), 5000);
         })
         .catch((e) => {
           toast({
@@ -271,13 +272,13 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
         start_date: initialValues.start_date,
         school_term_min: [
           {
-            label: initialValues.school_term_min?.toString(),
+            label: `${initialValues.school_term_min} ano`,
             value: initialValues.school_term_min?.toString(),
           },
         ],
         school_term_max: [
           {
-            label: initialValues.school_term_max?.toString(),
+            label: `${initialValues.school_term_max} ano`,
             value: initialValues.school_term_max?.toString(),
           },
         ],
@@ -415,8 +416,9 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
                   name={`location.id`}
                   className="max-w-[400px]"
                   disabled={!!initialValues}
-                  itens={
-                    me?.locations && optionsSelects(me?.locations, "id", "name")
+                  itens={ me ?
+                    me?.locations && optionsSelects(me?.locations, "id", "name") :
+                    initialValues?.location && optionsSelects([initialValues.location], "id", "name")
                   }
                 />
               </div>

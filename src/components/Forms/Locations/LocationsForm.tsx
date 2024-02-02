@@ -25,6 +25,7 @@ import { useRouter } from "next/navigation";
 import { LocationsI, ModalitysI, SpecialityI, TypesI } from "@/types/geralsI";
 import { useEffect, useState } from "react";
 import { InputMultiSelectForm } from "@/components/Inputs/InputMultiSelectForm";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string({ required_error: "Nome é necessário" }),
@@ -58,7 +59,7 @@ const formSchema = z.object({
   address: z.object({
     street: z.string({ required_error: "Rua é necessário" }),
     street_number: z.string({ required_error: "Número é necessário" }),
-    complement: z.string().optional().nullable(),
+    complement: z.string({ required_error: "Complemento é necessário" }),
     neighbourhood: z.string({ required_error: "Bairro é necessário" }),
     postal_code: z.string({ required_error: "CEP é necessário" }),
     city: z.string({ required_error: "Cidade é necessário" }),
@@ -88,20 +89,25 @@ export function LocationForm({ initialValues }: Props) {
   const axiosAuth = useAxiosAuth();
   const { toast } = useToast();
   const route = useRouter();
+  const [load, setLoad] = useState(false);
 
   const onSubmit = (values: any) => {
+    setLoad(true)
+
     const newValues = {
       ...values,
       location_type: values.location_type[0].value,
       modality: values.modality[0].value,
-      specialities: values.specialities.map((x:any) => x.label),
-      address: {...values.address,
-        federative_unit_st: values.address.federative_unit_st[0].value
-      }
+      specialities: values.specialities.map((x: any) => x.label),
+      address: {
+        ...values.address,
+        federative_unit_st: values.address.federative_unit_st[0].value,
+      },
     };
+
     initialValues &&
       axiosAuth
-        .patch(`/location/${initialValues.id}`, {location: newValues})
+        .patch(`/location/${initialValues.id}`, { location: newValues })
         .then((e) => {
           toast({
             title: "Sucesso!",
@@ -115,6 +121,7 @@ export function LocationForm({ initialValues }: Props) {
             title: "Erro!",
             description: "Algo deu errado, por gentileza, tente mais tarde.",
           });
+          setLoad(false)
           return;
         });
   };
@@ -263,8 +270,12 @@ export function LocationForm({ initialValues }: Props) {
               />
             </div>
           </div>
-          <Button type="submit" className="w-full">
-            Enviar
+          <Button type="submit" className="w-full" disabled={load}>
+            {load ? (
+              <Loader2 className="mr-2 ml-4 h-4 w-4 animate-spin" />
+            ) : (
+              "Enviar"
+            )}
           </Button>
         </form>
       </Form>

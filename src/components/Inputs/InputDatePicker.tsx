@@ -11,7 +11,7 @@ import {
 import { Input } from "../ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { DateRange } from "react-day-picker";
-import { addDays, format, parseISO, parseJSON, toDate } from "date-fns";
+import { addDays, format, formatISO, parseISO, parseJSON, toDate } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { ptBR } from "date-fns/locale";
@@ -72,7 +72,7 @@ export const InputSimpleDate = ({
                     locale={ptBR}
                     mode="single"
                     selected={field.value}
-                    onSelect={(e) => field.onChange(e)}
+                    onSelect={(e) => field.onChange(e && formatISO(e))}
                     initialFocus
                     className=" bg-white"
                   />

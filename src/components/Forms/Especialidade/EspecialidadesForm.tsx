@@ -125,8 +125,6 @@ export function EspecialidadesForm({ initialValues }: Props) {
       });
   }
 
-  console.log(initialValues);
-
   return (
     <div className="w-full m-auto max-w-[450px]">
       <Form {...form}>

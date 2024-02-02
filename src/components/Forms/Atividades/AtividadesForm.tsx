@@ -95,7 +95,7 @@ export function AtividadesForm({ initialValues }: Props) {
   function deleteAtividade() {
     setLoad(true);
     axiosAuth
-      .delete(`/activity/${initialValuesw.id}`)
+      .delete(`/activity/${initialValues?.id}`)
       .then((e) => {
         toast({
           title: "Sucesso!",
