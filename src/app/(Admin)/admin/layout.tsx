@@ -8,7 +8,7 @@ interface PrivateLayoutProps {
 }
 
 export const metadata = {
-	title: "Painel | MeuEstagioMed",
+	title: "Admin | MeuEstagioMed",
   };
 
 export default async function PrivateLayout({ children }: PrivateLayoutProps){

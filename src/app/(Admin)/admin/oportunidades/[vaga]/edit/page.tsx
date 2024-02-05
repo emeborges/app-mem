@@ -1,5 +1,4 @@
 import { CentralizerContainer } from "@/components/CentralizerContainer";
-import { OportunidadeForm } from "@/components/Forms/CreateOportunity";
 import EditOportunity from "@/components/PageStrutures/EditOportunity";
 
 export default async function EditVaga() {
