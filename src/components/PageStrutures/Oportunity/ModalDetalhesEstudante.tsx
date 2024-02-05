@@ -3,7 +3,6 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -59,7 +58,7 @@ export const ModalDetalhesEstudante = ({
         toast({
           title: "Sucesso!",
           description:
-            "Estudante selecionado, você será redirecionado em 3 segundos.",
+            "Estudante selecionado, a página será atualizada em 3 segundos.",
         });
 
         setTimeout(() => window.location.reload(), 5000);
@@ -173,10 +172,7 @@ export const ModalDetalhesEstudante = ({
                 <AlertDialogTitle>
                   Confirma a seleção de {estudante.name}?
                 </AlertDialogTitle>
-                <AlertDialogDescription>
-                  Após a confirmação, não será permitido a alteração do
-                  estagiário, tem certeza que deseja continuar?
-                </AlertDialogDescription>
+                
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>

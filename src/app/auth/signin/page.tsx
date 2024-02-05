@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
+import Link from "next/link";
 
 export default function Home() {
   const [email, setEmail] = useState<string>("");
@@ -31,7 +32,7 @@ export default function Home() {
     });
 
     if (result?.error) {
-
+      console.log(result);
       toast({
         title: "Email ou senha incorreto!",
         description: "Revise-os e tente novamente!",
@@ -72,14 +73,20 @@ export default function Home() {
                 placeholder="Digite seu e-mail"
                 onChange={(e) => setEmail(e.target.value)}
               />
-
-              <input
-                className="h-12 rounded-md p-2 bg-transparent border border-gray-300"
-                type="password"
-                name="password"
-                placeholder="Digite sua senha"
-                onChange={(e) => setPassword(e.target.value)}
-              />
+              <div className="flex flex-col items-end">
+                <input
+                  className="h-12 rounded-md w-full p-2 bg-transparent border border-gray-300"
+                  type="password"
+                  name="password"
+                  placeholder="Digite sua senha"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <div className="w-[35%] text-right ">
+                <Link href={"/auth/recuperar"} className="text-right">
+                  Esqueci minha senha
+                </Link>
+                </div>
+              </div>
 
               <Button disabled={load} type="submit">
                 {load ? (

@@ -16,7 +16,7 @@ const nextAuthOptions: NextAuthOptions = {
 					email: credentials?.email,
 					password: credentials?.password
 				})
-				
+			
 				const userTotal = await response.data
 
 				const user = {

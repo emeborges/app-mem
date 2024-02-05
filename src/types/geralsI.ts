@@ -100,6 +100,8 @@ export interface MedicI {
   specialities?: SpecialityI[];
   locations?: LocationsI[];
   openings?: OpeningI[];
+  created_at: string;
+  updated_at: string;
 }
 
 export interface StudentI {
@@ -124,6 +126,8 @@ export interface StudentI {
   curriculums?: CurriculumObj[];
   openings?: OpeningI[];
   applications?: ApplicationsI[];
+  created_at: string;
+  updated_at: string;
 }
 
 export interface OpeningI {

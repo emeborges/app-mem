@@ -58,9 +58,7 @@ export function CurriculoForm({ initialValues }: Props) {
     const newValues: any = {
       name_tag: formatISO(new Date()),
       ...values,
-    };
-
-   
+    };  
 
     initialValues
       ? axiosAuth
@@ -72,7 +70,7 @@ export function CurriculoForm({ initialValues }: Props) {
                 "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
             });
 
-            return setTimeout(() => route.push("/app"), 3000);
+            return setTimeout(() => window.location.reload(), 3000);
           })
           .catch((e) => {
             toast({
@@ -91,7 +89,7 @@ export function CurriculoForm({ initialValues }: Props) {
                 "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
             });
 
-            return setTimeout(() => route.push("/app"), 3000);
+            return setTimeout(() => window.location.reload(), 3000);
           })
           .catch((e) => {
             toast({

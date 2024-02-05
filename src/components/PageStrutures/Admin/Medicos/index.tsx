@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/table";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { MedicI, StudentI } from "@/types/geralsI";
+import { format } from "date-fns";
 import { Loader2, Menu, Pencil, UserCog, UserPlus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -73,6 +74,8 @@ export const MedicosAdmin = ({ scope }: Props) => {
                 <TableHead>Nome</TableHead>
                 <TableHead>E-mail</TableHead>
                 <TableHead>CRM</TableHead>
+                <TableHead>Cadastro em:</TableHead>
+                <TableHead>Atualizado em:</TableHead>
                 <TableHead>Status</TableHead>
               </TableRow>
             </TableHeader>
@@ -94,6 +97,13 @@ export const MedicosAdmin = ({ scope }: Props) => {
                   <TableCell>
                     {medico.professional_certificate} -{" "}
                     {medico.federative_unit_professional_certificate}
+                  </TableCell>
+
+                  <TableCell>
+                    {format(new Date(medico.created_at), "dd/MM/yyyy")}
+                  </TableCell>
+                  <TableCell>
+                    {format(new Date(medico.updated_at), "dd/MM/yyyy")}
                   </TableCell>
 
                   <TableCell>

@@ -2,6 +2,17 @@
 
 import { EditMedicoForm } from "@/components/Forms/EditProfile/EditMedicoForm";
 import { EditStudentForm } from "@/components/Forms/EditProfile/EditStudentForm";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -30,6 +41,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { toast } from "@/components/ui/use-toast";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { MedicI, StudentI } from "@/types/geralsI";
 import { formatarCPF, getPrimeiraLetra } from "@/utils/functions";
@@ -37,6 +49,7 @@ import { format } from "date-fns";
 import { Loader2, PenLine, UserCog } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import ListaCurriculos from "../../Curriculo/ListaCurriculos";
 
 interface Props {
   scope: string;
@@ -48,6 +61,7 @@ export const UserAdmin = ({ scope }: Props) => {
   const { user } = useParams();
   const [load, setLoad] = useState(true);
   const [userData, setUserData] = useState<MedicI & StudentI>();
+  const [send, setSend] = useState(false);
 
   const getDetail = async () => {
     if (scope == "medic") {
@@ -56,19 +70,57 @@ export const UserAdmin = ({ scope }: Props) => {
       setLoad(false);
       return;
     } else {
-      await axiosAuth.get("/medic").then((e) => setUserData(e.data));
+      await axiosAuth.get(`/student/${user}`).then((e) => setUserData(e.data));
 
       setLoad(false);
       return;
     }
   };
 
+  async function handleDelete() {
+    setSend(true);
+    if (scope === "medic") {
+      await axiosAuth
+        .delete(`/medic/${user}`)
+        .then((e) => {
+          toast({
+            title: "Usuário deletado com sucesso!",
+            description: "Você será redirecionado em 3 segundos!",
+          });
+
+          return setTimeout(() => route.back(), 2000);
+        })
+        .catch((e) => {
+          setSend(false);
+          toast({
+            title: "Erro!",
+            description: "Algo deu errado, tente novamente mais tarde.",
+          });
+        });
+    } else {
+      await axiosAuth
+        .delete(`/student/${user}`)
+        .then((e) => {
+          toast({
+            title: "Usuário deletado com sucesso!",
+            description: "Você será redirecionado em 3 segundos!",
+          });
+          return setTimeout(() => route.back(), 2000);
+        })
+        .catch((e) => {
+          setSend(false);
+          toast({
+            title: "Erro!",
+            description: "Algo deu errado, tente novamente mais tarde.",
+          });
+        });
+    }
+  }
+
   useEffect(() => {
     setTimeout(getDetail, 4000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log(userData);
 
   return (
     <div className="h-full w-full ">
@@ -171,16 +223,56 @@ export const UserAdmin = ({ scope }: Props) => {
                   </div>
                 )}
               </div>
-              <div className="flex flex-col w-full gap-2 items-center justify-center">
-                <Button
-                  className="w-[15rem]"
-                  onClick={() =>
-                    route.push(`/admin/medicos/${userData?.id}/editar`)
-                  }
-                >
-                  Editar Perfil
-                </Button>
-              </div>
+              {userData?.is_active === false ? null : (
+                <div className="flex flex-col w-full gap-2 items-center justify-center">
+                  <Button
+                    className="w-[15rem]"
+                    onClick={() =>
+                      scope === "medic"
+                        ? route.push(`/admin/medicos/${userData?.id}/editar`)
+                        : route.push(`/admin/estudantes/${userData?.id}/editar`)
+                    }
+                  >
+                    Editar Perfil
+                  </Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="outline" className="w-[15rem]">
+                        {send ? (
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        ) : (
+                          "Excluir Usuário"
+                        )}
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Confirma a exclusão do usuário {userData?.name} ?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Pense bem!! Após a confirmação, o usuário não
+                          conseguirá mais entrar na plataforma ou criar contas
+                          com este e-mail
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={handleDelete}
+                          disabled={send}
+                        >
+                          {send ? (
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          ) : (
+                            "Continuar"
+                          )}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
+              )}
             </div>
           </div>
           {userData?.scope === "medic" && (
@@ -327,6 +419,15 @@ export const UserAdmin = ({ scope }: Props) => {
             </div>
           )}
 
+          {scope === "student" && (
+            <div className="rounded-lg full border bg-card text-card-foreground shadow-sm w-full">
+              <ScrollArea className="h-[250px]">
+               
+                <ListaCurriculos student={userData} />
+              </ScrollArea>
+            </div>
+          )}
+
           <div className="rounded-lg full border bg-card text-card-foreground shadow-sm w-full">
             <ScrollArea className="h-[450px]">
               <div>
@@ -335,85 +436,170 @@ export const UserAdmin = ({ scope }: Props) => {
                 </h1>
               </div>
               <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-[100px]"></TableHead>
-                  <TableHead>Nome</TableHead>
-                  <TableHead>Localização</TableHead>
-                  <TableHead>Início</TableHead>
-                  <TableHead>Fim</TableHead>
-                  <TableHead>Max Insc</TableHead>
-                  <TableHead>Qtde Insc</TableHead>
-                  <TableHead>Status</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {userData?.openings?.map((opt) => (
-                  <TableRow key={opt.id}>
-                    <TableCell>
-                      <Button
-                        variant="outline"
-                        onClick={() => route.push(`/admin/oportunidades/${opt.id}`)}
-                      >
-                        <UserCog className="text-muted-foreground text-sm" />
-                      </Button>
-                    </TableCell>
-                    <TableCell>{opt.name}</TableCell>
-
-                    <TableCell>
-                      {opt.location?.name} - 
-                      {opt.location?.address?.city} {" "}
-                      {opt.location?.address?.federative_unit_st}
-                    </TableCell>
-
-                    <TableCell>
-                      {opt.start_date &&
-                        format(new Date(opt.start_date), "dd/MM/yyyy")}
-                    </TableCell>
-
-                    <TableCell>
-                      {opt.end_date &&
-                        format(new Date(opt.end_date), "dd/MM/yyyy")}
-                    </TableCell>
-
-                    <TableCell>
-                      {" "}
-                      {opt.due_date &&
-                        format(new Date(opt.due_date), "dd/MM/yyyy")}
-                    </TableCell>
-                    <TableCell />
-
-                    <TableCell>
-                    {(() => {
-                        switch (opt.status) {
-                          case "active":
-                            return (
-                              <Badge > Abertas </Badge>
-                            );
-                          case "canceled":
-                            return (
-                              <Badge variant={"destructive"}> Cancelada </Badge>
-                            );
-                            case "finished":
-                            return (
-                              <Badge variant={"outline"}> Finalizada </Badge>
-                            );
-                          case "closed":
-                            return (
-                              <Badge variant={"secondary"}>
-                                Fechadas
-                              </Badge>
-                            );
-                          
-                          default:
-                            return null;
-                        }
-                      })()}
-                    </TableCell>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[100px]"></TableHead>
+                    <TableHead>Nome</TableHead>
+                    <TableHead>Localização</TableHead>
+                    <TableHead>Início</TableHead>
+                    <TableHead>Fim</TableHead>
+                    <TableHead>Max Insc</TableHead>
+                    <TableHead>Qtde Insc</TableHead>
+                    <TableHead>Status</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {scope === "medic"
+                    ? userData?.openings?.map((opt) => (
+                        <TableRow key={opt.id}>
+                          <TableCell>
+                            <Button
+                              variant="outline"
+                              onClick={() =>
+                                route.push(`/admin/oportunidades/${opt.id}`)
+                              }
+                            >
+                              <UserCog className="text-muted-foreground text-sm" />
+                            </Button>
+                          </TableCell>
+                          <TableCell>{opt.name}</TableCell>
+
+                          <TableCell>
+                            {opt.location?.name} -{opt.location?.address?.city}{" "}
+                            {opt.location?.address?.federative_unit_st}
+                          </TableCell>
+
+                          <TableCell>
+                            {opt.start_date &&
+                              format(new Date(opt.start_date), "dd/MM/yyyy")}
+                          </TableCell>
+
+                          <TableCell>
+                            {opt.end_date &&
+                              format(new Date(opt.end_date), "dd/MM/yyyy")}
+                          </TableCell>
+
+                          <TableCell>
+                            {" "}
+                            {opt.due_date &&
+                              format(new Date(opt.due_date), "dd/MM/yyyy")}
+                          </TableCell>
+                          <TableCell />
+
+                          <TableCell>
+                            {(() => {
+                              switch (opt.status) {
+                                case "active":
+                                  return <Badge> Abertas </Badge>;
+                                case "canceled":
+                                  return (
+                                    <Badge variant={"destructive"}>
+                                      {" "}
+                                      Cancelada{" "}
+                                    </Badge>
+                                  );
+                                case "finished":
+                                  return (
+                                    <Badge variant={"outline"}>
+                                      {" "}
+                                      Finalizada{" "}
+                                    </Badge>
+                                  );
+                                case "closed":
+                                  return (
+                                    <Badge variant={"secondary"}>
+                                      Fechadas
+                                    </Badge>
+                                  );
+
+                                default:
+                                  return null;
+                              }
+                            })()}
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    : userData?.applications?.map((opt) => (
+                        <TableRow key={opt.id}>
+                          <TableCell>
+                            <Button
+                              variant="outline"
+                              onClick={() =>
+                                route.push(`/admin/oportunidades/${opt.id}`)
+                              }
+                            >
+                              <UserCog className="text-muted-foreground text-sm" />
+                            </Button>
+                          </TableCell>
+                          <TableCell>{opt.opening.name}</TableCell>
+
+                          <TableCell>
+                            {opt.opening.location?.name} -
+                            {opt.opening.location?.address?.city}{" "}
+                            {opt.opening.location?.address?.federative_unit_st}
+                          </TableCell>
+
+                          <TableCell>
+                            {opt.opening.start_date &&
+                              format(
+                                new Date(opt.opening.start_date),
+                                "dd/MM/yyyy"
+                              )}
+                          </TableCell>
+
+                          <TableCell>
+                            {opt.opening.end_date &&
+                              format(
+                                new Date(opt.opening.end_date),
+                                "dd/MM/yyyy"
+                              )}
+                          </TableCell>
+
+                          <TableCell>
+                            {" "}
+                            {opt.opening.due_date &&
+                              format(
+                                new Date(opt.opening.due_date),
+                                "dd/MM/yyyy"
+                              )}
+                          </TableCell>
+                          <TableCell />
+
+                          <TableCell>
+                            {(() => {
+                              switch (opt.status) {
+                                case "active":
+                                  return <Badge> Abertas </Badge>;
+                                case "canceled":
+                                  return (
+                                    <Badge variant={"destructive"}>
+                                      {" "}
+                                      Cancelada{" "}
+                                    </Badge>
+                                  );
+                                case "selected":
+                                  return (
+                                    <Badge variant={"outline"}>
+                                      {" "}
+                                      Selecionado{" "}
+                                    </Badge>
+                                  );
+                                case "closed":
+                                  return (
+                                    <Badge variant={"secondary"}>
+                                      Fechadas
+                                    </Badge>
+                                  );
+
+                                default:
+                                  return null;
+                              }
+                            })()}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                </TableBody>
+              </Table>
             </ScrollArea>
           </div>
         </div>

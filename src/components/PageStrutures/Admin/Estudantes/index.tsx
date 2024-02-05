@@ -3,6 +3,7 @@
 import { EditMedicoForm } from "@/components/Forms/EditProfile/EditMedicoForm";
 import { EditStudentForm } from "@/components/Forms/EditProfile/EditStudentForm";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -13,7 +14,9 @@ import {
 } from "@/components/ui/table";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { MedicI, StudentI } from "@/types/geralsI";
-import { Loader2 } from "lucide-react";
+import { format } from "date-fns";
+import { Loader2, UserCog } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface Props {
@@ -24,6 +27,7 @@ export const EstudantesAdmin = ({ scope }: Props) => {
   const axiosAuth = useAxiosAuth();
   const [load, setLoad] = useState(true);
   const [estudantes, setEstudantes] = useState<StudentI[]>();
+  const router = useRouter();
 
   const getEstudantes = async () => {
     await axiosAuth.get("/student").then((e) => setEstudantes(e.data));
@@ -59,18 +63,33 @@ export const EstudantesAdmin = ({ scope }: Props) => {
                 <TableHead>Nome</TableHead>
                 <TableHead>Semestre</TableHead>
                 <TableHead>Faculdade</TableHead>
+                <TableHead>Cadastro em:</TableHead>
+                <TableHead>Atualizado em:</TableHead>
                 <TableHead>Status</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {estudantes?.map((est) => (
                 <TableRow key={est.id}>
-                  <TableCell />
+                  <TableCell>
+                    <Button
+                      variant="outline"
+                      onClick={() => router.push(`/admin/estudantes/${est.id}`)}
+                    >
+                      <UserCog className="text-muted-foreground text-sm" />
+                    </Button>
+                  </TableCell>
                   <TableCell className=" ">{est.name}</TableCell>
                   <TableCell>{est.school_term}</TableCell>
 
                   <TableCell>{est.university?.name}</TableCell>
 
+                  <TableCell>
+                    {format(new Date(est.created_at), "dd/MM/yyyy")}
+                  </TableCell>
+                  <TableCell>
+                    {format(new Date(est.updated_at), "dd/MM/yyyy")}
+                  </TableCell>
                   <TableCell>
                     {" "}
                     {est.is_active ? (

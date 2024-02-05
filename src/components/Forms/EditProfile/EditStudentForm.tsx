@@ -13,7 +13,7 @@ import "../../react-datepicker.css";
 import { formatISO, sub } from "date-fns";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
-import { MedicI, StudentI } from "@/types/geralsI";
+import { MedicI, StudentI, UniversityI } from "@/types/geralsI";
 import { InputForm } from "@/components/Inputs/InputForm";
 import { InputMaskForm } from "@/components/Inputs/InputMaskForm";
 import { InputDateForm } from "@/components/Inputs/InputDateForm";
@@ -77,10 +77,10 @@ const formSchema = z.object({
 
 interface Props {
   initialValues?: StudentI;
-  height?: string;
+  admin?: boolean;
 }
 
-export function EditStudentForm({ initialValues, height }: Props) {
+export function EditStudentForm({ initialValues, admin }: Props) {
   const { toast } = useToast();
   const route = useRouter();
   const [load, setLoad] = useState(false);
@@ -88,37 +88,58 @@ export function EditStudentForm({ initialValues, height }: Props) {
     resolver: zodResolver(formSchema),
   });
   const axiosAuth = useAxiosAuth();
-  const [universitys, setUniversitys] = useState();
+  const [universitys, setUniversitys] = useState<any[]>();
 
   const onSubmit = async (values: any) => {
     setLoad(true);
-    const newValues: any = {
-      phone_number: values.phone_number,
-      birthdate: formatISO(values.birthdate),
-      school_term: values.school_term.toString()
-    };
+
+    const newValues: any = admin
+      ? { ...values, school_term: values.school_term.toString() }
+      : {
+          phone_number: values.phone_number,
+          birthdate: formatISO(values.birthdate),
+          school_term: values.school_term.toString(),
+        };
 
     if (values.picture) {
       newValues["picture"] = values.picture;
     }
 
-    axiosAuth
-      .patch("/student", { student: newValues })
-      .then((e) => {
-        toast({
-          title: "Sucesso!",
-          description:
-            "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
-        });
+    admin
+      ? axiosAuth
+          .patch(`/student/${initialValues?.id}`, { student: newValues })
+          .then((e) => {
+            toast({
+              title: "Sucesso!",
+              description:
+                "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
+            });
 
-        return setTimeout(() => route.push("/app"), 3000);
-      })
-      .catch((e) => {
-        toast({
-          title: "Erro!",
-          description: "Algo deu errado, por gentileza, tente mais tarde.",
-        });
-      });
+            return setTimeout(() => route.back(), 3000);
+          })
+          .catch((e) => {
+            toast({
+              title: "Erro!",
+              description: "Algo deu errado, por gentileza, tente mais tarde.",
+            });
+          })
+      : axiosAuth
+          .patch("/student", { student: newValues })
+          .then((e) => {
+            toast({
+              title: "Sucesso!",
+              description:
+                "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
+            });
+
+            return setTimeout(() => route.push("/app"), 3000);
+          })
+          .catch((e) => {
+            toast({
+              title: "Erro!",
+              description: "Algo deu errado, por gentileza, tente mais tarde.",
+            });
+          });
   };
 
   async function getDados() {
@@ -127,7 +148,7 @@ export function EditStudentForm({ initialValues, height }: Props) {
 
   useEffect(() => {
     getDados();
-
+    console.log(initialValues);
     initialValues &&
       form.reset({
         name: initialValues.name,
@@ -143,7 +164,14 @@ export function EditStudentForm({ initialValues, height }: Props) {
             value: initialValues.school_term?.toString(),
           },
         ],
-        university: initialValues.university?.name,
+        university: admin
+          ? [
+              {
+                label: initialValues?.university?.name,
+                value: initialValues?.university?.id,
+              },
+            ]
+          : initialValues?.university?.name,
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -174,14 +202,14 @@ export function EditStudentForm({ initialValues, height }: Props) {
               name={"name"}
               placeholder="Digite seu Nome"
               className="py-2"
-              disable
+              disable={!admin}
             />
             <InputForm
               formControl={form.control}
               name={"email"}
               placeholder="Digite seu melhor e-mail"
               className="py-2"
-              disable
+              disable={!admin}
             />
             <InputMaskForm
               formControl={form.control}
@@ -199,24 +227,39 @@ export function EditStudentForm({ initialValues, height }: Props) {
                 placeholder="Data de Aniversario"
               />
 
-              <InputForm
+              <InputMaskForm
                 formControl={form.control}
                 className="w-full max-w-[50%]"
                 name={"tax_document"}
+                mask={"___.___.___-__"}
                 placeholder="Digite seu CPF"
-                disable
+                disable={!admin}
               />
             </div>
 
             <div className=" py-2 flex gap-2 w-full">
-              <InputForm
-                formControl={form.control}
-                name={"university"}
-                placeholder="Universidade"
-                className=" w-full"
-                label="Faculdade"
-                disable
-              />
+              {admin ? (
+                <InputMultiSelectForm
+                  formControl={form.control}
+                  label={"Faculdade"}
+                  name={"university"}
+                  placeholder="Universidade"
+                  maxItens={1}
+                  className="w-full"
+                  itens={
+                    universitys && optionsSelects(universitys, "id", "name")
+                  }
+                />
+              ) : (
+                <InputForm
+                  formControl={form.control}
+                  name={"university"}
+                  placeholder="Universidade"
+                  className=" w-full"
+                  label="Faculdade"
+                  disable={!admin}
+                />
+              )}
             </div>
             <div className=" py-2 flex gap-2 w-full">
               <InputMultiSelectForm

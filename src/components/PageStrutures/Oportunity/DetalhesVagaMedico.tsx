@@ -32,7 +32,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { toast } from "@/components/ui/use-toast";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface Props {
   details?: OpeningI;
@@ -67,7 +77,7 @@ export const DetalhesMedico = ({ details }: Props) => {
     setLoad(true);
 
     await axiosAuth
-      .put(`/opening/${details?.id}/finish`)
+      .post(`/opening/${details?.id}/finish`)
       .then((e) => {
         toast({
           title: "Sucesso!",
@@ -77,7 +87,12 @@ export const DetalhesMedico = ({ details }: Props) => {
 
         setTimeout(() => window.location.reload(), 5000);
       })
-      .catch((e) => window.location.reload());
+      .catch((e) => {
+        toast({
+          title: "Erro!",
+          description: "Algo deu errado, tente novamente mais tarde.",
+        });
+      });
 
     setTimeout(() => setLoad(false), 5000);
   };
@@ -140,44 +155,46 @@ export const DetalhesMedico = ({ details }: Props) => {
                       totalInscritos={selecionados?.length}
                       maxInscritos={Number(details.max_selection)}
                     />
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="outline">
-                          <Settings />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="w-56 flex flex-col gap-2">
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <Button variant={"destructive"} disabled={load}>
-                              Desconsiderar Seleção
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent className="sm:max-w-[425px]">
-                            <DialogHeader>
-                              <DialogTitle>Desconsiderar Seleção</DialogTitle>
-                              <DialogDescription>
-                                Você tem certeza que deseja desconsiderar a
-                                inscrições de {selecionado.student.name}
-                                para esta oportunidade?
-                              </DialogDescription>
-                            </DialogHeader>
-
-                            <DialogFooter>
-                              <Button
-                                onClick={() =>
-                                  selecionado.student.id &&
-                                  handleDesconsiderar(selecionado.student.id)
-                                }
-                                disabled={load}
-                              >
-                                Confirmar
+                    {details.status === "finished" ? null : (
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="outline">
+                            <Settings />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-56 flex flex-col gap-2">
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button variant={"destructive"} disabled={load}>
+                                Desconsiderar Seleção
                               </Button>
-                            </DialogFooter>
-                          </DialogContent>
-                        </Dialog>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-[425px]">
+                              <DialogHeader>
+                                <DialogTitle>Desconsiderar Seleção</DialogTitle>
+                                <DialogDescription>
+                                  Você tem certeza que deseja desconsiderar a
+                                  inscrições de {selecionado.student.name}
+                                  para esta oportunidade?
+                                </DialogDescription>
+                              </DialogHeader>
+
+                              <DialogFooter>
+                                <Button
+                                  onClick={() =>
+                                    selecionado.student.id &&
+                                    handleDesconsiderar(selecionado.student.id)
+                                  }
+                                  disabled={load}
+                                >
+                                  Confirmar
+                                </Button>
+                              </DialogFooter>
+                            </DialogContent>
+                          </Dialog>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    )}
                   </div>
                   {selecionado.status === "selected" && (
                     <p className="py-2">
@@ -191,41 +208,44 @@ export const DetalhesMedico = ({ details }: Props) => {
             ))}
           </div>
           <div className="flex w-full pt-2 gap-2">
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button variant="outline" disabled={load}>
-                {load ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  "Finalizar Seleção"
-                )}
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>
-                  Confirma a finalização da seleção?
-                </AlertDialogTitle>
-                <AlertDialogDescription>
-                  Após a confirmação, não será permitido a alteração dos
-                  selecionados, tem certeza que deseja continuar assim mesmo??
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={handleFinalizar}
-                  disabled={load}
-                >
-                  {load ? (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  ) : (
-                    "Continuar"
-                  )}
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+            {details.status === "finished" ? null : (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="outline" disabled={load}>
+                    {load ? (
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    ) : (
+                      "Finalizar Seleção"
+                    )}
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Confirma a finalização da seleção?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Após a confirmação, não será permitido a alteração dos
+                      selecionados, tem certeza que deseja continuar assim
+                      mesmo??
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleFinalizar}
+                      disabled={load}
+                    >
+                      {load ? (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      ) : (
+                        "Continuar"
+                      )}
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            )}
           </div>
         </div>
       )}

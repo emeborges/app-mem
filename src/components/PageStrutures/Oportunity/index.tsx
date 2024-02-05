@@ -12,11 +12,9 @@ import { useEffect, useState } from "react";
 import { DetalhesMedico } from "./DetalhesVagaMedico";
 import { Button } from "@/components/ui/button";
 import { ModalConfirmSelect } from "./ModalConfirmSelect";
-import { maior } from "@/utils/functions";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { ModalConfirmCancel } from "./ModalConfirmCancel";
 
 interface Props {
@@ -55,6 +53,12 @@ export function Oportunity({ session }: Props) {
     Number(me?.school_term) >= Number(vagaDetails?.school_term_min) &&
     Number(me?.school_term) <= Number(vagaDetails?.school_term_max);
 
+  console.log(
+    vagaDetails &&
+      vagaDetails?.status !== "closed" &&
+      vagaDetails.applications.length > 0
+  );
+
   return (
     <div className="h-full w-full ">
       {load ? (
@@ -71,7 +75,11 @@ export function Oportunity({ session }: Props) {
                 vagaDetails?.status !== "canceled" && (
                   <Link
                     className="rounded-lg border p-2"
-                    href={session?.scope === 'medic' ? `/app/oportunidade/${vagaDetails?.id}/edit` : `/admin/oportunidades/${vagaDetails?.id}/edit`}
+                    href={
+                      session?.scope === "medic"
+                        ? `/app/oportunidade/${vagaDetails?.id}/edit`
+                        : `/admin/oportunidades/${vagaDetails?.id}/edit`
+                    }
                   >
                     Editar
                   </Link>
@@ -167,104 +175,107 @@ export function Oportunity({ session }: Props) {
             </div>
           </div>
 
-          {session?.scope === "medic" || session?.scope === "admin"  ? (
+          {session?.scope === "medic" || session?.scope === "admin" ? (
             <DetalhesMedico details={vagaDetails} />
           ) : (
-            <div>
-              <div className="flex items-center">
-                <p>Área do Aluno</p>
-                <Separator className="my-4 ml-2 max-w-[80%]" />
-              </div>
-              {!AnoValidation ? (
-                <Alert variant="default">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertTitle>Requisitos não compatíveis</AlertTitle>
-                  <AlertDescription>
-                    Infelizmente, você não se enquadra nos requisitos mínimos
-                    para essa vaga, tente outra vaga.
-                  </AlertDescription>
-                </Alert>
-              ) : me?.curriculums && me?.curriculums?.length > 0 ? (
-                vagaDetails &&
-                vagaDetails?.status !== "closed" &&
-                vagaDetails.applications.length > 0 ? (
-                  vagaDetails.applications.find(
-                    (x) => x.status !== "canceled"
-                  ) ? (
+            vagaDetails?.status !== "canceled" && (
+              <div>
+                <div className="flex items-center">
+                  <p>Área do Aluno</p>
+                  <Separator className="my-4 ml-2 max-w-[80%]" />
+                </div>
+                {!AnoValidation ? (
+                  <Alert variant="default">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertTitle>Requisitos não compatíveis</AlertTitle>
+                    <AlertDescription>
+                      Infelizmente, você não se enquadra nos requisitos mínimos
+                      para essa vaga, tente outra vaga.
+                    </AlertDescription>
+                  </Alert>
+                ) : me?.curriculums && me?.curriculums?.length > 0 ? (
+                  vagaDetails &&
+                  vagaDetails?.status !== "closed"  ? (
                     vagaDetails.applications.find(
-                      (x) => x.status === "selected"
+                      (x) => x.status !== "canceled"
                     ) ? (
-                      <Alert>
-                        <Medal className="h-4 w-4" />
-                        <AlertTitle>Você foi selecionado!</AlertTitle>
-                        <AlertDescription>
-                          <div>
-                            <p>
-                              Parabéns, você foi SELECIONADO!! Fique atento aos
-                              seus contatos cadastrados, o médico entrará em
-                              contato diretamente por lá!
-                            </p>
-                            <p>
-                              Agora é só esperar e se dedicar ao máximo ao
-                              estágio!
-                            </p>
-                          </div>
-                        </AlertDescription>
-                      </Alert>
-                    ) : vagaDetails.applications.find(
-                        (x) => x.status === "closed"
+                      vagaDetails.applications.find(
+                        (x) => x.status === "selected"
                       ) ? (
-                      <Alert>
-                        <Frown className="h-4 w-4" />
-                        <AlertTitle>Vaga Finalizada!</AlertTitle>
-                        <AlertDescription>
-                          <div>
-                            <p>Infelizmente, não foi desta vez!</p>
-                            <p>
-                              Mas não desanime, existem várias outras
-                              oportunidades. Sua hora irá chegar!
-                            </p>
-                          </div>
-                        </AlertDescription>
-                      </Alert>
+                        <Alert>
+                          <Medal className="h-4 w-4" />
+                          <AlertTitle>Você foi selecionado!</AlertTitle>
+                          <AlertDescription>
+                            <div>
+                              <p>
+                                Parabéns, você foi SELECIONADO!! Fique atento
+                                aos seus contatos cadastrados, o médico entrará
+                                em contato diretamente por lá!
+                              </p>
+                              <p>
+                                Agora é só esperar e se dedicar ao máximo ao
+                                estágio!
+                              </p>
+                            </div>
+                          </AlertDescription>
+                        </Alert>
+                      ) : vagaDetails.applications.find(
+                          (x) => x.status === "closed"
+                        ) ? (
+                        <Alert>
+                          <Frown className="h-4 w-4" />
+                          <AlertTitle>Vaga Finalizada!</AlertTitle>
+                          <AlertDescription>
+                            <div>
+                              <p>Infelizmente, não foi desta vez!</p>
+                              <p>
+                                Mas não desanime, existem várias outras
+                                oportunidades. Sua hora irá chegar!
+                              </p>
+                            </div>
+                          </AlertDescription>
+                        </Alert>
+                      ) : (
+                        <Alert>
+                          <RocketIcon className="h-4 w-4" />
+                          <AlertTitle>Candidatura Realizada!</AlertTitle>
+                          <AlertDescription>
+                            <div>
+                              <p>
+                                Parabéns, você foi cadastrado com sucesso! Fique
+                                atento aos seus contatos cadastrados, qualquer
+                                novidade, te comunicaremos por lá!
+                              </p>
+                            </div>
+                            <div>
+                              Você também pode desistir da vaga,{" "}
+                              <ModalConfirmCancel id={vagaDetails?.id} />
+                            </div>
+                          </AlertDescription>
+                        </Alert>
+                      )
                     ) : (
-                      <Alert>
-                        <RocketIcon className="h-4 w-4" />
-                        <AlertTitle>Candidatura Realizada!</AlertTitle>
-                        <AlertDescription>
-                          <div>
-                            <p>
-                              Parabéns, você foi cadastrado com sucesso! Fique
-                              atento aos seus contatos cadastrados, qualquer
-                              novidade, te comunicaremos por lá!
-                            </p>
-                          </div>
-                          <div>
-                            Você também pode desistir da vaga,{" "}
-                            <ModalConfirmCancel id={vagaDetails?.id} />
-                          </div>
-                        </AlertDescription>
-                      </Alert>
+                      <ModalConfirmSelect id={vagaDetails?.id} />
                     )
                   ) : (
-                    <ModalConfirmSelect id={vagaDetails?.id} />
+                    <div>
+                      <Label> Inscrições fechadas no momento. </Label>
+                    </div>
                   )
                 ) : (
-                  <ModalConfirmSelect id={vagaDetails?.id} />
-                )
-              ) : (
-                <div>
-                  <Label>
-                    {" "}
-                    Para se inscriver, é necessário ter um currículo cadastrado,
-                    cadastre-o já:
-                  </Label>
-                  <Link href={"/app/curriculo"}>
-                    <Button variant={"outline"}>Cadastrar Currículo</Button>
-                  </Link>
-                </div>
-              )}
-            </div>
+                  <div>
+                    <Label>
+                      {" "}
+                      Para se inscriver, é necessário ter um currículo
+                      cadastrado, cadastre-o já:
+                    </Label>
+                    <Link href={"/app/curriculo"}>
+                      <Button variant={"outline"}>Cadastrar Currículo</Button>
+                    </Link>
+                  </div>
+                )}
+              </div>
+            )
           )}
         </div>
       )}
