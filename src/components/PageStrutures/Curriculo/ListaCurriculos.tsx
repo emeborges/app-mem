@@ -1,15 +1,7 @@
-import { CentralizerContainer } from "@/components/CentralizerContainer";
 import { CurriculoForm } from "@/components/Forms/Curriculo/CurriculoForm";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { CardContent } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -19,11 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { StudentI } from "@/types/geralsI";
-import { formatarCPF, getPrimeiraLetra } from "@/utils/functions";
-import { format } from "date-fns";
 import { FileDown } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 interface Props {
   student?: StudentI;
@@ -66,7 +54,7 @@ export default function ListaCurriculos({ student }: Props) {
                       <Button variant="outline">Editar</Button>
                     </DialogTrigger>
                     <DialogContent className="sm:max-w-[425px]">
-                      <CurriculoForm  initialValues={curriculum}/>
+                      <CurriculoForm initialValues={curriculum} />
                     </DialogContent>
                   </Dialog>
                 </TableCell>

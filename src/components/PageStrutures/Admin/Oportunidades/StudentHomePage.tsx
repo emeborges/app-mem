@@ -1,6 +1,5 @@
 "use client";
 
-import { EstagioCard } from "@/components/EstagioCard";
 import { SingleDate } from "@/components/Inputs/InputSingleDate";
 import { MultiSelect } from "@/components/Inputs/MultiSelect";
 import { SelectSimple } from "@/components/Inputs/Select";
@@ -23,10 +22,9 @@ import {
 import { toast } from "@/components/ui/use-toast";
 import axios from "@/lib/axios";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { MedicI, OpeningI, SpecialityI } from "@/types/geralsI";
+import { OpeningI, SpecialityI } from "@/types/geralsI";
 import { editarString } from "@/utils/functions";
-import { optionsSelects } from "@/utils/options";
-import { differenceInDays, format, isAfter, isBefore, toDate } from "date-fns";
+import { differenceInDays, format, isBefore, toDate } from "date-fns";
 import { Loader2, UserCog } from "lucide-react";
 import { Session } from "next-auth/core/types";
 import { useRouter } from "next/navigation";

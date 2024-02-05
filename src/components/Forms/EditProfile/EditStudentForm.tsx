@@ -13,7 +13,7 @@ import "../../react-datepicker.css";
 import { formatISO, sub } from "date-fns";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
-import { MedicI, StudentI, UniversityI } from "@/types/geralsI";
+import { StudentI } from "@/types/geralsI";
 import { InputForm } from "@/components/Inputs/InputForm";
 import { InputMaskForm } from "@/components/Inputs/InputMaskForm";
 import { InputDateForm } from "@/components/Inputs/InputDateForm";
@@ -25,8 +25,6 @@ import { InputMultiSelectForm } from "@/components/Inputs/InputMultiSelectForm";
 import { Anos, optionsSelects } from "@/utils/options";
 import axios from "@/lib/axios";
 
-const REG_Mai =
-  /(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g;
 
 const formSchema = z.object({
   name: z.string({ required_error: "Nome é necessário" }).optional().nullable(),

@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
 import ptBR from "date-fns/locale/pt-BR";
-import { ReactNode } from "react";
+
 
 registerLocale("ptBR", ptBR);
 setDefaultLocale("ptBR");

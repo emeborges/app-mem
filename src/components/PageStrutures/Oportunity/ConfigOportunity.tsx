@@ -1,16 +1,11 @@
 "use client";
-import {
-  DropdownMenuCheckboxItemProps,
-  Label,
-} from "@radix-ui/react-dropdown-menu";
+
+import { Label } from "@radix-ui/react-dropdown-menu";
 
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useEffect, useState } from "react";
@@ -36,7 +31,6 @@ import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 import { ptBR } from "date-fns/locale";
 import { differenceInDays, format, formatISO } from "date-fns";
-import { FormMessage } from "@/components/ui/form";
 
 interface Props {
   status?: string;
@@ -49,7 +43,7 @@ export function ConfigsOportunity({ status, id, startDate }: Props) {
   const axiosAuth = useAxiosAuth();
   const [load, setLoad] = useState(false);
   const [dueDate, setDueDate] = useState<any>();
-  const [validation, setValidation] = useState(true)
+  const [validation, setValidation] = useState(true);
 
   async function CancelarVaga() {
     setLoad(true);
@@ -65,13 +59,12 @@ export function ConfigsOportunity({ status, id, startDate }: Props) {
   }
 
   useEffect(() => {
-    if(startDate && dueDate) {
-      if(differenceInDays(new Date(startDate), new Date(dueDate)) > 0){
-        setValidation(false)
+    if (startDate && dueDate) {
+      if (differenceInDays(new Date(startDate), new Date(dueDate)) > 0) {
+        setValidation(false);
       }
     }
-    
-  }, [dueDate, startDate])
+  }, [dueDate, startDate]);
 
   async function FecharInscricoes() {
     setLoad(true);
@@ -85,20 +78,22 @@ export function ConfigsOportunity({ status, id, startDate }: Props) {
       return setTimeout(() => location.reload(), 3000);
     });
   }
-  
+
   async function ReabrirInscricoes() {
     setLoad(true);
-    await axiosAuth.patch(`opening/${id}/reopen`, {
-      opening: {due_date: dueDate}
-    }).then((e) => {
-      toast({
-        title: "Ok!",
-        description:
-          "As inscrições foram reabertas, sua página será atualizada em 3 segundos",
-      });
+    await axiosAuth
+      .patch(`opening/${id}/reopen`, {
+        opening: { due_date: dueDate },
+      })
+      .then((e) => {
+        toast({
+          title: "Ok!",
+          description:
+            "As inscrições foram reabertas, sua página será atualizada em 3 segundos",
+        });
 
-      return setTimeout(() => location.reload(), 3000);
-    });
+        return setTimeout(() => location.reload(), 3000);
+      });
   }
 
   return (
@@ -168,24 +163,33 @@ export function ConfigsOportunity({ status, id, startDate }: Props) {
                           mode="single"
                           selected={dueDate}
                           onSelect={(e) => {
-                            return e && setDueDate(formatISO(e))}}
+                            return e && setDueDate(formatISO(e));
+                          }}
                           initialFocus
                           className=" bg-white"
                         />
                       </PopoverContent>
                     </Popover>
-                    {startDate && dueDate && (differenceInDays(new Date(startDate), new Date(dueDate)) > 0 ? (
-                      null
-                    ) : (
-                      <Label className="text-red-500 text-xs">Data de Vencimento deve ser menor que a data de Início do Estágio</Label>
-                    ))}
+                    {startDate &&
+                      dueDate &&
+                      (differenceInDays(
+                        new Date(startDate),
+                        new Date(dueDate)
+                      ) > 0 ? null : (
+                        <Label className="text-red-500 text-xs">
+                          Data de Vencimento deve ser menor que a data de Início
+                          do Estágio
+                        </Label>
+                      ))}
                   </div>
                 </DialogDescription>
               </DialogHeader>
 
               <DialogFooter>
-                <Button onClick={ReabrirInscricoes} disabled={validation || load}>
-                
+                <Button
+                  onClick={ReabrirInscricoes}
+                  disabled={validation || load}
+                >
                   Confirmar
                 </Button>
               </DialogFooter>

@@ -1,19 +1,11 @@
 "use client";
 
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { SyntheticEvent, useState } from "react";
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/use-toast";
 import { Loader2 } from "lucide-react";
-import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import axios from "@/lib/axios";
 import { RecuperarForm } from "@/components/Forms/RecuperarSenha";
 

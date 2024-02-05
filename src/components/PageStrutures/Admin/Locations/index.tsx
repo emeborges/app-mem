@@ -3,15 +3,14 @@
 
 import { LocationForm } from "@/components/Forms/Locations/LocationsForm";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { LocationsI, MedicI } from "@/types/geralsI";
+import { LocationsI } from "@/types/geralsI";
 import { Loader2 } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
 export const LocationsAdmin = () => {
   const axiosAuth = useAxiosAuth();
-  const route = useRouter();
   const { id } = useParams();
   const [load, setLoad] = useState(true);
   const [location, setLocation] = useState<LocationsI>();

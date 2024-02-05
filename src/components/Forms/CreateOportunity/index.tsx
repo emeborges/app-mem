@@ -25,7 +25,6 @@ import {
 import { useRouter } from "next/navigation";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { toast } from "@/components/ui/use-toast";
-import { Session } from "next-auth/core/types";
 import { Switch } from "@/components/ui/switch";
 import { InputForm } from "@/components/Inputs/InputForm";
 import { InputSelectForm } from "@/components/Inputs/InputSelectForm";

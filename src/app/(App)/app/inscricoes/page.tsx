@@ -1,4 +1,4 @@
-import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route";
+
 import { CentralizerContainer } from "@/components/CentralizerContainer";
 import { MinhasInscricoes } from "@/components/PageStrutures/MinhasInscricoes";
 

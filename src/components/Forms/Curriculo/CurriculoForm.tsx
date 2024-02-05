@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { CardContent, CardFooter } from "@/components/ui/card";
+import { CardContent, } from "@/components/ui/card";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -13,15 +13,13 @@ import "../../react-datepicker.css";
 
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
-import { CurriculumObj, MedicI } from "@/types/geralsI";
+import { CurriculumObj } from "@/types/geralsI";
 
 import { InputDocForm } from "@/components/Inputs/InputDocForm";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { TextInput } from "@/components/Inputs/TextInput";
 import { formatISO } from "date-fns";
 
-const REG_Mai =
-  /(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g;
 
 const formSchema = z.object({
   file: z.object(

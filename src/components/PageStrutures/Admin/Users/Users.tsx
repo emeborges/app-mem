@@ -1,7 +1,5 @@
 "use client";
 
-import { EditMedicoForm } from "@/components/Forms/EditProfile/EditMedicoForm";
-import { EditStudentForm } from "@/components/Forms/EditProfile/EditStudentForm";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -16,7 +14,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Command } from "@/components/ui/command";
 import {
   Dialog,
   DialogContent,
@@ -25,13 +22,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,

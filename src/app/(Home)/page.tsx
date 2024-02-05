@@ -1,11 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { CentralizerContainer } from "@/components/CentralizerContainer";
 import { StepsMedic, StepsStudent } from "@/utils/textos";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { StartAnimation } from "@/components/ScrollAnimation";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -15,7 +13,6 @@ import { InfosForm } from "@/components/Forms/Home/InfosForm";
 import { FooterHome } from "@/components/Footer/FooterHome";
 
 export default function Home() {
-  const router = useRouter();
   const [selected, setSelected] = useState(false);
 
   return (

@@ -1,17 +1,16 @@
 "use client";
 
-import { EditMedicoForm } from "@/components/Forms/EditProfile/EditMedicoForm";
 import { UniversityForm } from "@/components/Forms/University/UniversityForm";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { MedicI } from "@/types/geralsI";
 import { Loader2 } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
 export const EditUniversidadeAdmin = () => {
   const axiosAuth = useAxiosAuth();
-  const route = useRouter();
+
   const { id } = useParams();
   const [load, setLoad] = useState(true);
   const [universidade, setUniversidade] = useState<MedicI>();

@@ -3,7 +3,6 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -12,7 +11,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { axiosAuth } from "@/lib/axios";
-import { OpeningI } from "@/types/geralsI";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -23,9 +21,10 @@ interface Props {
 
 export const ModalConfirmSelect = ({ id }: Props) => {
   const [load, setLoad] = useState<boolean>(false);
-  const route = useRouter()
+  const route = useRouter();
 
   function handleSubmition() {
+    setLoad(true)
     axiosAuth
       .post(`/opening/${id}/application`)
       .then((e) => {
@@ -35,7 +34,7 @@ export const ModalConfirmSelect = ({ id }: Props) => {
             "Você se candidatou a esta oportunidade, fique atento aos seus contatos cadastrados no seu perfil. Você será redirecionado em 3 segundos.",
         });
 
-        return setTimeout(() =>  window.location.reload(), 5000);
+        return setTimeout(() => window.location.reload(), 5000);
       })
       .catch((e) => {
         toast({
@@ -48,7 +47,7 @@ export const ModalConfirmSelect = ({ id }: Props) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button  disabled={load}>
+        <Button disabled={load}>
           {load ? (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           ) : (

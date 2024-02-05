@@ -1,11 +1,10 @@
 "use client";
 
-import { EditMedicoForm } from "@/components/Forms/EditProfile/EditMedicoForm";
 import { EditStudentForm } from "@/components/Forms/EditProfile/EditStudentForm";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { StudentI } from "@/types/geralsI";
 import { Loader2 } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 

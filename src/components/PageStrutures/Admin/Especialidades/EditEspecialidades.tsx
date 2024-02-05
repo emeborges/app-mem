@@ -1,14 +1,11 @@
 "use client";
 
-import { EditMedicoForm } from "@/components/Forms/EditProfile/EditMedicoForm";
 import { EspecialidadesForm } from "@/components/Forms/Especialidade/EspecialidadesForm";
-import { UniversityForm } from "@/components/Forms/University/UniversityForm";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { MedicI, SpecialityI } from "@/types/geralsI";
+import { SpecialityI } from "@/types/geralsI";
 import { Loader2 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-
 
 export const EditEspecialidadesAdmin = () => {
   const axiosAuth = useAxiosAuth();
@@ -18,12 +15,12 @@ export const EditEspecialidadesAdmin = () => {
   const [especialidade, setEspecialidade] = useState<SpecialityI>();
 
   const getDetail = async () => {
+    await axiosAuth
+      .get(`/speciality/${id}`)
+      .then((e) => setEspecialidade(e.data));
 
-      await axiosAuth.get(`/speciality/${id}`).then((e) => setEspecialidade(e.data));
-
-      setLoad(false);
-      return;
-
+    setLoad(false);
+    return;
   };
 
   useEffect(() => {

@@ -21,12 +21,9 @@ import { InputDocForm } from "@/components/Inputs/InputDocForm";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getPrimeiraLetra } from "@/utils/functions";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { InputSelectForm } from "@/components/Inputs/InputSelectForm";
 import { Estados } from "@/utils/options";
 import { InputMultiSelectForm } from "@/components/Inputs/InputMultiSelectForm";
 
-const REG_Mai =
-  /(?=^.{8,}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/g;
 
 const formSchema: any = z.object({
   name: z.string({ required_error: "Nome é necessário" }).optional().nullable(),

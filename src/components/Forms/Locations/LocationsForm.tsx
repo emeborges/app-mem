@@ -7,14 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { InputForm } from "../../Inputs/InputForm";
-import { TextInput } from "../../Inputs/TextInput";
 import { InputMaskForm } from "@/components/Inputs/InputMaskForm";
-import { InputSelectForm } from "@/components/Inputs/InputSelectForm";
 import {
   Estados,
   LocationsTypes,
-  LocationsTypesEnum,
-  Modalidade,
   ModalitiesTypes,
   enumTypeObj,
   optionsSelects,

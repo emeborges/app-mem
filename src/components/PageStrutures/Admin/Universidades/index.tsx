@@ -1,27 +1,7 @@
 "use client";
 
-import { EditMedicoForm } from "@/components/Forms/EditProfile/EditMedicoForm";
-import { EditStudentForm } from "@/components/Forms/EditProfile/EditStudentForm";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   Table,
   TableBody,
@@ -31,8 +11,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { MedicI, StudentI, UniversityI } from "@/types/geralsI";
-import { FileCog, Loader2, PlusCircle, Trash2, UserCog } from "lucide-react";
+import { UniversityI } from "@/types/geralsI";
+import { FileCog, Loader2, PlusCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -103,8 +83,6 @@ export const UniversidadesAdmin = ({ scope }: Props) => {
                     >
                       <FileCog className="text-muted-foreground text-sm" />
                     </Button>
-
-                    
                   </TableCell>
 
                   <TableCell className=" ">{uni.name}</TableCell>

@@ -7,13 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { InputForm } from "../../Inputs/InputForm";
-import { TextInput } from "../../Inputs/TextInput";
+
 import { InputMaskForm } from "@/components/Inputs/InputMaskForm";
-import { InputSelectForm } from "@/components/Inputs/InputSelectForm";
+
 import {
   Estados,
-  LocationsTypes,
-  Modalidade,
   ModalitiesTypes,
   enumTypeObj,
   optionsSelects,
@@ -201,7 +199,7 @@ export function UniversityForm({ initialValues }: Props) {
           ],
         },
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -301,12 +299,16 @@ export function UniversityForm({ initialValues }: Props) {
       {initialValues && initialValues.is_active && (
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button variant={"outline"} className="w-full mt-2" disabled={load || !initialValues?.is_active}>
-            {load ? (
-              <Loader2 className="mr-2 ml-4 h-4 w-4 animate-spin" />
-            ) : (
-              "Excluir"
-            )}
+            <Button
+              variant={"outline"}
+              className="w-full mt-2"
+              disabled={load || !initialValues?.is_active}
+            >
+              {load ? (
+                <Loader2 className="mr-2 ml-4 h-4 w-4 animate-spin" />
+              ) : (
+                "Excluir"
+              )}
             </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>

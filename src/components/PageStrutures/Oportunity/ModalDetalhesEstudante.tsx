@@ -24,7 +24,7 @@ import { getPrimeiraLetra } from "@/utils/functions";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { Badge, FileDown, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 interface Props {
   aplication: ApplicationsI;

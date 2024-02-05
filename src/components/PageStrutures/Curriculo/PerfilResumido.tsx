@@ -1,4 +1,3 @@
-import { CentralizerContainer } from "@/components/CentralizerContainer";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { CardContent } from "@/components/ui/card";

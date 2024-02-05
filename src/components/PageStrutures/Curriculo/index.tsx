@@ -1,14 +1,8 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { MedicI, StudentI } from "@/types/geralsI";
-import { formatarCPF, getPrimeiraLetra } from "@/utils/functions";
-import { format } from "date-fns";
+import { StudentI } from "@/types/geralsI";
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import PerfilResumido from "./PerfilResumido";
 import { CurriculoForm } from "@/components/Forms/Curriculo/CurriculoForm";
@@ -16,7 +10,6 @@ import ListaCurriculos from "./ListaCurriculos";
 
 export const Curriculo = () => {
   const axiosAuth = useAxiosAuth();
-  const route = useRouter();
   const [load, setLoad] = useState(true);
   const [me, setMe] = useState<StudentI>();
 
@@ -32,8 +25,6 @@ export const Curriculo = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
-
   return (
     <div className="h-full w-full ">
       {load ? (
@@ -44,12 +35,11 @@ export const Curriculo = () => {
         <div>
           <PerfilResumido student={me} />
           <div className="rounded-lg full border bg-card text-card-foreground shadow-sm flex flex-col flex-wrap justify-around md:justify-start gap-2 w-full p-2 my-2">
-            {
-              me?.curriculums && me?.curriculums?.length > 0 ? 
-              (<ListaCurriculos student={me} />)
-              :
+            {me?.curriculums && me?.curriculums?.length > 0 ? (
+              <ListaCurriculos student={me} />
+            ) : (
               <CurriculoForm />
-            }
+            )}
           </div>
         </div>
       )}

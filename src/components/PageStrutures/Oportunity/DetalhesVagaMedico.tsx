@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { OpeningI } from "@/types/geralsI";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
@@ -49,7 +48,6 @@ interface Props {
 }
 
 export const DetalhesMedico = ({ details }: Props) => {
-  const route = useRouter();
   const [send, setSend] = useState(false);
   const axiosAuth = useAxiosAuth();
   const [load, setLoad] = useState(false);

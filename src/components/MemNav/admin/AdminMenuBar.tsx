@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { AuthItens, ManuItensAppEstudante, ManuItensAppMedico } from "@/utils/menuitens";
+import { AuthItens } from "@/utils/menuitens";
 import Link from "next/link";
 
 import { nextAuthOptions } from "@/app/api/auth/[...nextauth]/route";

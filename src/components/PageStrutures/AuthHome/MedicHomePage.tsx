@@ -1,7 +1,6 @@
 "use client";
 
 import { EstagioCard } from "@/components/EstagioCard";
-import { SingleDate } from "@/components/Inputs/InputSingleDate";
 import { toast } from "@/components/ui/use-toast";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { MedicI } from "@/types/geralsI";
@@ -33,6 +32,7 @@ export const MedicHomePage = ({ session }: Props) => {
 
   useEffect(() => {
     setTimeout(fetchMe, 2000);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
 
   function handleInitial(e: any) {

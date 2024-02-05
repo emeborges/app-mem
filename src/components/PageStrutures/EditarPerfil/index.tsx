@@ -2,7 +2,6 @@
 
 import { EditMedicoForm } from "@/components/Forms/EditProfile/EditMedicoForm";
 import { EditStudentForm } from "@/components/Forms/EditProfile/EditStudentForm";
-import { MedicoSignup } from "@/components/Forms/Signup/MedicoForm";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { MedicI, StudentI } from "@/types/geralsI";
 import { Loader2 } from "lucide-react";

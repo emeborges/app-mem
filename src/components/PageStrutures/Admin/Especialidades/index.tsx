@@ -1,7 +1,5 @@
 "use client";
 
-import { EditMedicoForm } from "@/components/Forms/EditProfile/EditMedicoForm";
-import { EditStudentForm } from "@/components/Forms/EditProfile/EditStudentForm";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { MedicI, StudentI, UniversityI } from "@/types/geralsI";
+import { UniversityI } from "@/types/geralsI";
 import { FileCog, Loader2, PlusCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -25,7 +23,7 @@ interface Props {
 export const EspecialidadesAdmin = ({ scope }: Props) => {
   const axiosAuth = useAxiosAuth();
   const [load, setLoad] = useState(true);
-  const route = useRouter()
+  const route = useRouter();
   const [especialidades, setEspecialidades] = useState<UniversityI[]>();
 
   const getEspecialidades = async () => {
@@ -51,11 +49,15 @@ export const EspecialidadesAdmin = ({ scope }: Props) => {
           <div className="w-full py-4 flex justify-between p-2 ">
             <div>
               <h2 className="text-3xl font-bold text-muted-foreground">
-              Especialidades
+                Especialidades
               </h2>
             </div>
             <div>
-              <Button onClick={() => route.push('/admin/especialidades/adicionar')}><PlusCircle /></Button>
+              <Button
+                onClick={() => route.push("/admin/especialidades/adicionar")}
+              >
+                <PlusCircle />
+              </Button>
             </div>
           </div>
           <Table>
@@ -73,7 +75,9 @@ export const EspecialidadesAdmin = ({ scope }: Props) => {
                     <Button
                       variant="outline"
                       disabled={!esp.is_active}
-                      onClick={() => route.push(`/admin/especialidades/${esp.id}/editar`)}
+                      onClick={() =>
+                        route.push(`/admin/especialidades/${esp.id}/editar`)
+                      }
                     >
                       <FileCog className="text-muted-foreground text-sm" />
                     </Button>

@@ -3,7 +3,6 @@ import {
     AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
-    AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
@@ -12,7 +11,6 @@ import {
   import { Button } from "@/components/ui/button";
   import { toast } from "@/components/ui/use-toast";
   import { axiosAuth } from "@/lib/axios";
-  import { OpeningI } from "@/types/geralsI";
   import { Loader2 } from "lucide-react";
   import { useRouter } from "next/navigation";
   import { useState } from "react";
@@ -23,9 +21,9 @@ import {
   
   export const ModalConfirmCancel = ({ id }: Props) => {
     const [load, setLoad] = useState<boolean>(false);
-    const route = useRouter()
   
     function handleSubmition() {
+      setLoad(true)
       axiosAuth
         .delete(`/opening/${id}/application`)
         .then((e) => {

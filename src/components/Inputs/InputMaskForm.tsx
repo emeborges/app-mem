@@ -19,7 +19,7 @@ export const InputMaskForm = ({
   placeholder,
   description,
   className,
-  disable
+  
 }: Props) => {
 
   return (

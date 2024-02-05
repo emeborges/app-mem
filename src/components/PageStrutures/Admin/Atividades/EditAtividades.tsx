@@ -1,19 +1,15 @@
 "use client";
 
 import { AtividadesForm } from "@/components/Forms/Atividades/AtividadesForm";
-import { EditMedicoForm } from "@/components/Forms/EditProfile/EditMedicoForm";
-import { EspecialidadesForm } from "@/components/Forms/Especialidade/EspecialidadesForm";
-import { UniversityForm } from "@/components/Forms/University/UniversityForm";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { MedicI, SpecialityI } from "@/types/geralsI";
+import {  SpecialityI } from "@/types/geralsI";
 import { Loader2 } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
 export const EditAtividadesAdmin = () => {
   const axiosAuth = useAxiosAuth();
-  const route = useRouter();
   const { id } = useParams();
   const [load, setLoad] = useState(true);
   const [atividade, setAtividade] = useState<SpecialityI>();

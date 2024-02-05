@@ -13,7 +13,7 @@ import {
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { StudentI } from "@/types/geralsI";
 import { format } from "date-fns";
-import { CircleEllipsis, Link, Loader2 } from "lucide-react";
+import { Link, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 

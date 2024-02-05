@@ -1,7 +1,5 @@
 "use client";
 
-import { EditMedicoForm } from "@/components/Forms/EditProfile/EditMedicoForm";
-import { EditStudentForm } from "@/components/Forms/EditProfile/EditStudentForm";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { ActivityI, MedicI, StudentI, UniversityI } from "@/types/geralsI";
+import { ActivityI } from "@/types/geralsI";
 import { FileCog, Loader2, PlusCircle, UserCog } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -76,7 +74,9 @@ export const AtividadesAdmin = ({ scope }: Props) => {
                     <Button
                       variant="outline"
                       disabled={!ativ.is_active}
-                      onClick={() => route.push(`/admin/atividades/${ativ.id}/editar`)}
+                      onClick={() =>
+                        route.push(`/admin/atividades/${ativ.id}/editar`)
+                      }
                     >
                       <FileCog className="text-muted-foreground text-sm" />
                     </Button>

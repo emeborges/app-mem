@@ -1,7 +1,5 @@
 "use client";
 
-import { EditMedicoForm } from "@/components/Forms/EditProfile/EditMedicoForm";
-import { EditStudentForm } from "@/components/Forms/EditProfile/EditStudentForm";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import { MedicI, StudentI } from "@/types/geralsI";
+import {  StudentI } from "@/types/geralsI";
 import { format } from "date-fns";
 import { Loader2, UserCog } from "lucide-react";
 import { useRouter } from "next/navigation";
