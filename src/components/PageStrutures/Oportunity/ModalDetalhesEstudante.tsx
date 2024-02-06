@@ -9,6 +9,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { AvatarFallback } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,7 +23,7 @@ import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { ApplicationsI } from "@/types/geralsI";
 import { getPrimeiraLetra } from "@/utils/functions";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
-import { Badge, FileDown, Loader2 } from "lucide-react";
+import { FileDown, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 
@@ -47,7 +48,7 @@ export const ModalDetalhesEstudante = ({
 }: Props) => {
   const estudante = aplication.student;
   const axiosAuth = useAxiosAuth();
-  const maxInscritosValidation = totalInscritos <= maxInscritos - 1
+  const maxInscritosValidation = totalInscritos <= maxInscritos - 1;
 
   const handleConfirmation = async () => {
     setSendState(true);
@@ -172,7 +173,6 @@ export const ModalDetalhesEstudante = ({
                 <AlertDialogTitle>
                   Confirma a seleção de {estudante.name}?
                 </AlertDialogTitle>
-                
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>

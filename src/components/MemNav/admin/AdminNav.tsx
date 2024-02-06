@@ -16,8 +16,6 @@ import { getPrimeiraLetra } from "@/utils/functions";
 
 import {
   AuthItens,
-  ManuItensAppEstudante,
-  ManuItensAppMedico,
 } from "@/utils/menuitens";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -67,7 +65,7 @@ export function AdminNav({ name, email, scope }: Props) {
         <DropdownMenuGroup>
           <DropdownMenuItem
             className="cursor-pointer hover:bg-gray-200"
-            onClick={() => router.replace(`/app/perfil`)}
+            onClick={() => router.replace(`/admin/perfil`)}
           >
             Perfil
           </DropdownMenuItem>

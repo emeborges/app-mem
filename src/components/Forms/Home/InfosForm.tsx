@@ -4,31 +4,56 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-} from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { InputForm } from "../../Inputs/InputForm";
 import { TextInput } from "../../Inputs/TextInput";
+import axios from "@/lib/axios";
+import { toast } from "@/components/ui/use-toast";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
-  name: z.string().min(2, {
+  name: z.string({ required_error: "É necessário um nome." }).min(2, {
     message: "É necessário ao menos 2 caracters.",
   }),
-  email: z.string().email('É necessário um e-mail válido'),
-  text: z.string(),
-
+  email: z
+    .string({ required_error: "É necessário um email para prosseguir." })
+    .email("É necessário um e-mail válido."),
+  message: z.string({ required_error: "É necessário uma mensagem." }),
 });
 
 export function InfosForm() {
-  // ...
+  const [load, setLoad] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema)
+    resolver: zodResolver(formSchema),
   });
 
   const onSubmit = (values: any) => {
-    console.log(values)
-  }
+    setLoad(true);
+
+    axios
+      .post("/contactus", { contact: values })
+      .then((e) => {
+        toast({
+          title: "Sucesso!",
+          description: "Mensagem enviada com sucesso, respondemos em até 24 horas úteis.",
+        });
+
+        setLoad(false);
+        return;
+      })
+      .catch((e) => {
+        toast({
+          title: "Erro!",
+          description: "Algo deu errado, tente novamente mais tarde.",
+        });
+
+        setLoad(false);
+        return;
+      });
+
+  };
 
   return (
     <Form {...form}>
@@ -47,10 +72,16 @@ export function InfosForm() {
         />
         <TextInput
           formControl={form.control}
-          name="text"
+          name="message"
           placeholder={"Mensagem"}
         />
-        <Button type="submit" className="w-full">Enviar</Button>
+        <Button disabled={load} type="submit">
+          {load ? (
+            <Loader2 className="mr-2 ml-4 h-4 w-4 animate-spin" />
+          ) : (
+            "Entrar"
+          )}
+        </Button>
       </form>
     </Form>
   );

@@ -12,13 +12,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { TrocarSenha } from "./ModalTrocarSenha";
 
-interface Props {
-  scope?: string;
-}
 
-export const Perfil = ({ scope }: Props) => {
+export const Perfil = () => {
   const axiosAuth = useAxiosAuth();
-  const route = useRouter()
+  const route = useRouter();
   const [load, setLoad] = useState(true);
   const [me, setMe] = useState<MedicI & StudentI>();
 
@@ -34,7 +31,6 @@ export const Perfil = ({ scope }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   return (
     <div className="h-full w-full ">
       {load ? (
@@ -45,11 +41,13 @@ export const Perfil = ({ scope }: Props) => {
         <div className="rounded-lg full border bg-card text-card-foreground shadow-sm flex flex-col flex-wrap justify-around md:justify-start gap-2 w-full p-2 my-2">
           <div className="m-auto">
             <Avatar className="h-[10rem] w-[10rem] bg-red-500">
-                {
-                    me?.picture_url ?
-                        <AvatarImage src={me.picture_url.toString()} />
-                        : <AvatarFallback className="bg-primary text-5xl">{getPrimeiraLetra(me?.name)}</AvatarFallback>
-                }
+              {me?.picture_url ? (
+                <AvatarImage src={me.picture_url.toString()} />
+              ) : (
+                <AvatarFallback className="bg-primary text-5xl">
+                  {getPrimeiraLetra(me?.name)}
+                </AvatarFallback>
+              )}
             </Avatar>
           </div>
 
@@ -109,14 +107,21 @@ export const Perfil = ({ scope }: Props) => {
                   <div>
                     <p>CRM:</p>
                   </div>
-                  <h3 className="text-3xl">{me?.professional_certificate} - {me?.federative_unit_professional_certificate}</h3>
+                  <h3 className="text-3xl">
+                    {me?.professional_certificate} -{" "}
+                    {me?.federative_unit_professional_certificate}
+                  </h3>
                 </div>
               </div>
-              
             </div>
           )}
           <div className="flex flex-col w-full gap-2 items-center justify-center">
-            <Button className="w-[15rem]" onClick={() => route.push('/app/perfil/editar')}>Editar Perfil</Button>
+            <Button
+              className="w-[15rem]"
+              onClick={() => route.push("/app/perfil/editar")}
+            >
+              Editar Perfil
+            </Button>
             <TrocarSenha />
           </div>
         </div>

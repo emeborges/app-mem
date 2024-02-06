@@ -412,7 +412,6 @@ export const UserAdmin = ({ scope }: Props) => {
           {scope === "student" && (
             <div className="rounded-lg full border bg-card text-card-foreground shadow-sm w-full">
               <ScrollArea className="h-[250px]">
-               
                 <ListaCurriculos student={userData} />
               </ScrollArea>
             </div>
@@ -510,12 +509,14 @@ export const UserAdmin = ({ scope }: Props) => {
                         </TableRow>
                       ))
                     : userData?.applications?.map((opt) => (
-                        <TableRow key={opt.id}>
+                        <TableRow key={opt.opening.id}>
                           <TableCell>
                             <Button
                               variant="outline"
                               onClick={() =>
-                                route.push(`/admin/oportunidades/${opt.id}`)
+                                route.push(
+                                  `/admin/oportunidades/${opt.opening.id}`
+                                )
                               }
                             >
                               <UserCog className="text-muted-foreground text-sm" />
