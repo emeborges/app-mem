@@ -285,7 +285,7 @@ export function UniversityForm({ initialValues }: Props) {
           </div>
           <Button
             className="w-full"
-            disabled={load || !initialValues?.is_active}
+            disabled={load}
             type="submit"
           >
             {load ? (
