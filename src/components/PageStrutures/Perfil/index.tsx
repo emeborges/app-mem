@@ -40,7 +40,7 @@ export const Perfil = () => {
       ) : (
         <div className="rounded-lg full border bg-card text-card-foreground shadow-sm flex flex-col flex-wrap justify-around md:justify-start gap-2 w-full p-2 my-2">
           <div className="m-auto">
-            <Avatar className="h-[10rem] w-[10rem] bg-red-500">
+            <Avatar className="h-[10rem] w-[10rem] ">
               {me?.picture_url ? (
                 <AvatarImage src={me.picture_url.toString()} />
               ) : (
@@ -63,7 +63,7 @@ export const Perfil = () => {
             <div className="px-4 py-2">
               <div>
                 <div>
-                  <p>Email:</p>
+                  <p>E-mail:</p>
                 </div>
                 <h3 className="text-xl">{me?.email}</h3>
               </div>
@@ -82,7 +82,7 @@ export const Perfil = () => {
               <div className="px-4 py-2">
                 <div>
                   <div>
-                    <p>Data Nascimento:</p>
+                    <p>Data de Nascimento:</p>
                   </div>
                   <h3 className="text-lg">
                     {me?.birthdate &&

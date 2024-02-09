@@ -75,7 +75,7 @@ export const MedicHomePage = ({ session }: Props) => {
               ))
             ) : (
               <div className=" w-full text-center pt-[10rem]">
-                Você ainda não tem oportunidades cadastradas!
+                Você ainda não cadastrou nenhuma oportunidade!
               </div>
             )}
           </div>

@@ -66,7 +66,7 @@ export function TrocarSenha() {
         toast({
           title: "Sucesso!",
           description:
-            "Senha altarada com sucesso! Você será redirecionado em 3 segundos.",
+            "Senha alterada com sucesso! Você será redirecionado em 3 segundos.",
         });
 
         return setTimeout(() => route.replace('/app'), 3000)

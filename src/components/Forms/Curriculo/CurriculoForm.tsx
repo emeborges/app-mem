@@ -65,7 +65,7 @@ export function CurriculoForm({ initialValues }: Props) {
             toast({
               title: "Sucesso!",
               description:
-                "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
+                "Currículo editado com sucesso, você será redirecionado em 3 segundos.",
             });
 
             return setTimeout(() => window.location.reload(), 3000);
@@ -84,7 +84,7 @@ export function CurriculoForm({ initialValues }: Props) {
             toast({
               title: "Sucesso!",
               description:
-                "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
+                "Currículo cadastrado com sucesso, você será redirecionado em 3 segundos.",
             });
 
             return setTimeout(() => window.location.reload(), 3000);
@@ -123,7 +123,7 @@ export function CurriculoForm({ initialValues }: Props) {
             </div>
 
             <TextInput
-              label="Descreva um pouco sobre você:"
+              label="Poderia nos contar um pouco sobre você?:"
               formControl={form.control}
               className="py-2"
               name={`description`}

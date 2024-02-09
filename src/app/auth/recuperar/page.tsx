@@ -34,10 +34,10 @@ export default function RecuperarSenha() {
         />
         <Card className="max-w-md w-full m-auto">
           <CardDescription className="p-6">
-            <CardTitle className="text-2xl pb-6">Recuperar Senha.</CardTitle>
+            <CardTitle className="text-2xl pb-6">Recuperar Senha</CardTitle>
             {!send && (
               <CardDescription className="pb-6">
-                Preencha seu e-mail abaixo.
+                Preencha seu endereço de e-mail abaixo.
               </CardDescription>
             )}
 

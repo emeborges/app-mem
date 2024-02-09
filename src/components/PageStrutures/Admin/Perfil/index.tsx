@@ -24,7 +24,7 @@ export const PerfilAdmin = ({ session }: Props) => {
           <div className="px-4 py-2">
             <div>
               <div>
-                <p>Email:</p>
+                <p>E-mail:</p>
               </div>
               <h3 className="text-xl">{session?.email}</h3>
             </div>

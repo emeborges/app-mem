@@ -67,7 +67,7 @@ export function EstagioCard({ opening, userType }: Props) {
               </div>
             </div>
             <div className="w-[49%]">
-              <p className="text-sm font-bold leading-none">Ate</p>
+              <p className="text-sm font-bold leading-none">Até</p>
               <div>
                 <p className="text-lg  text-muted-foreground">
                   {opening.end_date &&
@@ -104,16 +104,17 @@ export function EstagioCard({ opening, userType }: Props) {
           </div>
           <div className="flex flex-row mb-1 pb-2 ">
             <div className="w-[49%]">
-              <p className="text-sm font-bold leading-none">
-                Quantidade de Vagas:
-              </p>
+              <p className="text-sm font-bold leading-none">Nº de Vagas:</p>
               <div> {opening.max_selection && opening.max_selection}</div>
             </div>
             <div className="w-[49%]">
-              <p className="text-sm font-bold leading-none">
-                Quantidade de Inscritos:
-              </p>
-              <div> {opening.applications && opening.applications.length ? opening.applications.length : 0}</div>
+              <p className="text-sm font-bold leading-none">Nº de Inscritos:</p>
+              <div>
+                {" "}
+                {opening.applications && opening.applications.length
+                  ? opening.applications.length
+                  : 0}
+              </div>
             </div>
           </div>
         </div>

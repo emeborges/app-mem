@@ -266,8 +266,7 @@ export function Oportunity({ session }: Props) {
                   <div>
                     <Label>
                       {" "}
-                      Para se inscriver, é necessário ter um currículo
-                      cadastrado, cadastre-o já:
+                      Para se inscrever, é necessário ter um currículo cadastrado. Cadastre-o agora mesmo!
                     </Label>
                     <Link href={"/app/curriculo"}>
                       <Button variant={"outline"}>Cadastrar Currículo</Button>

@@ -108,7 +108,7 @@ export function LocationForm({ initialValues }: Props) {
           toast({
             title: "Sucesso!",
             description:
-              "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
+              "Local editado com sucesso. Você será redirecionado em 3 segundos.",
           });
           return setTimeout(() => route.back(), 3000);
         })
@@ -190,7 +190,7 @@ export function LocationForm({ initialValues }: Props) {
             <div className="py-1 flex flex-col gap-2 max-w-[440px]">
               <InputMultiSelectForm
                 formControl={form.control}
-                label={"Especialidade(s) do Local"}
+                label={"Especialidade(s)"}
                 placeholder="Selecione"
                 name={`specialities`}
                 className="w-full"

@@ -151,7 +151,7 @@ const formSchema = z
       message: "Ano final não pode ser menor que ano inicial.",
     }
   )
-  .refine((data) => data.end_date > data.start_date
+  .refine((data) => data.end_date >= data.start_date
 , {
     path: ["end_date"],
     message: "A data final não pode ser maior que a data inicial.",
@@ -195,7 +195,7 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
           toast({
             title: "Sucesso!",
             description:
-              "Excelente, a oportunidade foi editada! Você será redirecionado em 5 segundos",
+              "A oportunidade foi editada! Você será redirecionado em 5 segundos.",
           });
 
           return setTimeout(() => router.back(), 5000);
@@ -334,7 +334,7 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
                 <div className="py-1 flex flex-col gap-2 max-w-[440px]">
                   <InputMultiSelectForm
                     formControl={form.control}
-                    label={"Especialidade(s) do Local"}
+                    label={"Especialidade(s)"}
                     placeholder="Selecione"
                     name={`location.specialities`}
                     className="w-full"
@@ -427,7 +427,7 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
           <div className="px-4 flex flex-col gap-2 max-w-[440px]">
             <InputMultiSelectForm
               formControl={form.control}
-              label={"Em qual área médica a oportunidade será voltada?"}
+              label={"Para qual área essa oportunidade estará direcionada?"}
               placeholder="Selecione"
               name={`speciality`}
               className="w-full"
@@ -439,7 +439,7 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
           <div className="px-4 flex flex-col gap-2 max-w-[440px]">
             <InputMultiSelectForm
               formControl={form.control}
-              label={"Quais as atividades planejadas?"}
+              label={"Atividades programadas"}
               placeholder="Selecione"
               name={`activities`}
               className="w-full"
@@ -463,7 +463,7 @@ export const OportunidadeForm = ({ initialValues }: Props) => {
           </div>
           <div className="px-4 flex items-center gap-2">
             <InputSimpleDate
-              label="Data de Final da Oportunidade"
+              label="Data Final da Oportunidade"
               formControl={form.control}
               name={"end_date"}
             />

@@ -128,7 +128,7 @@ export const UserAdmin = ({ scope }: Props) => {
             </div>
             <div className=" flex flex-col md:justify-start md:flex-row gap-2 w-full p-2 my-2">
               <div className="m-auto">
-                <Avatar className="h-[10rem] w-[10rem] bg-red-500">
+                <Avatar className="h-[10rem] w-[10rem] ">
                   {userData?.picture_url ? (
                     <AvatarImage src={userData.picture_url.toString()} />
                   ) : (
@@ -159,7 +159,7 @@ export const UserAdmin = ({ scope }: Props) => {
                 <div className="px-4 py-2">
                   <div>
                     <div>
-                      <p>Email:</p>
+                      <p>E-mail:</p>
                     </div>
                     <h3 className="text-xl">{userData?.email}</h3>
                   </div>
@@ -179,7 +179,7 @@ export const UserAdmin = ({ scope }: Props) => {
                   <div className="px-4 py-2">
                     <div>
                       <div>
-                        <p>Data Nascimento:</p>
+                        <p>Data de Nascimento:</p>
                       </div>
                       <h3 className="text-lg">
                         {userData?.birthdate &&

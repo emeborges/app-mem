@@ -70,9 +70,9 @@ export function ConfigsOportunity({ status, id, startDate }: Props) {
     setLoad(true);
     await axiosAuth.patch(`opening/${id}/close`).then((e) => {
       toast({
-        title: "Ok!",
+        title: "Sucesso!",
         description:
-          "As inscrições foram fechadas, sua página será atualizada em 3 segundos",
+          "As inscrições foram fechadas. Sua página será atualizada em 3 segundos",
       });
 
       return setTimeout(() => location.reload(), 3000);
@@ -87,9 +87,9 @@ export function ConfigsOportunity({ status, id, startDate }: Props) {
       })
       .then((e) => {
         toast({
-          title: "Ok!",
+          title: "Sucesso!",
           description:
-            "As inscrições foram reabertas, sua página será atualizada em 3 segundos",
+            "As inscrições foram reabertas. Sua página será atualizada em 3 segundos",
         });
 
         return setTimeout(() => location.reload(), 3000);

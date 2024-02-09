@@ -125,7 +125,7 @@ export function MedicoSignup({ handleUseSelectedTab }: Props) {
         toast({
           title: "Sucesso!",
           description:
-            "Cadastro foi recebido, iremos enviar um e-mail para confirmação",
+            "Para finalizar o seu cadastro em nosso site, é necessário que você confirme o seu endereço de e-mail.",
         });
 
         return setTimeout(() => handleUseSelectedTab(2), 1000);

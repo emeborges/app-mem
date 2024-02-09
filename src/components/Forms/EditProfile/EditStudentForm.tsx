@@ -110,7 +110,7 @@ export function EditStudentForm({ initialValues, admin }: Props) {
             toast({
               title: "Sucesso!",
               description:
-                "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
+                "Perfil editado com sucesso. Você será redirecionado em 3 segundos.",
             });
 
             return setTimeout(() => route.back(), 3000);
@@ -127,7 +127,7 @@ export function EditStudentForm({ initialValues, admin }: Props) {
             toast({
               title: "Sucesso!",
               description:
-                "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
+                "Perfil editado com sucesso. Você será redirecionado em 3 segundos.",
             });
 
             return setTimeout(() => route.push("/app"), 3000);
@@ -184,7 +184,7 @@ export function EditStudentForm({ initialValues, admin }: Props) {
             encType="multipart/form-data"
           >
             <div className="m-auto">
-              <Avatar className="h-[10rem] w-[10rem] bg-red-500">
+              <Avatar className="h-[10rem] w-[10rem]">
                 {initialValues?.picture_url ? (
                   <AvatarImage src={initialValues.picture_url.toString()} />
                 ) : (

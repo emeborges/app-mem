@@ -112,7 +112,7 @@ export function EditMedicoForm({ initialValues, admin }: Props) {
             toast({
               title: "Sucesso!",
               description:
-                "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
+                "Perfil editado com sucesso. Você será redirecionado em 3 segundos.",
             });
 
             return setTimeout(() => route.push("/admin/medicos"), 3000);
@@ -129,7 +129,7 @@ export function EditMedicoForm({ initialValues, admin }: Props) {
             toast({
               title: "Sucesso!",
               description:
-                "Perfil editado com sucesso, você será redirecionado em 3 segundos.",
+                "Perfil editado com sucesso. Você será redirecionado em 3 segundos.",
             });
 
             return setTimeout(() => route.push("/app"), 3000);
@@ -177,7 +177,7 @@ export function EditMedicoForm({ initialValues, admin }: Props) {
             encType="multipart/form-data"
           >
             <div className="m-auto">
-              <Avatar className="h-[10rem] w-[10rem] bg-red-500">
+              <Avatar className="h-[10rem] w-[10rem] ">
                 {initialValues?.picture_url ? (
                   <AvatarImage src={initialValues.picture_url.toString()} />
                 ) : (
@@ -234,7 +234,7 @@ export function EditMedicoForm({ initialValues, admin }: Props) {
                 name={"professional_certificate"}
                 type="number"
                 placeholder="Digite seu CRM"
-                className="w-full max-w-[50%]"
+                className="w-full max-w-[45%]"
                 disable={!admin}
               />
               {admin ? (
@@ -252,7 +252,7 @@ export function EditMedicoForm({ initialValues, admin }: Props) {
                   formControl={form.control}
                   placeholder="Estado do CRM"
                   name={"federative_unit_professional_certificate"}
-                  className="w-full max-w-[50%] h-full"
+                  className="w-full max-w-[48%] h-full"
                   disable
                 />
               )}

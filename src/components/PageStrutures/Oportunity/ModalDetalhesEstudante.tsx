@@ -107,7 +107,7 @@ export const ModalDetalhesEstudante = ({
                   <div className="py-2 max-w-[45%]">
                     <div>
                       <div className="w-full">
-                        <p className="break-words">Email:</p>
+                        <p className="break-words">E-mail:</p>
                       </div>
                       <h3 className="text-md break-words">{estudante.email}</h3>
                     </div>

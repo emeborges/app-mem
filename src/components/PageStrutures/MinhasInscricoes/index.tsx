@@ -115,7 +115,7 @@ export const MinhasInscricoes = () => {
               </TableBody>
             </Table>
           ) : (
-            <div>Você não se inscreveu em nenhuma vaga.</div>
+            <div>Você não se inscreveu em nenhuma oportunidade.</div>
           )}
           <ScrollBar orientation="horizontal" />
         </ScrollArea>
