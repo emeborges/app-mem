@@ -24,7 +24,6 @@ import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { Estados } from "@/utils/options";
 import { InputMultiSelectForm } from "@/components/Inputs/InputMultiSelectForm";
 
-
 const formSchema: any = z.object({
   name: z.string({ required_error: "Nome é necessário" }).optional().nullable(),
   email: z
@@ -71,6 +70,7 @@ const formSchema: any = z.object({
     )
     .array()
     .transform((id) => id[0].value)
+    .or(z.string())
     .optional()
     .nullable(),
 });
@@ -250,6 +250,7 @@ export function EditMedicoForm({ initialValues, admin }: Props) {
               ) : (
                 <InputForm
                   formControl={form.control}
+                  label="Estado Crm"
                   placeholder="Estado do CRM"
                   name={"federative_unit_professional_certificate"}
                   className="w-full max-w-[48%] h-full"

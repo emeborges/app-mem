@@ -8,6 +8,7 @@ import Image from "next/image";
 import { CentralizerContainer } from "@/components/CentralizerContainer";
 import { LoginList } from "@/components/MemNav/LoginList";
 import { HamburguerMenu } from "@/components/MemNav/MenuHamburguer";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,6 +54,7 @@ export default function HomeRootLayout({
             <HamburguerMenu />
           </CentralizerContainer>
         </Menubar>
+        <Toaster />
         {children}
       </body>
     </html>
