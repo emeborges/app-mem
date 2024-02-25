@@ -146,7 +146,7 @@ export function EditStudentForm({ initialValues, admin }: Props) {
 
   useEffect(() => {
     getDados();
-    console.log(initialValues);
+
     initialValues &&
       form.reset({
         name: initialValues.name,

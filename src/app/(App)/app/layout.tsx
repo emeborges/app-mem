@@ -22,5 +22,9 @@ export default async function PrivateLayout({ children }: PrivateLayoutProps){
 		redirect('/admin')
 	}
 
+	if(!session.is_authorized) {
+		redirect('/verificacao')
+	}
+
 	return <>{children}</>
 }

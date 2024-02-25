@@ -150,11 +150,20 @@ export function EstudanteSignup({ handleUseSelectedTab }: Props) {
         return setTimeout(() => handleUseSelectedTab(2), 1000);
       })
       .catch((e) => {
-        toast({
-          title: "Erro!",
-          description: "Algo deu errado, por gentileza, tente mais tarde.",
-        });
+        if (e.response.status === 409) {
+          toast({
+            title: "E-mail já cadastrado!",
+            description: "E-mail já cadastrado, recupera a sua senha através da página de login.",
+          });
+        } else {
+          toast({
+            title: "Erro!",
+            description: "Algo deu errado, por gentileza, tente mais tarde.",
+          });
+        }
+
         setLoad(false);
+
         return;
       });
   };
@@ -270,7 +279,7 @@ export function EstudanteSignup({ handleUseSelectedTab }: Props) {
                       <div>
                         Estou ciente e concordo com os{" "}
                         <span
-                        className={'cursor-pointer mr-1 text-bold underline'}
+                          className={"cursor-pointer mr-1 text-bold underline"}
                           onClick={() =>
                             window.open(
                               "https://s3.sa-east-1.amazonaws.com/dev.mem.publicread/static/TERMOS+E+CONDIC%CC%A7O%CC%83ES+DE+USO+MEM+FINAL.pdf"
@@ -279,10 +288,9 @@ export function EstudanteSignup({ handleUseSelectedTab }: Props) {
                         >
                           Termos de Uso
                         </span>
-                        e{" "}
-                        <br />
+                        e <br />
                         <span
-                          className={'cursor-pointer text-bold underline'}
+                          className={"cursor-pointer text-bold underline"}
                           onClick={() =>
                             window.open(
                               "https://s3.sa-east-1.amazonaws.com/dev.mem.publicread/static/Politica+de+privacidade+MEM+atualizado.pdf"

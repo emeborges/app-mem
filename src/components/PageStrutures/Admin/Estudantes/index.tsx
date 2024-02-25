@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
-import {  StudentI } from "@/types/geralsI";
+import { StudentI } from "@/types/geralsI";
 import { format } from "date-fns";
 import { Loader2, UserCog } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -89,8 +89,9 @@ export const EstudantesAdmin = ({ scope }: Props) => {
                     {format(new Date(est.updated_at), "dd/MM/yyyy")}
                   </TableCell>
                   <TableCell>
-                    {" "}
-                    {est.is_active ? (
+                    {!est.is_authorized ? (
+                      <Badge variant={'secondary'}> Não Conferido </Badge>
+                    ) : est.is_active ? (
                       <Badge> Ativo </Badge>
                     ) : (
                       <Badge variant={"destructive"}>Desativado</Badge>

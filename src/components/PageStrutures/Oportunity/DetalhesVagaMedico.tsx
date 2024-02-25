@@ -196,9 +196,7 @@ export const DetalhesMedico = ({ details }: Props) => {
                   </div>
                   {selecionado.status === "selected" && (
                     <p className="py-2">
-                      Nos detalhes acima, você terá acesso aos dados para entrar
-                      em contato diretamente com o estagiário, e, caso precise,
-                      estamos a disposição no canal de atendimento.
+                      Nos detalhes acima, você terá acesso aos dados para entrar em contato diretamente com o estagiário, e, caso precise, estaremos sempre à disposição no nosso canal de atendimento.
                     </p>
                   )}
                 </div>

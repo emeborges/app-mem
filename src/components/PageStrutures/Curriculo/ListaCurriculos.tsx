@@ -21,7 +21,7 @@ export default function ListaCurriculos({ student }: Props) {
   const curriculum = student?.curriculums && student?.curriculums[0];
 
   return (
-    <div className="w-full">
+    <div className="w-full pt-2">
       <CardContent>
         <h2 className="text-3xl">Currículo Cadastrado</h2>
         <div className="p-2 flex flex-col gap-4  w-full flax-wrap ">
@@ -35,30 +35,32 @@ export default function ListaCurriculos({ student }: Props) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell />
-                <TableCell className=" ">{curriculum?.description}</TableCell>
-                <TableCell>
-                  <Button variant={"outline"}>
-                    <FileDown
-                      onClick={() =>
-                        window.location.assign(`${curriculum?.url}`)
-                      }
-                    />
-                  </Button>
-                </TableCell>
+              {student?.curriculums && student?.curriculums?.length > 0 && (
+                <TableRow>
+                  <TableCell />
+                  <TableCell className=" ">{curriculum?.description}</TableCell>
+                  <TableCell>
+                    <Button variant={"outline"}>
+                      <FileDown
+                        onClick={() =>
+                          window.location.assign(`${curriculum?.url}`)
+                        }
+                      />
+                    </Button>
+                  </TableCell>
 
-                <TableCell>
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <Button variant="outline">Editar</Button>
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px]">
-                      <CurriculoForm initialValues={curriculum} />
-                    </DialogContent>
-                  </Dialog>
-                </TableCell>
-              </TableRow>
+                  <TableCell>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button variant="outline">Editar</Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-[425px]">
+                        <CurriculoForm initialValues={curriculum} />
+                      </DialogContent>
+                    </Dialog>
+                  </TableCell>
+                </TableRow>
+              )}
             </TableBody>
           </Table>
         </div>

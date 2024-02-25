@@ -12,5 +12,6 @@ declare module "next-auth" {
     id: string;
     email: string;
     school_term: string;
+    is_authorized: boolean;
   }
 }

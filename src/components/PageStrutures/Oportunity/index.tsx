@@ -53,11 +53,6 @@ export function Oportunity({ session }: Props) {
     Number(me?.school_term) >= Number(vagaDetails?.school_term_min) &&
     Number(me?.school_term) <= Number(vagaDetails?.school_term_max);
 
-  console.log(
-    vagaDetails &&
-      vagaDetails?.status !== "closed" &&
-      vagaDetails.applications.length > 0
-  );
 
   return (
     <div className="h-full w-full ">

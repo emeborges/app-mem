@@ -39,8 +39,6 @@ export const MedicosAdmin = ({ scope }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(medicos);
-
   return (
     <div className="h-full w-full ">
       {load ? (
@@ -97,7 +95,9 @@ export const MedicosAdmin = ({ scope }: Props) => {
                   </TableCell>
 
                   <TableCell>
-                    {medico.is_active ? (
+                    {!medico.is_authorized ? (
+                      <Badge> Não Conferido </Badge>
+                    ) : medico.is_active ? (
                       <Badge> Ativo </Badge>
                     ) : (
                       <Badge variant={"destructive"}>Desativado</Badge>

@@ -28,7 +28,8 @@ const nextAuthOptions: NextAuthOptions = {
 					picture: userTotal.user_details.picture_url,
 					id: userTotal.user_details.id,
 					email: userTotal.user_details.email,
-					school_term: userTotal.user_details.school_term
+					school_term: userTotal.user_details.school_term,
+					is_authorized: userTotal.user_details.is_authorized
 				}				
 				
 				if (user && response.status) {

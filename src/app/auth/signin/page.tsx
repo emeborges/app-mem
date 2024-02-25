@@ -32,7 +32,7 @@ export default function Home() {
     });
 
     if (result?.error) {
-      console.log(result);
+
       toast({
         title: "Email ou senha incorreto!",
         description: "Revise-os e tente novamente!",

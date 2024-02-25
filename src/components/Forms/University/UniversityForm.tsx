@@ -177,7 +177,7 @@ export function UniversityForm({ initialValues }: Props) {
 
   useEffect(() => {
     setTimeout(getDados, 2000);
-    console.log(initialValues);
+
     initialValues &&
       form.reset({
         name: initialValues.name,

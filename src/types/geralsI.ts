@@ -89,6 +89,7 @@ export interface MedicI {
   phone_number?: string;
   email?: string;
   usage_terms?: string;
+  is_authorized?: boolean;
   is_active?: boolean;
   scope?: "medic";
   fk_address?: string;
@@ -118,6 +119,7 @@ export interface StudentI {
   usage_terms?: string;
   is_active?: boolean;
   fk_address?: string;
+  is_authorized?: boolean;
   address?: AddressI;
   fk_university?: string;
   scope?: "student";

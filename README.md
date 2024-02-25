@@ -1,34 +1,55 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Bem vindo, vamos começar!
 
-First, run the development server:
+Primeiramente, bem vindo ao projeto MEM, meuEstagioMed!
+O projeto foi construído com os seguintes frameworks e libs:
+
+- [Next.js](https://nextjs.org/docs)
+- [Shadcn/ui](https://ui.shadcn.com/)
+- [NextAuth](https://next-auth.js.org/)
+- [ReactHookForm](https://react-hook-form.com/)
+- [Zod](https://zod.dev/)
+
+Para rodar o projeto, após o clone do repositório, crei um #env com base no exemplo do projeto e após:
+
 
 ```bash
-npm run dev
-# or
+yarn 
+
+# e depois
+
 yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+O projeto foi dividido em sessões, sendo:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Admin 
+    - Área administrativa `src/app/(Admin)/admin/page.tsx`;
+- App
+    - Área de uso dos usuários, desenvolvida para "após" o cadastro `src/app/(App)/app/page.tsx`;
+- Home
+    - Área de contato inicial dos usuários `src/app/(Home)/page.tsx`;
+- api
+    - Área necessário para o NextAuth Funcionar;
+- Auth
+    - Área de login/cadastro/solicitação de senha `src/app/(Auth)/../page.tsx`
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Estrutura básica
 
-## Learn More
+Cada página, seguiu-se uma estrutura básica, sendo.
 
-To learn more about Next.js, take a look at the following resources:
+- Estrutura base em Service Page (`.../page.tsx`)
+- Estrutura componentização em Client Components (`src/components/PageStrutures`) 
+- Caso necessário, utilizou-se mais de uma ramificação de compontens, estando-os presentes em (`src/components`)
+- Em caso de formulários, eles estão anexados em ( `src/components/Forms`), com inputs presentes em  ( `src/components/Inputs`)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Mecanismo de Auth/Refresh Token
 
-## Deploy on Vercel
+Foi utilizado o sistema de Auth/Refresh token através de um Hook presente em (`src/lib/hooks`).
+Em todos as requests que precisariam de refresh, foi utilizado o useAxiosAuth (`src/lib/hooks/useAxiosAuth.ts`), entretanto, essa request acontece apenas em componentes Client Components.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Regra de negócio
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Assim que cadastrado, o usuário precisa confirmar o 
+

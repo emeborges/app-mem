@@ -36,10 +36,11 @@ import useAxiosAuth from "@/lib/hooks/useAxiosAuth";
 import { MedicI, StudentI } from "@/types/geralsI";
 import { formatarCPF, getPrimeiraLetra } from "@/utils/functions";
 import { format } from "date-fns";
-import { Loader2, PenLine, UserCog } from "lucide-react";
+import { FileDown, Loader2, PenLine, UserCog } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ListaCurriculos from "../../Curriculo/ListaCurriculos";
+import Link from "next/link";
 
 interface Props {
   scope: string;
@@ -107,6 +108,46 @@ export const UserAdmin = ({ scope }: Props) => {
     }
   }
 
+  async function handleActive() {
+    setSend(true);
+    if (scope === "medic") {
+      await axiosAuth
+        .patch(`/medic/${user}/authorize`)
+        .then((e) => {
+          toast({
+            title: "Usuário ativado com sucesso!",
+            description: "Você será redirecionado em 3 segundos!",
+          });
+
+          return setTimeout(() => route.back(), 2000);
+        })
+        .catch((e) => {
+          setSend(false);
+          toast({
+            title: "Erro!",
+            description: "Algo deu errado, tente novamente mais tarde.",
+          });
+        });
+    } else {
+      await axiosAuth
+        .patch(`/student/${user}/authorize`)
+        .then((e) => {
+          toast({
+            title: "Usuário ativado com sucesso!",
+            description: "Você será redirecionado em 3 segundos!",
+          });
+          return setTimeout(() => route.back(), 2000);
+        })
+        .catch((e) => {
+          setSend(false);
+          toast({
+            title: "Erro!",
+            description: "Algo deu errado, tente novamente mais tarde.",
+          });
+        });
+    }
+  }
+
   useEffect(() => {
     setTimeout(getDetail, 4000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -156,7 +197,7 @@ export const UserAdmin = ({ scope }: Props) => {
                     </h3>
                   </div>
                 </div>
-                <div className="px-4 py-2">
+                <div className="px-4 py-2 flex w-full justify-between">
                   <div>
                     <div>
                       <p>E-mail:</p>
@@ -188,13 +229,32 @@ export const UserAdmin = ({ scope }: Props) => {
                     </div>
                   </div>
                 </div>
-                <div className="px-4 py-2">
-                  <div>
+
+                <div className="flex">
+                  <div className="px-4 py-2">
                     <div>
                       <p>Telefone:</p>
                     </div>
                     <h3 className="text-lg">{userData?.phone_number}</h3>
                   </div>
+                  {userData?.scope === "student" && (
+                    <div className="px-4 py-2">
+                      <div>
+                        <p>Comprovante de Matrícula:</p>
+                      </div>
+                      <h3 className="text-lg">
+                        {userData?.enrollment_certificate_url &&
+                          (
+                            <a
+                              href={`${userData?.enrollment_certificate_url}`}
+                              target="_blank"
+                            >
+                              <FileDown />
+                            </a>
+                          )}
+                      </h3>
+                    </div>
+                  )}
                 </div>
 
                 {scope === "student" ? null : (
@@ -225,6 +285,50 @@ export const UserAdmin = ({ scope }: Props) => {
                   >
                     Editar Perfil
                   </Button>
+
+                  <AlertDialog>
+                    <AlertDialogTrigger
+                      asChild
+                      disabled={userData.is_authorized}
+                    >
+                      <Button
+                        variant="secondary"
+                        className="w-[15rem] text-white"
+                      >
+                        {send ? (
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        ) : userData.is_authorized ? (
+                          "Usuário Já Ativo"
+                        ) : (
+                          "Ativar Usuário"
+                        )}
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Você confirma a ativação do usuário {userData?.name} ?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Pense bem!! Após a ativação, o usuário terá acesso
+                          total a plataforma.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={handleActive}
+                          disabled={send}
+                        >
+                          {send ? (
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          ) : (
+                            "Ativar Usuário"
+                          )}
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button variant="outline" className="w-[15rem]">
@@ -247,7 +351,7 @@ export const UserAdmin = ({ scope }: Props) => {
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
                         <AlertDialogAction
                           onClick={handleDelete}
                           disabled={send}
