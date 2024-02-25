@@ -289,7 +289,7 @@ export const UserAdmin = ({ scope }: Props) => {
                   <AlertDialog>
                     <AlertDialogTrigger
                       asChild
-                      disabled={userData.is_authorized}
+                      disabled={userData?.is_authorized}
                     >
                       <Button
                         variant="secondary"
@@ -297,7 +297,7 @@ export const UserAdmin = ({ scope }: Props) => {
                       >
                         {send ? (
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        ) : userData.is_authorized ? (
+                        ) : userData?.is_authorized ? (
                           "Usuário Já Ativo"
                         ) : (
                           "Ativar Usuário"
