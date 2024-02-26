@@ -40,6 +40,12 @@ export function InfosForm() {
           description: "Mensagem enviada com sucesso, respondemos em até 24 horas úteis.",
         });
 
+        form.reset({
+          name: '',
+          email: '',
+          message: ''
+        })
+
         setLoad(false);
         return;
       })
@@ -79,7 +85,7 @@ export function InfosForm() {
           {load ? (
             <Loader2 className="mr-2 ml-4 h-4 w-4 animate-spin" />
           ) : (
-            "Entrar"
+            "Enviar"
           )}
         </Button>
       </form>
