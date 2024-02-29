@@ -5,7 +5,7 @@ export default async function Page() {
   const session = await getServerSession(nextAuthOptions);
   return (
     <div className="pt-[5rem] flex flex-col h-screen items-center justify-center">
-      <div className="max-w-[500px] break-all text-center">
+      <div className="max-w-[500px] break-words text-center">
         <p>Olá, {session?.name.toLocaleUpperCase()}.</p>
         <p className="pt-2">
           Nossa equipe está verificando suas informações de cadastro para

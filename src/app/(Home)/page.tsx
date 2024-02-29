@@ -88,11 +88,11 @@ export default function Home() {
               </h3>
               {selected
                 ? StepsMedic.map((i, index) => (
-                    <div key={index} className="flex items-center pt-6 ml-2">
+                    <div key={index} className="flex items-center  pt-6 ml-2">
                       <span
                         className={`${
                           selected ? "bg-primary" : "bg-secondary"
-                        } px-3 py-2 rounded-full text-white`}
+                        }  rounded-full text-center py-2  text-white w-[2.5rem]`}
                       >
                         {i.item}.
                       </span>{" "}
@@ -104,7 +104,7 @@ export default function Home() {
                       <span
                         className={`${
                           selected ? "bg-primary" : "bg-secondary"
-                        } px-3 py-2 rounded-full text-white`}
+                        } rounded-full text-center py-2  text-white w-[2.5rem]`}
                       >
                         {i.item}.
                       </span>{" "}
@@ -133,9 +133,8 @@ export default function Home() {
             </div>
             <div>
               <p className="py-3 text-md md:text-md w:1/2 md:w-3/4">
-                A MEM acredita que a
-                experiência prática é fundamental para criar futuros médicos
-                excepcionais.
+                A MEM acredita que a experiência prática é fundamental para
+                criar futuros médicos excepcionais.
               </p>
 
               <p className="py-3 text-md md:text-md w:1/2 md:w-3/4">
@@ -154,28 +153,31 @@ export default function Home() {
               </div>
             </div>
             <div className="flex flex-wrap justify-end  items-center gap-3 w-full max-w-[20rem] h-full">
-              
-              <Image
-                src="/inovasanta.png"
-                height={200}
-                width={200}
-                alt="Inova Santa"
-                className=""
-              />
-              <Image
-                src="/gastros-logo-1.svg"
-                height={200}
-                width={200}
-                alt="Inova Santa"
-                className=""
-              />
-              <Image
-                src="/medeasy.png"
-                height={200}
-                width={200}
-                alt="Inova Santa"
-                className="bg-[#111433]"
-              />
+              <div className="min-h-[100px]">
+                <Image
+                  src="/inovasanta2.png"
+                  height={200}
+                  width={200}
+                  alt="Inova Santa"
+                />
+              </div>
+              <div className=" flex flex-col justify-center min-h-[100px]">
+                <Image
+                  src="/gastros-logo-1.svg"
+                  height={200}
+                  width={200}
+                  alt="Inova Santa"
+                  className=""
+                />
+              </div>
+              <div className=" flex flex-col justify-center min-h-[100px]">
+                <Image
+                  src="/medeasy.png"
+                  height={200}
+                  width={200}
+                  alt="Inova Santa"
+                />
+              </div>
             </div>
           </div>
         </CentralizerContainer>
